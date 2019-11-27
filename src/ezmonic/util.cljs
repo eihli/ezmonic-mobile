@@ -147,14 +147,15 @@
   (map #(:terminals (get-in ezmonic.data/data %)) combo))
 
 
-(defn split-number [number]
-"Split a base 10 number into an list of digits."
-(loop [number number
-       result []]
-  (if (= number 0)
-    result
-    (recur (quot number 10)
-           (cons (rem number 10) result)))))
+(defn split-number
+  [number]
+  "Split a base 10 number into an list of digits."
+  (loop [number number
+         result []]
+    (if (= number 0)
+      result
+      (recur (quot number 10)
+             (cons (rem number 10) result)))))
 
 ;; start with this
 (defn all-phrases
