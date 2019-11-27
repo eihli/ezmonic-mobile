@@ -71,6 +71,9 @@
                                  (do (println "the new value is:" item)
                                      (reset! ratom item)))
                 :enabled true}
+        [picker-item {:key (random-uuid)
+                      :label "pick a value"
+                      :value "placeholder"}]
         (for [option (first (u/all-mezmorizations @input-value))]
           (do (println "picker-item:" option)
               [picker-item {:label (first option) :value (s/join " " (rest option))}]))]])))
