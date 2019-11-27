@@ -64,42 +64,42 @@
                       (rf/dispatch [:input-value number])
                       (println (u/all-mezmorizations @input-value)))}]]
        [text {:style (.-title styles)} "Input: " @input-value]
-       [text {:style (.-title styles)} "picked value: " @ratom]
+       [text {:style (.-title styles)} "picked value: \n" @ratom]
        [picker {:selectedValue @ratom
                 :onValueChange (fn [item]
                                  (do (println "the new value is:" item)
                                      (reset! ratom item)))
                 :enabled true}
-        (for [item (u/all-mezmorizations @input-value)]
-          (do (println "picker-item:" item)
-              [picker-item {:label (str item) :value (str item)}]))]])))
+        (for [option (first (u/all-mezmorizations @input-value))]
+          (do (println "picker-item:" option)
+              [picker-item {:label (str option) :value (str option)}]))]])))
 
 
 (defonce root-ref (atom nil))
 (defonce root-component-ref (atom nil))
 
 (defn render-root [root]
-(let [first-call? (nil? @root-ref)]
-  (reset! root-ref root)
+  (let [first-call? (nil? @root-ref)]
+    (reset! root-ref root)
 
-  (if-not first-call?
-    (when-let [root @root-component-ref]
-      (.forceUpdate ^js root))
-    (let [Root (crc
-                #js {:componentDidMount
-                     (fn []
-                       (this-as this
-                         (reset! root-component-ref this)))
-                     :componentWillUnmount
-                     (fn []
-                       (reset! root-component-ref nil))
-                     :render
-                     (fn []
-                       (let [body @root-ref]
-                         (if (fn? body)
-                           (body)
-                           body)))})]
-      (rn/AppRegistry.registerComponent "Ezmonic" (fn [] Root))))))
+    (if-not first-call?
+      (when-let [root @root-component-ref]
+        (.forceUpdate ^js root))
+      (let [Root (crc
+                  #js {:componentDidMount
+                       (fn []
+                         (this-as this
+                           (reset! root-component-ref this)))
+                       :componentWillUnmount
+                       (fn []
+                         (reset! root-component-ref nil))
+                       :render
+                       (fn []
+                         (let [body @root-ref]
+                           (if (fn? body)
+                             (body)
+                             body)))})]
+        (rn/AppRegistry.registerComponent "Ezmonic" (fn [] Root))))))
 
 
 (defn start
