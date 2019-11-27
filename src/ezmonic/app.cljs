@@ -1,5 +1,6 @@
 (ns ezmonic.app
-  (:require ["react-native" :as rn]
+  (:require [clojure.string :as s]
+            ["react-native" :as rn]
             ["react" :as react]
             ["create-react-class" :as crc]
             [re-frame.core :as rf]
