@@ -76,7 +76,9 @@
                       :value "placeholder"}]
         (for [option (first (u/all-mezmorizations @input-value))]
           (do (println "picker-item:" option)
-              [picker-item {:label (first option) :value (s/join " " (rest option))}]))]])))
+              [picker-item {:key (random-uuid)
+                            :label (first option)
+                            :value (s/join " " (rest option))}]))]])))
 
 
 (defonce root-ref (atom nil))
