@@ -73,7 +73,7 @@
                 :enabled true}
         (for [option (first (u/all-mezmorizations @input-value))]
           (do (println "picker-item:" option)
-              [picker-item {:label (str option) :value (str option)}]))]])))
+              [picker-item {:label (first option) :value (s/join " " (rest option))}]))]])))
 
 
 (defonce root-ref (atom nil))
