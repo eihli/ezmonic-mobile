@@ -5,7 +5,8 @@
             [re-frame.core :as rf]
             [reagent.core :as r]
             [ezmonic.events]
-            [ezmonic.subs]))
+            [ezmonic.subs]
+            [ezmonic.util :as u]))
 
 
 (def styles
