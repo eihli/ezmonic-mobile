@@ -46,18 +46,33 @@
 
 
 (defn root []
-  (let [input-value (rf/subscribe [:input-value])]
+  (let [input-value (rf/subscribe [:input-value])
+        ratom (r/atom nil)]
     (fn []
-      [:> rn/View {:style (.-container styles)}
-       [textinput {:style {:height 40
-                           :width 150
-                           :borderColor "gray"
-                           :borderWidth 1}
-                   :keyboardType "numeric"
-                   :placeholder "Enter a number"
-                   :on-change-text (fn [number]
-                                     (rf/dispatch [:input-value number]))}]
-       [textinput {:style (.-title styles)} "Input: " @input-value]])))
+      [:> rn/View {}
+       [scroll-view {:style {:padding-top 50}
+                     :scroll-enabled false}
+        [textinput {:style {:padding-top 10
+                            :height 40
+                            :width 150
+                            :borderColor "gray"
+                            :borderWidth 1}
+                    :keyboardType "numeric"
+                    :placeholder "Enter a number"
+                    :on-change-text
+                    (fn [number]
+                      (rf/dispatch [:input-value number])
+                      (println (u/all-mezmorizations @input-value)))}]]
+       [text {:style (.-title styles)} "Input: " @input-value]
+       [text {:style (.-title styles)} "picked value: " @ratom]
+       [picker {:selectedValue @ratom
+                :onValueChange (fn [item]
+                                 (do (println "the new value is:" item)
+                                     (reset! ratom item)))
+                :enabled true}
+        (for [item (u/all-mezmorizations @input-value)]
+          (do (println "picker-item:" item)
+              [picker-item {:label (str item) :value (str item)}]))]])))
 
 
 (defonce root-ref (atom nil))
