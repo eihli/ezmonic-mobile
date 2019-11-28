@@ -37,7 +37,12 @@
           (clj->js)
           (rn/StyleSheet.create)))
 
+(def text (r/adapt-react-class (.-Text rn)))
 (def textinput (r/adapt-react-class (.-TextInput rn)))
+(def scroll-view (r/adapt-react-class (.-ScrollView rn)))
+(def picker (r/adapt-react-class (.-Picker rn)))
+(def picker-item (r/adapt-react-class (.-Item (.-Picker rn))))
+
 
 (defn root []
   (let [input-value (rf/subscribe [:input-value])]
