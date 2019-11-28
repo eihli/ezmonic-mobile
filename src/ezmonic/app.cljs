@@ -39,6 +39,7 @@
           (clj->js)
           (rn/StyleSheet.create)))
 
+(def safe-area-view (r/adapt-react-class (.-SafeAreaView rn)))
 (def text (r/adapt-react-class (.-Text rn)))
 (def textinput (r/adapt-react-class (.-TextInput rn)))
 (def scroll-view (r/adapt-react-class (.-ScrollView rn)))
@@ -50,7 +51,7 @@
   (let [input-value (rf/subscribe [:input-value])
         ratom (r/atom nil)]
     (fn []
-      [:> rn/View {}
+      [safe-area-view {}
        [scroll-view {:style {:padding-top 50}
                      :scroll-enabled false}
         [textinput {:style {:padding-top 10
