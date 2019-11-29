@@ -8,7 +8,8 @@
             [ezmonic.events]
             [ezmonic.subs]
             [ezmonic.util :as u]
-            ["react-native-dropdown-menu" :as react-native-dropdown-menu]))
+            ["react-native-dropdown-menu" :as react-native-dropdown-menu]
+            ["react-native-picker-select" :as react-native-picker-select]))
 
 
 (def styles
@@ -49,6 +50,7 @@
 (def picker-item (r/adapt-react-class (.-Item (.-Picker rn))))
 (def touchable-highlight (r/adapt-react-class (.-TouchableHighlight rn)))
 (def dropdown-menu (r/adapt-react-class (.-default react-native-dropdown-menu)))
+(def picker-select (r/adapt-react-class (.-default react-native-picker-select)))
 
 (defn picker-options
   "From given `data`, display picker options."
@@ -102,6 +104,27 @@
                      :bg-color "white"
                      :handler (fn [column row]
                                 (println "----> column, row:" column row))}]]))
+
+
+(defn picker-select-menu
+  [data]
+  (doall
+   (for [mnemonics (u/number->mnemonics @data)]
+     ^{:key (random-uuid)}
+     [view {:style {:flex-direction "row"}}
+      [text {:style {:padding-right 10}} (key mnemonics)]
+
+      [picker-select {:items (->> (val mnemonics)
+                                  (mapv #(hash-map "label" % "value" %)))
+                      :style {:fontSize 16,
+                              :paddingHorizontal 10
+                              :paddingVertical 8
+                              :borderWidth 0.5
+                              :borderColor "purple"
+                              :borderRadius 8
+                              :color "black"
+                              :paddingRight 30}
+                      :on-value-change #(println "picker-select" %)}]])))
 
 
 (defn root []
