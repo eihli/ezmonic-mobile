@@ -7,7 +7,8 @@
             [reagent.core :as r]
             [ezmonic.events]
             [ezmonic.subs]
-            [ezmonic.util :as u]))
+            [ezmonic.util :as u]
+            ["react-native-dropdown-menu" :as react-native-dropdown-menu]))
 
 
 (def styles
@@ -47,6 +48,7 @@
 (def picker (r/adapt-react-class (.-Picker rn)))
 (def picker-item (r/adapt-react-class (.-Item (.-Picker rn))))
 (def touchable-highlight (r/adapt-react-class (.-TouchableHighlight rn)))
+(def dropdown-menu (r/adapt-react-class (.-default react-native-dropdown-menu)))
 
 (defn picker-options
   "From given `data`, display picker options."
@@ -89,7 +91,17 @@
         (picker-options (rest mnemonics))])])))
 
 
-
+(defn drop-down-menu
+  [data]
+  (let [_ (println "drop-down-menu ->" data)]
+    ^{:key (random-uuid)}
+    [view {:style {:flex-direction "row"}}
+     [text {:style {:width 50}} (key data)]
+     [dropdown-menu {:data [(val data)]
+                     :style {:width 100}
+                     :bg-color "white"
+                     :handler (fn [column row]
+                                (println "----> column, row:" column row))}]]))
 
 
 (defn root []
@@ -117,7 +129,10 @@
          [text "press me"]]]
        [text {:style (.-title styles)} "Input!!: " @submitted-number]
        (when-not (nil? @submitted-number)
-         (display-pickers ratom submitted-number))])))
+         (doall
+          (for [mnemonics (u/number->mnemonics @submitted-number)]
+            ^{:key (random-uuid)}
+            (drop-down-menu mnemonics))))])))
 
 
 (defonce root-ref (atom nil))
