@@ -94,9 +94,6 @@
                 :onValueChange #(do (println "the new value is:" %)
                                     (reset! ratom (assoc @ratom (first mnemonics) %)))
                 :enabled true}
-        [picker-item {:key (random-uuid)
-                      :label "pick a value!!"
-                      :value ""}]
         (picker-options (rest mnemonics))])])))
 
 
