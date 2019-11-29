@@ -161,10 +161,9 @@
          [text "press me"]]]
        [text {:style (.-title styles)} "Input!!: " @submitted-number]
        (when-not (nil? @submitted-number)
-         (doall
-          (for [mnemonics (u/number->mnemonics @submitted-number)]
-            ^{:key (random-uuid)}
-            (drop-down-menu mnemonics))))])))
+         (if ios?
+           (picker-select-menu submitted-number)
+           (display-native-pickers ratom submitted-number)))])))
 
 
 (defonce root-ref (atom nil))
