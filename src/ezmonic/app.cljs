@@ -51,6 +51,11 @@
 (def touchable-highlight (r/adapt-react-class (.-TouchableHighlight rn)))
 (def dropdown-menu (r/adapt-react-class (.-default react-native-dropdown-menu)))
 (def picker-select (r/adapt-react-class (.-default react-native-picker-select)))
+(def platform (.-Platform rn))
+
+
+(def ios? (= "ios" (.-OS platform)))
+
 
 (defn picker-options
   "From given `data`, display picker options."
