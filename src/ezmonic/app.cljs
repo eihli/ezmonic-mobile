@@ -8,7 +8,6 @@
             [ezmonic.events]
             [ezmonic.subs]
             [ezmonic.util :as u]
-            ["react-native-dropdown-menu" :as react-native-dropdown-menu]
             ["react-native-picker-select" :as react-native-picker-select]))
 
 
@@ -49,7 +48,6 @@
 (def picker (r/adapt-react-class (.-Picker rn)))
 (def picker-item (r/adapt-react-class (.-Item (.-Picker rn))))
 (def touchable-highlight (r/adapt-react-class (.-TouchableHighlight rn)))
-(def dropdown-menu (r/adapt-react-class (.-default react-native-dropdown-menu)))
 (def picker-select (r/adapt-react-class (.-default react-native-picker-select)))
 (def platform (.-Platform rn))
 
@@ -100,19 +98,6 @@
                       :label "pick a value!!"
                       :value ""}]
         (picker-options (rest mnemonics))])])))
-
-
-(defn drop-down-menu
-  [data]
-  (let [_ (println "drop-down-menu ->" data)]
-    ^{:key (random-uuid)}
-    [view {:style {:flex-direction "row"}}
-     [text {:style {:width 50}} (key data)]
-     [dropdown-menu {:data [(val data)]
-                     :style {:width 100}
-                     :bg-color "white"
-                     :handler (fn [column row]
-                                (println "----> column, row:" column row))}]]))
 
 
 (defn picker-select-menu

@@ -12,7 +12,6 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.5",
-    "react-native-dropdown-menu": "^2.0.0",
     "react-native-picker-select": "^6.3.3"
   },
   "devDependencies": {
