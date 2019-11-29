@@ -40,15 +40,61 @@
           (rn/StyleSheet.create)))
 
 (def safe-area-view (r/adapt-react-class (.-SafeAreaView rn)))
+(def view (r/adapt-react-class (.-View rn)))
 (def text (r/adapt-react-class (.-Text rn)))
 (def textinput (r/adapt-react-class (.-TextInput rn)))
 (def scroll-view (r/adapt-react-class (.-ScrollView rn)))
 (def picker (r/adapt-react-class (.-Picker rn)))
 (def picker-item (r/adapt-react-class (.-Item (.-Picker rn))))
+(def touchable-highlight (r/adapt-react-class (.-TouchableHighlight rn)))
+
+(defn picker-options
+  "From given `data`, display picker options."
+  [data]
+  (doall
+   (for [words data]
+     (doall
+      (for [word words]
+        ^{:key (random-uuid)}
+        (doall
+         ^{:key (random-uuid)}
+         [picker-item {:label word
+                       :value word}]))))))
+
+(defn display-pickers
+  "Display pickers full of mnemonics for a given `number`."
+  [ratom number]
+  (doall
+   (for [mnemonics (u/number->mnemonics @number)]
+     ^{:key (random-uuid)}
+     [view {:style {:flex-direction "row"}}
+      [text "Number: "]
+      [text {:style {:width 50
+                     :padding-top 35
+                     :font-weight "bold"
+                     :font-size 14}}
+       (first mnemonics)]
+      ^{:key (random-uuid)}
+      (doall
+       [picker {:style {:width 150}
+                :item-style {:font-size 10}
+                :key (random-uuid)
+                :selectedValue (get @ratom (first mnemonics))
+                :onValueChange #(do (println "the new value is:" %)
+                                    (reset! ratom (assoc @ratom (first mnemonics) %)))
+                :enabled true}
+        [picker-item {:key (random-uuid)
+                      :label "pick a value!!"
+                      :value ""}]
+        (picker-options (rest mnemonics))])])))
+
+
+
 
 
 (defn root []
   (let [input-value (rf/subscribe [:input-value])
+        submitted-number (rf/subscribe [:submitted-number])
         ratom (r/atom nil)]
     (fn []
       [safe-area-view {}
@@ -64,22 +110,14 @@
                     :on-change-text
                     (fn [number]
                       (rf/dispatch [:input-value number])
-                      (println (u/all-mezmorizations @input-value)))}]]
-       [text {:style (.-title styles)} "Input: " @input-value]
-       [text {:style (.-title styles)} "picked value: \n" @ratom]
-       [picker {:selectedValue @ratom
-                :onValueChange (fn [item]
-                                 (do (println "the new value is:" item)
-                                     (reset! ratom item)))
-                :enabled true}
-        [picker-item {:key (random-uuid)
-                      :label "pick a value"
-                      :value "placeholder"}]
-        (for [option (first (u/all-mezmorizations @input-value))]
-          (do (println "picker-item:" option)
-              [picker-item {:key (random-uuid)
-                            :label (first option)
-                            :value (s/join " " (rest option))}]))]])))
+                      (println (u/all-mezmorizations @input-value)))}]
+        [touchable-highlight {:on-press #(rf/dispatch [:submitted-number @input-value])
+                              :style {:padding 20
+                                      :background-color "green"}}
+         [text "press me"]]]
+       [text {:style (.-title styles)} "Input!!: " @submitted-number]
+       (when-not (nil? @submitted-number)
+         (display-pickers ratom submitted-number))])))
 
 
 (defonce root-ref (atom nil))
