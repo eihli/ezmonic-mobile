@@ -136,7 +136,8 @@
                     :on-change-text
                     (fn [number]
                       (rf/dispatch [:input-value number])
-                      (println (u/all-mezmorizations @input-value)))}]
+                      (println (u/all-mezmorizations @input-value)))
+                    :on-submit-editing #(rf/dispatch [:submitted-number @input-value])}]
         [touchable-highlight {:on-press #(rf/dispatch [:submitted-number @input-value])
                               :style {:padding 20
                                       :background-color "green"}}
