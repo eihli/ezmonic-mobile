@@ -70,8 +70,12 @@
          [picker-item {:label word
                        :value word}]))))))
 
-(defn display-pickers
-  "Display pickers full of mnemonics for a given `number`."
+(defn display-native-pickers
+  "Display pickers full of mnemonics for a given `number`.
+  Update the choices picked in `ratom`.
+
+  Uses native picker, which looks fine in Android, but for this
+  particular app is not the right fit."
   [ratom number]
   (doall
    (for [mnemonics (u/number->mnemonics @number)]
