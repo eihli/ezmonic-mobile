@@ -38,3 +38,8 @@
  :input-value
  (fn [db [_ value]]
    (assoc db :input-value value)))
+
+(reg-event-db
+ :submitted-number
+ (fn [db [_ value]]
+   (assoc db :submitted-number value)))

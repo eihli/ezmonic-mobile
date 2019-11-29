@@ -10,3 +10,8 @@
  :input-value
  (fn [db _]
    (:input-value db)))
+
+(reg-sub
+ :submitted-number
+ (fn [db _]
+   (:submitted-number db)))
