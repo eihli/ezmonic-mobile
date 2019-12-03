@@ -18,7 +18,8 @@
     "react-native-screens": "^1.0.0-alpha.23",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^1.10.3",
-    "ws": ">=3.3.1"
+    "ws": ">=3.3.1",
+    "mem": ">=4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
