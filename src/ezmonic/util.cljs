@@ -182,10 +182,10 @@
   ({33 [MAMA MEMO MIME MOM]}
    {3 [AIM EMU WAY WHEY YAM]})"
   [number]
-  (into {} (for [phone (all-mezmorizations number)]
-             (hash-map (->> phone
+  (into {} (for [phrase-option (all-mezmorizations number)]
+             (hash-map (->> phrase-option
                             first
                             strip-vowels
                             normalize-consonants
                             (clojure.string/join ""))
-                       (mapv first phone)))))
+                       (mapv first phrase-option)))))
