@@ -9,7 +9,9 @@
             [ezmonic.subs]
             [ezmonic.style :as style]
             [ezmonic.util :as u]
-            ["react-native-picker-select" :as react-native-picker-select]))
+            ["react-native-picker-select" :as react-native-picker-select]
+            ["react-navigation" :as react-navigation]
+            ["react-navigation-stack" :as react-navigation-stack]))
 
 
 (def safe-area-view (r/adapt-react-class (.-SafeAreaView rn)))
@@ -22,6 +24,10 @@
 (def touchable-highlight (r/adapt-react-class (.-TouchableHighlight rn)))
 (def picker-select (r/adapt-react-class (.-default react-native-picker-select)))
 (def platform (.-Platform rn))
+
+
+(def create-stack-navigator (.-createStackNavigator react-navigation-stack))
+(def create-app-container (.-createAppContainer react-navigation))
 
 
 (def ios? (= "ios" (.-OS platform)))
@@ -90,11 +96,19 @@
                       :on-value-change #(println "picker-select" %)}]])))
 
 
-(defn root []
-  (let [input-value (rf/subscribe [:input-value])
-        submitted-number (rf/subscribe [:submitted-number])
-        ratom (r/atom nil)]
-    (fn []
+(defn navigate-to
+  ([props screen]
+   (-> props clj->js .-navigation (.navigate screen)))
+  ([props screen params]
+   (-> props clj->js .-navigation (.navigate screen params))))
+
+
+(defn root
+  [props]
+  (fn [props]
+    (let [input-value (rf/subscribe [:input-value])
+          submitted-number (rf/subscribe [:submitted-number])
+          ratom (r/atom nil)]
       [safe-area-view {}
        [scroll-view {:style {:padding-top 50}
                      :scroll-enabled false}
@@ -114,11 +128,70 @@
                               :style (.-inputButton style/styles)}
          [text {:style (.-inputButtonText style/styles)} "mezmorize!"]]]
        [text {:style (.-title style/styles)} "Input!!: " @submitted-number]
+       #_[touchable-highlight
+          {:style {:border-radius 25
+                   :padding 150}
+           :on-press #(navigate-to props "settings" {:foo "BAR!"})}
+          [text {:style {:font-size 40
+                         :font-weight "100"
+                         :color "white"
+                         :background-color "red"
+                         :padding 20
+                         :border-radius 50}}
+           "Yey"]]
        (when-not (nil? @submitted-number)
          (if ios?
            (picker-select-menu submitted-number)
            (display-native-pickers ratom submitted-number)))])))
 
+
+(defn screen
+  ([screen]
+   (r/reactify-component screen))
+  ([screen navigation-options]
+   (doto (r/reactify-component screen)
+     (aset "navigationOptions" (clj->js navigation-options)))))
+
+
+(defn settings-screen
+  [params]
+  [view {:style {:flex 1
+                 :justify-content "center"
+                 :align-tems "center"}}
+   [text "Settings Screen!"]
+   [text (-> params
+             :navigation
+             .-state
+             .-params
+             :foo)]])
+
+(defn stack-navigator
+  [routes options]
+  (create-stack-navigator (clj->js routes) (clj->js options)))
+
+(defn app-root
+  []
+  (let [header-style {:backgroundColor "#01BCD4"
+                      :borderBottomColor "#ffffff"
+                      :borderBottomWidth 3}]
+    [:>
+     (create-app-container
+      (stack-navigator {:home (screen root {:title "ezmonic"
+                                            :headerStyle header-style
+                                            :headerRight
+                                            (r/as-element
+                                             [touchable-highlight
+                                              {:on-press
+                                               (println "Take me to 'Settings'")}
+                                              [text {:style
+                                                     {:font-size 30
+                                                      :color "black"
+                                                      :padding-right 10}}
+                                               "☰"]])})
+                        :settings (screen settings-screen {:title "Settings"
+                                                           :headerStyle header-style
+                                                           :headerTintColor "black"})}
+                       {:initialRouteName "home"}))]))
 
 (defonce root-ref (atom nil))
 (defonce root-component-ref (atom nil))
@@ -150,7 +223,7 @@
 (defn start
   {:dev/after-load true}
   []
-  (render-root (r/as-element [root])))
+  (render-root (r/as-element [app-root])))
 
 (defn init []
   (rf/dispatch-sync [:initialize-db])
