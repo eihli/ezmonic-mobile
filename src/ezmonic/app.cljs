@@ -7,38 +7,10 @@
             [reagent.core :as r]
             [ezmonic.events]
             [ezmonic.subs]
+            [ezmonic.style :as style]
             [ezmonic.util :as u]
             ["react-native-picker-select" :as react-native-picker-select]))
 
-
-(def styles
-  ^js (-> {:container
-           {:flex 1
-            :backgroundColor "#fff"
-            :alignItems "center"
-            :justifyContent "center"}
-           :title
-           {:fontWeight "bold"
-            :fontSize 24
-            :color "blue"}
-           :button
-           {:fontWeight "bold"
-            :fontSize 18
-            :padding 6
-            :backgroundColor "blue"
-            :borderRadius 10}
-           :buttonText
-           {:paddingLeft 12
-            :paddingRight 12
-            :fontWeight "bold"
-            :fontSize 18
-            :color "white"}
-           :label
-           {:fontWeight "normal"
-            :fontSize 15
-            :color "blue"}}
-          (clj->js)
-          (rn/StyleSheet.create)))
 
 (def safe-area-view (r/adapt-react-class (.-SafeAreaView rn)))
 (def view (r/adapt-react-class (.-View rn)))
@@ -139,10 +111,9 @@
                       (println (u/all-mezmorizations @input-value)))
                     :on-submit-editing #(rf/dispatch [:submitted-number @input-value])}]
         [touchable-highlight {:on-press #(rf/dispatch [:submitted-number @input-value])
-                              :style {:padding 20
-                                      :background-color "green"}}
-         [text "press me"]]]
-       [text {:style (.-title styles)} "Input!!: " @submitted-number]
+                              :style (.-inputButton style/styles)}
+         [text {:style (.-inputButtonText style/styles)} "mezmorize!"]]]
+       [text {:style (.-title style/styles)} "Input!!: " @submitted-number]
        (when-not (nil? @submitted-number)
          (if ios?
            (picker-select-menu submitted-number)
