@@ -15,3 +15,8 @@
  :submitted-number
  (fn [db _]
    (:submitted-number db)))
+
+(reg-sub
+ :picker-data
+ (fn [db _]
+   (:picker-data db)))

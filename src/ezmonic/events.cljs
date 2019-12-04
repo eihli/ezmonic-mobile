@@ -43,3 +43,9 @@
  :submitted-number
  (fn [db [_ value]]
    (assoc db :submitted-number value)))
+
+(reg-event-db
+ :picker-data
+ (fn [db [_ value]]
+   (assoc db :picker-data
+          (merge (:picker-data db) value))))

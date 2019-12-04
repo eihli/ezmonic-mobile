@@ -48,31 +48,36 @@
 
 (defn display-native-pickers
   "Display pickers full of mnemonics for a given `number`.
-  Update the choices picked in `ratom`.
 
   Uses native picker, which looks fine in Android, but for this
   particular app is not the right fit."
-  [ratom number]
+  [number]
   (doall
    (for [mnemonics (u/number->mnemonics @number)]
-     ^{:key (random-uuid)}
-     [view {:style {:flex-direction "row"}}
-      [text "Number: "]
-      [text {:style {:width 50
-                     :padding-top 35
-                     :font-weight "bold"
-                     :font-size 14}}
-       (first mnemonics)]
-      ^{:key (random-uuid)}
-      (doall
-       [picker {:style {:width 150}
-                :item-style {:font-size 10}
-                :key (random-uuid)
-                :selectedValue (get @ratom (first mnemonics))
-                :onValueChange #(do (println "the new value is:" %)
-                                    (reset! ratom (assoc @ratom (first mnemonics) %)))
-                :enabled true}
-        (picker-options (rest mnemonics))])])))
+     (let [random-key (random-uuid)
+           chunk-number (first mnemonics)]
+       ^{:key random-key}
+       [view {:style {:flex-direction "row"}}
+        [text "Number: "]
+        [text {:style {:width 50
+                       :padding-top 35
+                       :font-weight "bold"
+                       :font-size 14}}
+         chunk-number]
+        ^{:key (random-uuid)}
+        (doall
+         [picker {:style {:width 150}
+                  :item-style {:font-size 10}
+                  :key (random-uuid)
+                  :selectedValue (-> (rf/subscribe [:picker-data])
+                                     deref
+                                     #_(get (str chunk-number "-" random-key))
+                                     (get chunk-number))
+                  :onValueChange #(do (println "the new value is:" %)
+                                      #_(rf/dispatch [:picker-data (hash-map (str chunk-number "-" random-key) %)])
+                                      (rf/dispatch [:picker-data (hash-map chunk-number %)]))
+                  :enabled true}
+          (picker-options (rest mnemonics))])]))))
 
 
 (defn picker-select-menu
@@ -107,8 +112,7 @@
   [props]
   (fn [props]
     (let [input-value (rf/subscribe [:input-value])
-          submitted-number (rf/subscribe [:submitted-number])
-          ratom (r/atom nil)]
+          submitted-number (rf/subscribe [:submitted-number])]
       [safe-area-view {}
        [scroll-view {:style {:padding-top 50}
                      :scroll-enabled false}
@@ -142,7 +146,7 @@
        (when-not (nil? @submitted-number)
          (if ios?
            (picker-select-menu submitted-number)
-           (display-native-pickers ratom submitted-number)))])))
+           (display-native-pickers submitted-number)))])))
 
 
 (defn screen
