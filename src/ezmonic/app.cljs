@@ -52,32 +52,34 @@
   Uses native picker, which looks fine in Android, but for this
   particular app is not the right fit."
   [number]
-  (doall
-   (for [mnemonics (u/number->mnemonics @number)]
-     (let [random-key (random-uuid)
-           chunk-number (first mnemonics)]
-       ^{:key random-key}
-       [view {:style {:flex-direction "row"}}
-        [text "Number: "]
-        [text {:style {:width 50
-                       :padding-top 35
-                       :font-weight "bold"
-                       :font-size 14}}
-         chunk-number]
-        ^{:key (random-uuid)}
-        (doall
-         [picker {:style {:width 150}
-                  :item-style {:font-size 10}
-                  :key (random-uuid)
-                  :selectedValue (-> (rf/subscribe [:picker-data])
-                                     deref
-                                     #_(get (str chunk-number "-" random-key))
-                                     (get chunk-number))
-                  :onValueChange #(do (println "the new value is:" %)
-                                      #_(rf/dispatch [:picker-data (hash-map (str chunk-number "-" random-key) %)])
-                                      (rf/dispatch [:picker-data (hash-map chunk-number %)]))
-                  :enabled true}
-          (picker-options (rest mnemonics))])]))))
+  [view {:style {:flex-direction "row"
+                 :justify-content "flex-start"
+                 :flex-wrap "wrap"
+                 :padding 10}}
+   (doall
+    (for [mnemonics (u/number->mnemonics @number)]
+      (let [random-key (random-uuid)
+            chunk-number (first mnemonics)]
+        ^{:key random-key}
+        [view {:style {:flex-direction "row"}}
+         [text {:style {:padding-top 15
+                        :font-weight "bold"
+                        :font-size 18}}
+          chunk-number]
+         ^{:key (random-uuid)}
+         (doall
+          [picker {:style {:width 150}
+                   :item-style {:font-size 10}
+                   :key (random-uuid)
+                   :selectedValue (-> (rf/subscribe [:picker-data])
+                                      deref
+                                      #_(get (str chunk-number "-" random-key))
+                                      (get chunk-number))
+                   :onValueChange #(do (println "the new value is:" %)
+                                       #_(rf/dispatch [:picker-data (hash-map (str chunk-number "-" random-key) %)])
+                                       (rf/dispatch [:picker-data (hash-map chunk-number %)]))
+                   :enabled true}
+           (picker-options (rest mnemonics))])])))])
 
 
 (defn picker-select-menu
