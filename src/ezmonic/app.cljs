@@ -6,6 +6,7 @@
             [re-frame.core :as rf]
             [reagent.core :as r]
             [ezmonic.events]
+            [ezmonic.helper :refer [->clj]]
             [ezmonic.subs]
             [ezmonic.style :as style]
             [ezmonic.util :as u]
@@ -137,7 +138,11 @@
          [touchable-highlight {:on-press #(rf/dispatch [:submitted-number @input-value])
                                :style (.-inputButton style/styles)}
           [text
-           {:style (.-inputButtonText style/styles)}
+           {:style (let [input-button-style (.-inputButtonText style/styles)]
+                     (if ios?
+                       (merge (->clj input-button-style)
+                              {:margin-top 3})
+                       input-button-style))}
            "mezmorize!"]]]]
        #_[touchable-highlight
           {:style {:border-radius 25
