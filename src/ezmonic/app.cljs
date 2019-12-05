@@ -85,23 +85,33 @@
 
 (defn picker-select-menu
   [data]
-  (doall
-   (for [mnemonics (u/number->mnemonics @data)]
-     ^{:key (random-uuid)}
-     [view {:style {:flex-direction "row"}}
-      [text {:style {:padding-right 10}} (key mnemonics)]
-
-      [picker-select {:items (->> (val mnemonics)
-                                  (mapv #(hash-map "label" % "value" %)))
-                      :style {:fontSize 16,
-                              :paddingHorizontal 10
-                              :paddingVertical 8
-                              :borderWidth 0.5
-                              :borderColor "purple"
-                              :borderRadius 8
-                              :color "black"
-                              :paddingRight 30}
-                      :on-value-change #(println "picker-select" %)}]])))
+  [view {:style {:flex-direction "row"
+                 :justify-content "flex-start"
+                 :flex-wrap "wrap"
+                 :padding 10}}
+   (doall
+    (for [mnemonics (u/number->mnemonics @data)]
+      ^{:key (random-uuid)}
+      [view {:style {:flex-direction "row"
+                     :flex-wrap "wrap"
+                     :align-items "flex-start"
+                     :width 150}}
+       [view {:style {:width 50}}
+        [text {:style {:font-size 20}}
+         (key mnemonics)]]
+       [picker-select {:items (->> (val mnemonics)
+                                   (mapv #(hash-map "label" % "value" %)))
+                       :placeholder {:label "Pick a word" #_"▼"}
+                       :style {:font-size 18
+                               :padding-horizontal 10
+                               :padding-vertical 8
+                               :border-width 0.5
+                               :border-color "purple"
+                               :border-radius 8
+                               :color "black"
+                               :padding-right 30
+                               :padding-left 20}
+                       :on-value-change #(println "picker-select" %)}]]))])
 
 
 (defn navigate-to
