@@ -9,7 +9,7 @@
             :alignItems "center"
             :justifyContent "center"}
            :inputButton
-           {:padding 20
+           {:padding 10
             :backgroundColor "#01BCD4"}
            :inputButtonText
            {:color "white"

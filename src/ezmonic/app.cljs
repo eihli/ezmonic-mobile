@@ -116,22 +116,27 @@
       [safe-area-view {}
        [scroll-view {:style {:padding-top 50}
                      :scroll-enabled false}
-        [textinput {:style {:padding-top 10
-                            :height 40
-                            :width 150
-                            :borderColor "gray"
-                            :borderWidth 1}
-                    :keyboardType "numeric"
-                    :placeholder "Enter a number"
-                    :on-change-text
-                    (fn [number]
-                      (rf/dispatch [:input-value number])
-                      (println (u/all-mezmorizations @input-value)))
-                    :on-submit-editing #(rf/dispatch [:submitted-number @input-value])}]
-        [touchable-highlight {:on-press #(rf/dispatch [:submitted-number @input-value])
-                              :style (.-inputButton style/styles)}
-         [text {:style (.-inputButtonText style/styles)} "mezmorize!"]]]
-       [text {:style (.-title style/styles)} "Input!!: " @submitted-number]
+        [view {:style {:flex-direction "row"
+                       :padding 10}}
+         [textinput {:style {:margin-right 10
+                             :height 50
+                             :width 230
+                             :borderColor "gray"
+                             :borderWidth 1
+                             :font-size 20}
+                     :keyboardType "numeric"
+                     :placeholder "Enter a number"
+                     :on-change-text
+                     (fn [number]
+                       (rf/dispatch [:input-value number])
+                       (println (u/all-mezmorizations @input-value)))
+                     :on-submit-editing #(rf/dispatch [:submitted-number @input-value])}]
+
+         [touchable-highlight {:on-press #(rf/dispatch [:submitted-number @input-value])
+                               :style (.-inputButton style/styles)}
+          [text
+           {:style (.-inputButtonText style/styles)}
+           "mezmorize!"]]]]
        #_[touchable-highlight
           {:style {:border-radius 25
                    :padding 150}
