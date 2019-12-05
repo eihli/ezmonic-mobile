@@ -6,7 +6,7 @@
             [re-frame.core :as rf]
             [reagent.core :as r]
             [ezmonic.events]
-            [ezmonic.helper :refer [->clj]]
+            [ezmonic.helper :refer [->clj ios?]]
             [ezmonic.subs]
             [ezmonic.style :as style]
             [ezmonic.util :as u]
@@ -24,14 +24,10 @@
 (def picker-item (r/adapt-react-class (.-Item (.-Picker rn))))
 (def touchable-highlight (r/adapt-react-class (.-TouchableHighlight rn)))
 (def picker-select (r/adapt-react-class (.-default react-native-picker-select)))
-(def platform (.-Platform rn))
 
 
 (def create-stack-navigator (.-createStackNavigator react-navigation-stack))
 (def create-app-container (.-createAppContainer react-navigation))
-
-
-(def ios? (= "ios" (.-OS platform)))
 
 
 (defn picker-options
