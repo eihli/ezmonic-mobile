@@ -20,3 +20,8 @@
  :picker-data
  (fn [db _]
    (:picker-data db)))
+
+(reg-sub
+ :navigation
+ (fn [db _]
+   (:navigation db)))

@@ -49,3 +49,8 @@
  (fn [db [_ value]]
    (assoc db :picker-data
           (merge (:picker-data db) value))))
+
+(reg-event-db
+ :navigation
+ (fn [db [_ value]]
+   (assoc db :navigation value)))

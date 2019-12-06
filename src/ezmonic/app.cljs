@@ -110,17 +110,17 @@
                        :on-value-change #(println "picker-select" %)}]]))])
 
 
-(defn navigate-to
-  ([props screen]
-   (-> props clj->js .-navigation (.navigate screen)))
-  ([props screen params]
-   (-> props clj->js .-navigation (.navigate screen params))))
+(defn navigate->
+  "Navigate to a given `screen`."
+  [screen]
+  ((.-navigate @(rf/subscribe [:navigation])) screen))
 
 
 (defn root
   [props]
-  (fn [props]
-    (let [input-value (rf/subscribe [:input-value])
+  (fn [{:keys [navigation] :as props}]
+    (let [_ (rf/dispatch [:navigation navigation])
+          input-value (rf/subscribe [:input-value])
           submitted-number (rf/subscribe [:submitted-number])]
       [safe-area-view {}
        [scroll-view {:style {:padding-top 50}
@@ -177,12 +177,8 @@
   [view {:style {:flex 1
                  :justify-content "center"
                  :align-tems "center"}}
-   [text "Settings Screen!"]
-   [text (-> params
-             :navigation
-             .-state
-             .-params
-             :foo)]])
+   [text "Settings Screen!"]])
+
 
 (defn stack-navigator
   [routes options]
@@ -200,8 +196,7 @@
                                             :headerRight
                                             (r/as-element
                                              [touchable-highlight
-                                              {:on-press
-                                               (println "Take me to 'Settings'")}
+                                              {:on-press #(navigate-> "settings")}
                                               [text {:style
                                                      {:font-size 30
                                                       :color "black"
