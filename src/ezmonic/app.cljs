@@ -135,10 +135,7 @@
                              :font-size 20}
                      :keyboardType "numeric"
                      :placeholder "Enter a number"
-                     :on-change-text
-                     (fn [number]
-                       (rf/dispatch [:input-value number])
-                       (println (u/all-mezmorizations @input-value)))
+                     :on-change-text #(rf/dispatch [:input-value %])
                      :on-submit-editing #(rf/dispatch [:submitted-number @input-value])}]
 
          [touchable-highlight {:on-press #(rf/dispatch [:submitted-number @input-value])
