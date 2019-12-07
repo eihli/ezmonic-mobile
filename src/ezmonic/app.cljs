@@ -160,9 +160,15 @@
                          :border-radius 50}}
            "Yey"]]
        (when-not (nil? @submitted-number)
-         (if ios?
-           (picker-select-menu submitted-number)
-           (display-native-pickers submitted-number)))])))
+         [view
+          [text {:style {:padding 10
+                         :font-size 20}}
+           "You can memorize the number "
+           @submitted-number
+           " with the simple pharse:"]
+          (if ios?
+            (picker-select-menu submitted-number)
+            (display-native-pickers submitted-number))])])))
 
 
 (defn screen
