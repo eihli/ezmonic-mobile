@@ -1,5 +1,5 @@
 (ns ezmonic.util
-  (:require [clojure.math.combinatorics :as combo]
+  (:require [clojure.math.combinatorics :refer [selections]]
             [clojure.set]
             [clojure.string :as string]
             [ezmonic.data]))
@@ -7,7 +7,7 @@
 
 (defn connections
   [length]
-  (combo/selections [0 1] length))
+  (selections [0 1] length))
 
 
 (defn joiner
