@@ -1,4 +1,5 @@
-{:source-paths ["src"]
+{:source-paths ["src"
+                "dev"]
 
  :dependencies [[cider/cider-nrepl "0.22.4"]
                 [reagent "0.9.0-rc3"]
