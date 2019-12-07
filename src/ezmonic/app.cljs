@@ -1,12 +1,13 @@
 (ns ezmonic.app
   (:require [clojure.string :as s]
+            [cljs-bean.core :refer [bean ->clj ->js]]
             ["react-native" :as rn]
             ["react" :as react]
             ["create-react-class" :as crc]
             [re-frame.core :as rf]
             [reagent.core :as r]
             [ezmonic.events]
-            [ezmonic.helper :refer [->clj ios?]]
+            [ezmonic.helper :refer [ios?]]
             [ezmonic.subs]
             [ezmonic.style :as style]
             [ezmonic.util :as u]
@@ -169,7 +170,7 @@
    (r/reactify-component screen))
   ([screen navigation-options]
    (doto (r/reactify-component screen)
-     (aset "navigationOptions" (clj->js navigation-options)))))
+     (aset "navigationOptions" (->js navigation-options)))))
 
 
 (defn settings-screen
@@ -182,7 +183,7 @@
 
 (defn stack-navigator
   [routes options]
-  (create-stack-navigator (clj->js routes) (clj->js options)))
+  (create-stack-navigator (->js routes) (->js options)))
 
 (defn app-root
   []

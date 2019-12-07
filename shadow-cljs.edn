@@ -3,7 +3,8 @@
  :dependencies [[cider/cider-nrepl "0.22.4"]
                 [reagent "0.9.0-rc3"]
                 [re-frame "0.11.0-rc3"]
-                [org.clojure/math.combinatorics "0.1.5"]]
+                [org.clojure/math.combinatorics "0.1.5"]
+                [cljs-bean "1.5.0"]]
 
  :nrepl {:port 3333}
 
