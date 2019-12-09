@@ -142,11 +142,7 @@
          [touchable-highlight {:on-press #(rf/dispatch [:submitted-number @input-value])
                                :style (.-inputButton style/styles)}
           [text
-           {:style (let [input-button-style (.-inputButtonText style/styles)]
-                     (if ios?
-                       (merge (->clj input-button-style)
-                              {:margin-top 3})
-                       input-button-style))}
+           {:style (.-inputButtonText style/styles)}
            "mezmorize!"]]]]
        #_[touchable-highlight
           {:style {:border-radius 25
