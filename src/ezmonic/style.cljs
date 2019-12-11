@@ -1,12 +1,13 @@
 (ns ezmonic.style
-  (:require ["react-native" :as rn]
-            [ezmonic.helper :refer [ios?]]
+  (:require ["react-native" :as rn :refer [Platform] :rename {Platform platform}]
             [medley.core :as m :refer [deep-merge]]
             [cljs-bean.core :refer [->js]]))
+
 
 (def ios-only-styles
   {:inputButton {:borderRadius 10}
    :inputButtonText {:marginTop 3}})
+
 
 (def all-styles
   {:container
@@ -45,11 +46,14 @@
     :fontSize 15
     :color "blue"}})
 
-(def platform-style (if ios?
-                      (m/deep-merge all-styles ios-only-styles)
-                      all-styles))
+
+(def platform-style
+  ((.-select platform)
+   #js {:ios (m/deep-merge all-styles ios-only-styles)
+        :android all-styles}))
+
 
 (def styles
-  ^js (-> platform-style
-          ->js
-          rn/StyleSheet.create))
+  (-> platform-style
+      ->js
+      rn/StyleSheet.create))
