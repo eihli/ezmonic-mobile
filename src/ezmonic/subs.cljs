@@ -25,3 +25,8 @@
  :navigation
  (fn [db _]
    (:navigation db)))
+
+(reg-sub
+ :show-welcome
+ (fn [db _]
+   (:show-welcome db)))

@@ -54,3 +54,8 @@
  :navigation
  (fn [db [_ value]]
    (assoc db :navigation value)))
+
+(reg-event-db
+ :show-welcome
+ (fn [db [_ value]]
+   (assoc db :show-welcome value)))

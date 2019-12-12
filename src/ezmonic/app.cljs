@@ -13,7 +13,8 @@
             [ezmonic.util :as u]
             ["react-native-picker-select" :as react-native-picker-select]
             ["react-navigation" :as react-navigation]
-            ["react-navigation-stack" :as react-navigation-stack]))
+            ["react-navigation-stack" :as react-navigation-stack]
+            ["react-native-modal" :as react-native-modal :refer [default] :rename {default modal}]))
 
 
 (def safe-area-view (r/adapt-react-class (.-SafeAreaView rn)))
@@ -117,6 +118,40 @@
   ((.-navigate @(rf/subscribe [:navigation])) screen))
 
 
+(defn welcome-modal
+  ""
+  []
+  (let [paragraph {:style (.-paragraph style/styles)}]
+    [:> modal {:is-visible @(rf/subscribe [:show-welcome])
+               :hideModalContentWhileAnimating true
+               :animation-out "slideOutDown"
+               :swipe-direction ["right" "left" "up" "down"]
+               :on-swipe-complete #(rf/dispatch [:show-welcome false])
+               :on-backdrop-press #(println "modal background press")}
+     [view {:background-color "white"
+            :padding 20
+            :border-radius 10}
+      [text {:style {:font-size 22
+                     :font-weight "bold"}} "Welcome"]
+      [text paragraph
+       "Here's a quick overview for the first-time users."]
+      [text paragraph
+       "Type in a number you want to remember and click \"mezmorize\"."]
+      [text paragraph
+       "We'll generate an easy to memorize phrase that can be converted back to the number."]
+      [text paragraph
+       "Every consonant sound in the phrase translates to a particular number. Vowels are ignored."]
+      [text paragraph
+       "- S, Z and soft C translate to \"0\"
+- T and D as in Tea or Add translate to \"1\"
+- N as in Knee translates to \"2\"
+- M as in Aim translates to \"3\"
+- R as in Ray translates to \"4\"
+- L as in Low translates to \"5\"
+- J and soft G as in Joy or Gyro translates to \"6\"
+- K and hard C as in Key and Cay translates to \"7\"
+- etc..."]]]))
+
 (defn root
   [props]
   (fn [{:keys [navigation] :as props}]
@@ -126,6 +161,7 @@
       [safe-area-view {}
        [scroll-view {:style {:padding-top 50}
                      :scroll-enabled false}
+        [welcome-modal]
         [view {:style {:flex-direction "row"
                        :padding 10}}
          [textinput {:style {:margin-right 10

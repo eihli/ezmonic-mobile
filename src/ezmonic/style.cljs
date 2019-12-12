@@ -10,7 +10,9 @@
 
 
 (def all-styles
-  {:container
+  {:paragraph
+   {:paddingTop 10}
+   :container
    {:flex 1
     :backgroundColor "#fff"
     :alignItems "center"
