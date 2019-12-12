@@ -170,8 +170,8 @@
                              :borderColor "gray"
                              :borderWidth 1
                              :font-size 20}
-                     :keyboardType "numeric"
-                     :placeholder "Enter a number"
+                     :keyboardType "phone-pad"
+                     :placeholder " Enter a number"
                      :on-change-text #(rf/dispatch [:input-value %])
                      :on-submit-editing #(rf/dispatch [:submitted-number @input-value])}]
 
