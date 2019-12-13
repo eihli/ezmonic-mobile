@@ -59,3 +59,8 @@
  :show-welcome
  (fn [db [_ value]]
    (assoc db :show-welcome value)))
+
+(reg-event-db
+ :switch
+ (fn [db [_ value]]
+   (assoc db :switch value)))

@@ -27,7 +27,7 @@
 (def picker-item (r/adapt-react-class (.-Item (.-Picker rn))))
 (def touchable-highlight (r/adapt-react-class (.-TouchableHighlight rn)))
 (def picker-select (r/adapt-react-class (.-default react-native-picker-select)))
-
+(def rnswitch (r/adapt-react-class (.-Switch rn)))
 
 (def create-stack-navigator (.-createStackNavigator react-navigation-stack))
 (def create-app-container (.-createAppContainer react-navigation))
@@ -215,10 +215,17 @@
 
 (defn settings-screen
   [params]
-  [view {:style {:flex 1
-                 :justify-content "center"
-                 :align-tems "center"}}
-   [text "Settings Screen!"]])
+  (let [state (rf/subscribe [:switch])]
+    [view {:style {:justify-content "flex-start"
+                   :flex-wrap "wrap"
+                   :padding 10}}
+     [rnswitch {:onValueChange #(rf/dispatch [:switch %])
+                :value @state}]
+     [text "Crazy toggle, that does nothing useful... just yet!"]
+     [touchable-highlight {:on-press #(rf/dispatch [:show-welcome true])}
+      [text {:style {:padding-top 20
+                     :font-weight "bold"}}
+       "Show About intro"]]]))
 
 
 (defn stack-navigator

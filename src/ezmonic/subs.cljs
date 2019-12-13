@@ -30,3 +30,8 @@
  :show-welcome
  (fn [db _]
    (:show-welcome db)))
+
+(reg-sub
+ :switch
+ (fn [db _]
+   (:switch db)))
