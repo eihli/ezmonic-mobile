@@ -8,4 +8,4 @@
 
 ;; initial state of app-db
 (defonce app-db {:counter 0
-                 :show-welcome true})
+                 :show-welcome false})

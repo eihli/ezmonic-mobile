@@ -1,7 +1,8 @@
 (ns ezmonic.app
   (:require [clojure.string :as s]
+            [cljs.reader :refer [read-string]]
             [cljs-bean.core :refer [bean ->clj ->js]]
-            ["react-native" :as rn]
+            ["react-native" :as rn :refer [AsyncStorage] :rename {AsyncStorage async-storage}]
             ["react" :as react]
             ["create-react-class" :as crc]
             [re-frame.core :as rf]
@@ -126,8 +127,9 @@
                :hideModalContentWhileAnimating true
                :animation-out "slideOutDown"
                :swipe-direction ["right" "left" "up" "down"]
-               :on-swipe-complete #(rf/dispatch [:show-welcome false])
-               :on-backdrop-press #(println "modal background press")}
+               :on-swipe-complete #(do (.setItem async-storage "show-welcome" "false")
+                                       (rf/dispatch-sync [:show-welcome false]))
+               :on-backdrop-press #(rf/dispatch [:show-welcome false])}
      [view {:background-color "white"
             :padding 20
             :border-radius 10}
@@ -278,6 +280,15 @@
   []
   (render-root (r/as-element [app-root])))
 
+
+(defn determine-state
+  "Determine if the `arg` should be shown to the end user."
+  [arg]
+  (-> (.getItem async-storage (name arg))
+      (.then #(rf/dispatch-sync [arg (read-string %)]))))
+
+
 (defn init []
   (rf/dispatch-sync [:initialize-db])
+  (determine-state :show-welcome)
   (start))
