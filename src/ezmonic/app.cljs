@@ -292,7 +292,10 @@
   "Determine if the `arg` should be shown to the end user."
   [arg]
   (-> (.getItem async-storage (name arg))
-      (.then #(rf/dispatch-sync [arg (read-string %)]))))
+      (.then #(let [stored-value (read-string %)]
+                (if (nil? stored-value)
+                  (rf/dispatch-sync [arg true])
+                  (rf/dispatch-sync [arg false]))))))
 
 
 (defn init []
