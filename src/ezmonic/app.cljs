@@ -230,6 +230,35 @@
        "Show About intro"]]]))
 
 
+(defn about-screen
+  ""
+  []
+  (let [paragraph {:style (.-paragraph style/styles)}]
+    [view {:style {:flex-direction "row"
+                   :padding 10}}
+     [view
+      [text {:style {:padding-bottom 10
+                     :font-size 20
+                     :font-weight "bold"}}
+       "How to use ezmonic"]
+      [text paragraph
+       "Our brains are better at remembering relationships between concrete things than abstract things like numbers."]
+      [text paragraph
+       "Stories and songs were passed down orally for centuries. Epics as long as Homer's Illiad and Odyssey were memorized by their original storytellers and memory champions around the world use these techniques to break world records every year."]
+      [text paragraph
+       "By using a simple technique to convert numbers to nouns that can be stringed together to form a story, you'll be amazed at how quickly you can memorize large numbers."]
+      [text paragraph
+       "All you need to do is learn how to convert phonetic sounds to numbers."]
+      [text paragraph
+       "Here is a quick example."]
+      [text paragraph
+       "Every time you hear the \"T\" or \"D\" sound, such as in the word Tea, or Aid, convert that sound to an \"1\". Every time you hear the \"M\" sound, as in May, or Mow, convert that sound to a \"3\"."]
+      [text paragraph
+       "Now see if you can use that technique to tell me what number is represented by the following pharse."]
+      [text paragraph
+       "\"Timmy met Tom today\" (13311311)."]]]))
+
+
 (defn stack-navigator
   [routes options]
   (create-stack-navigator (->js routes) (->js options)))
@@ -254,7 +283,19 @@
                                                "☰"]])})
                         :settings (screen settings-screen {:title "Settings"
                                                            :headerStyle header-style
-                                                           :headerTintColor "black"})}
+                                                           :headerTintColor "black"
+                                                           :headerRight
+                                                           (r/as-element
+                                                            [touchable-highlight
+                                                             {:on-press #(navigate-> "about")}
+                                                             [text {:style
+                                                                    {:font-size 17
+                                                                     :color "black"
+                                                                     :padding-right 10}}
+                                                              "About"]])})
+                        :about (screen about-screen {:title "About"
+                                                     :headerStyle header-style
+                                                     :headerTintColor "black"})}
                        {:initialRouteName "home"}))]))
 
 (defonce root-ref (atom nil))
