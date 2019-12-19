@@ -174,7 +174,9 @@
                              :font-size 20}
                      :keyboardType "phone-pad"
                      :placeholder " Enter a number"
-                     :on-change-text #(rf/dispatch [:input-value %])
+                     :on-change-text #(->> (s/replace % #"[^0-9]" "")
+                                           (vector :input-value)
+                                           (rf/dispatch))
                      :on-submit-editing #(rf/dispatch [:submitted-number @input-value])}]
 
          [touchable-highlight {:on-press #(rf/dispatch [:submitted-number @input-value])
