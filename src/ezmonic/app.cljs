@@ -216,7 +216,7 @@
 
 
 (defn settings-screen
-  [params]
+  []
   (let [state (rf/subscribe [:switch])]
     [view {:style {:justify-content "flex-start"
                    :flex-wrap "wrap"
