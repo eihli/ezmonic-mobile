@@ -173,6 +173,8 @@
           {:title "mezmorize!"
            :style {:flex 5}
            :on-press #(rf/dispatch [:mnemonic-submitted-for-calculation @number-to-mnemorize])}]]
+        [:> Text
+            (str @calculating-mnemonic?)]
         (when (not @calculating-mnemonic?)
           [:> View
            [:> Text
