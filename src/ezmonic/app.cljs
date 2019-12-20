@@ -35,16 +35,13 @@
 
 (defn picker-options
   "From given `data`, display picker options."
-  [data]
-  (doall
-   (for [words data]
-     (doall
-      (for [word words]
-        ^{:key (random-uuid)}
-        (doall
-         ^{:key (random-uuid)}
-         [picker-item {:label word
-                       :value word}]))))))
+  [words]
+  (map-indexed
+   (fn [idx word]
+     ^{:key idx}
+     [picker-item {:label word
+                   :value word}])
+   words))
 
 (defn display-native-pickers
   "Display pickers full of mnemonics for a given `number`.
@@ -57,29 +54,24 @@
                  :flex-wrap "wrap"
                  :padding 10}}
    (doall
-    (for [mnemonics (u/number->mnemonics @number)]
+    (for [mnemonic-subelement (rf/subscribe [:mnemonic])]
       (let [random-key (random-uuid)
-            chunk-number (first mnemonics)]
+            selected-value (:mnemonic-chosen-word mnemonic-subelement)
+            mnemonic-number (:mnemonic-number mnemonic-subelement)]
         ^{:key random-key}
         [view {:style {:flex-direction "row"}}
          [text {:style {:padding-top 15
                         :font-weight "bold"
                         :font-size 18}}
-          chunk-number]
+          mnemonic-number]
          ^{:key (random-uuid)}
-         (doall
-          [picker {:style {:width 150}
-                   :item-style {:font-size 10}
-                   :key (random-uuid)
-                   :selectedValue (-> (rf/subscribe [:picker-data])
-                                      deref
-                                      #_(get (str chunk-number "-" random-key))
-                                      (get chunk-number))
-                   :onValueChange #(do (println "the new value is:" %)
-                                       #_(rf/dispatch [:picker-data (hash-map (str chunk-number "-" random-key) %)])
-                                       (rf/dispatch [:picker-data (hash-map chunk-number %)]))
-                   :enabled true}
-           (picker-options (rest mnemonics))])])))])
+         [picker {:style {:width 150}
+                  :item-style {:font-size 10}
+                  :key (random-uuid)
+                  :selectedValue selected-value
+                  :onValueChange #(rf/dispatch [:select-value %1 %2])
+                  :enabled true}
+          (picker-options (:mnemonic-word-choices mnemonic-subelement))]])))])
 
 
 (defn picker-select-menu
@@ -156,10 +148,9 @@
 
 (defn root
   [props]
-  (fn [{:keys [navigation] :as props}]
-    (let [_ (rf/dispatch [:navigation navigation])
-          input-value (rf/subscribe [:input-value])
-          submitted-number (rf/subscribe [:submitted-number])]
+  (let [mnemonic (rf/subscribe [:mnemonic])
+        input-value (rf/subscribe [:number-to-mnemorize])]
+    (fn [{:keys [navigation] :as props}]
       [safe-area-view {}
        [scroll-view {:style {:padding-top 50}
                      :scroll-enabled false}
@@ -174,37 +165,23 @@
                              :font-size 20}
                      :keyboardType "phone-pad"
                      :placeholder " Enter a number"
-                     :on-change-text #(->> (s/replace % #"[^0-9]" "")
-                                           (vector :input-value)
-                                           (rf/dispatch))
-                     :on-submit-editing #(rf/dispatch [:submitted-number @input-value])}]
-
-         [touchable-highlight {:on-press #(rf/dispatch [:submitted-number @input-value])
+                     :on-change-text #(rf/dispatch [:number-input-changed %])
+                     :on-submit-editing #(rf/dispatch [:calculate-mnemonic])}]
+         [touchable-highlight {:on-press #(rf/dispatch [:calculate-mnemonic])
                                :style (.-inputButton style/styles)}
           [text
            {:style (.-inputButtonText style/styles)}
-           "mezmorize!"]]]]
-       #_[touchable-highlight
-          {:style {:border-radius 25
-                   :padding 150}
-           :on-press #(navigate-to props "settings" {:foo "BAR!"})}
-          [text {:style {:font-size 40
-                         :font-weight "100"
-                         :color "white"
-                         :background-color "red"
-                         :padding 20
-                         :border-radius 50}}
-           "Yey"]]
-       (when-not (nil? @submitted-number)
+           "mezmorize!"]]]]       
+       (when-not (empty? @mnemonic)
          [view
           [text {:style {:padding 10
                          :font-size 20}}
-           "You can memorize the number "
-           @submitted-number
+           "You can mezmorize the number "
+           @input-value
            " with the simple pharse:"]
           (if ios?
-            (picker-select-menu submitted-number)
-            (display-native-pickers submitted-number))])])))
+            (picker-select-menu @input-value)
+            (display-native-pickers @input-value))])])))
 
 
 (defn screen
@@ -334,11 +311,13 @@
 (defn determine-state
   "Determine if the `arg` should be shown to the end user."
   [arg]
-  (-> (.getItem async-storage (name arg))
-      (.then #(rf/dispatch-sync [arg (read-string %)]))))
-
+   (-> (.getItem async-storage (name arg))
+      (.then #(let [stored-value (read-string %)]
+                (if (nil? stored-value)
+                  (rf/dispatch-sync [arg true])
+                  (rf/dispatch-sync [arg false]))))))
 
 (defn init []
-  (rf/dispatch-sync [:initialize-db])
+  (rf/dispatch-sync [:initialize-e-db])
   (determine-state :show-welcome)
   (start))

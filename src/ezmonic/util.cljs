@@ -189,3 +189,19 @@
                             normalize-consonants
                             (clojure.string/join ""))
                        (mapv first phrase-option)))))
+
+
+(defn e-number->mnemonics
+  "Given a `number`, return all the mnemonics, grouped by the numbers as
+  keys and mnemonics as values e.g. for 333 it returns:
+
+  ({33 [MAMA MEMO MIME MOM]}
+   {3 [AIM EMU WAY WHEY YAM]})"
+  [number]
+  (into [] (for [phrase-option (all-mezmorizations number)]
+             (list (->> phrase-option
+                        first
+                        strip-vowels
+                        normalize-consonants
+                        (clojure.string/join ""))
+                   (mapv first phrase-option)))))

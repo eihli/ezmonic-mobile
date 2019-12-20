@@ -1,6 +1,32 @@
 (ns ezmonic.subs
   (:require [re-frame.core :refer [reg-sub]]))
 
+
+(reg-sub
+ :show-welcome?
+ (fn [db]
+   (:show-welcome? db)))
+
+(reg-sub
+ :number-to-mnemorize
+ (fn [db]
+   (:number-to-mnemorize db)))
+
+(reg-sub
+ :mnemonic
+ (fn [db]
+   (:mnemonic db)))
+
+(reg-sub
+ :calculating-mnemonic?
+ (fn [db]
+   (:calculating-mnemonic? db)))
+
+(reg-sub
+ :mnemonic
+ (fn [db]
+   (:mnemonic db)))
+
 (reg-sub
  :get-counter
  (fn [db _]
