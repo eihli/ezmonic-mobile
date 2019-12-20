@@ -202,15 +202,17 @@ etc..."]]]))
   [props]
   (let [state (rf/subscribe [:switch])
         navigation (:navigation props)]
-    [view {:style {:justify-content "flex-start"
-                   :flex-wrap "wrap"
-                   :padding 10}}
-     [rnswitch {:onValueChange #(rf/dispatch [:switch %])
-                :value @state}]
-     [text "Crazy toggle, that does nothing useful... just yet!"]
-     [touchable-highlight {:on-press #(rf/dispatch [:show-welcome true])}
-      [text {:style {:padding-top 20
-                     :font-weight "bold"}}
+    [:> View {:style {:justify-content "flex-start"
+                      :flex-wrap "wrap"
+                      :padding 10}}
+     [:> Switch {:onValueChange #(rf/dispatch [:switch %])
+                 :value @state}]
+     [:> Text "Crazy toggle, that does nothing useful... just yet!"]
+     [:> TouchableHighlight
+      {:on-press #(rf/dispatch [:show-welcome true])}
+      [:> Text
+       {:style {:padding-top 20
+                :font-weight "bold"}}
        "Show About intro"]]]))
 
 
