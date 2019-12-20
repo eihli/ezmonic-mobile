@@ -67,6 +67,11 @@
    (assoc db :show-welcome? value)))
 
 (reg-event-db
+ :select-value
+ (fn [db [_ picker-position item-value item-position]]
+   (assoc-in db [:mnemonic picker-position :mnemonic-chosen-word] item-value)))
+
+(reg-event-db
  :number-input-changed
  (fn [db [_ number]]
    (do
@@ -89,14 +94,15 @@
                   :mnemonic-word-choices (second mnemonic-subphrase)
                   :mnemonic-chosen-word (first (second mnemonic-subphrase))})
                (util/e-number->mnemonics val)))
+       (print cofx)
        {:db (assoc
              (:db cofx)
-             :mnemonic (map
-                        (fn [mnemonic-subphrase]
-                          {:mnemonic-number (first mnemonic-subphrase)
-                           :mnemonic-word-choices (second mnemonic-subphrase)
-                           :mnemonic-chosen-word (first (second mnemonic-subphrase))})
-                        (util/e-number->mnemonics val)))}))))
+             :mnemonic (vec (map
+                             (fn [mnemonic-subphrase]
+                               {:mnemonic-number (first mnemonic-subphrase)
+                                :mnemonic-word-choices (second mnemonic-subphrase)
+                                :mnemonic-chosen-word (first (second mnemonic-subphrase))})
+                             (util/e-number->mnemonics val))))}))))
 
 
 #_(assoc {} :mnemonic (map

@@ -54,24 +54,26 @@
                  :flex-wrap "wrap"
                  :padding 10}}
    (doall
-    (for [mnemonic-subelement (rf/subscribe [:mnemonic])]
-      (let [random-key (random-uuid)
-            selected-value (:mnemonic-chosen-word mnemonic-subelement)
-            mnemonic-number (:mnemonic-number mnemonic-subelement)]
-        ^{:key random-key}
-        [view {:style {:flex-direction "row"}}
-         [text {:style {:padding-top 15
-                        :font-weight "bold"
-                        :font-size 18}}
-          mnemonic-number]
-         ^{:key (random-uuid)}
-         [picker {:style {:width 150}
-                  :item-style {:font-size 10}
-                  :key (random-uuid)
-                  :selectedValue selected-value
-                  :onValueChange #(rf/dispatch [:select-value %1 %2])
-                  :enabled true}
-          (picker-options (:mnemonic-word-choices mnemonic-subelement))]])))])
+    (map-indexed 
+     (fn [idx mnemonic-subelement]
+       (let [selected-value (:mnemonic-chosen-word mnemonic-subelement)
+             mnemonic-number (:mnemonic-number mnemonic-subelement)]
+         ^{:key idx}
+         [view {:style {:flex-direction "row"}}
+          ^{:key "text"}
+          [text {:style {:padding-top 15
+                         :font-weight "bold"
+                         :font-size 18}}
+           mnemonic-number]
+          ^{:key "picker"}
+          [picker {:style {:width 150}
+                   :item-style {:font-size 10}
+                   :selectedValue selected-value
+                   :onValueChange #(rf/dispatch [:select-value idx %1 %2])
+                   :enabled true}
+           (picker-options (:mnemonic-word-choices mnemonic-subelement))]])
+       )
+     @(rf/subscribe [:mnemonic])))])
 
 
 (defn picker-select-menu

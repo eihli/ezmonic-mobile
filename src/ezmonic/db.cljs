@@ -19,7 +19,7 @@
   (s/keys :req-un [::mnemonic-number
                    ::mnemonic-word-choices
                    ::mnemonic-chosen-word]))
-(s/def ::mnemonic (s/map-of ::mnemonic-subelement))
+(s/def ::mnemonic (s/coll-of ::mnemonic-subelement))
 
 (s/def ::e-app-db (s/keys :req-un [::show-welcome?
                                    ::mnemonic
