@@ -72,35 +72,35 @@
 (reg-event-db
  :number-input-changed
  (fn [db [_ number]]
-   (do
-     (print (str "Number changed: " number))
-     (assoc db :number-to-mnemorize number))))
+   (assoc db :number-to-mnemorize number)))
+
+(reg-event-fx
+ :mnemonic-submitted-for-calculation
+ [debug
+  validate-e-spec]
+ (fn [cofx [_ number-to-mnemorize]]
+   (let [db (:db cofx)]
+     (print db)
+     {:db (assoc db
+                 :calculating-mnemonic? true
+                 :submitted-number number-to-mnemorize)
+      :dispatch ^:flush-dom [:calculate-mnemonic number-to-mnemorize]})))
 
 (reg-event-fx
  :calculate-mnemonic
  [debug
-  validate-e-spec
-  (inject-cofx :number-to-mnemorize)]
- (fn [cofx event]
-   (let [val (:number-to-mnemorize cofx)
-         db (:db cofx)]
-     (do
-       (print (str "received " val))
-       (print (map
-               (fn [mnemonic-subphrase]
-                 {:mnemonic-number (first mnemonic-subphrase)
-                  :mnemonic-word-choices (second mnemonic-subphrase)
-                  :mnemonic-chosen-word (first (second mnemonic-subphrase))})
-               (util/e-number->mnemonics val)))
-       (print cofx)
-       {:db (-> (:db cofx)
-                (assoc :mnemonic (vec (map
-                                 (fn [mnemonic-subphrase]
-                                   {:mnemonic-number (first mnemonic-subphrase)
-                                    :mnemonic-word-choices (second mnemonic-subphrase)
-                                    :mnemonic-chosen-word (first (second mnemonic-subphrase))})
-                                 (util/e-number->mnemonics val))))
-                (assoc :submitted-number val))}))))
+  validate-e-spec]
+ (fn [cofx [_ number-to-memorize]]
+   (let [db (:db cofx)]
+     (print db)
+     {:db (-> (:db cofx)
+              (assoc :mnemonic (vec (map
+                                     (fn [mnemonic-subphrase]
+                                       {:mnemonic-number (first mnemonic-subphrase)
+                                        :mnemonic-word-choices (second mnemonic-subphrase)
+                                        :mnemonic-chosen-word (first (second mnemonic-subphrase))})
+                                     (util/e-number->mnemonics number-to-memorize))))
+              (assoc :calculating-mnemonic? false))})))
 
 
 #_(assoc {} :mnemonic (map

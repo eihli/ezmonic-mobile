@@ -51,32 +51,30 @@
 
   Uses native picker, which looks fine in Android, but for this
   particular app is not the right fit."
-  [number]
+  [mnemonic]
   [view {:style {:flex-direction "row"
                  :justify-content "flex-start"
                  :flex-wrap "wrap"
                  :padding 10}}
-   (doall
-    (map-indexed 
-     (fn [idx mnemonic-subelement]
-       (let [selected-value (:mnemonic-chosen-word mnemonic-subelement)
-             mnemonic-number (:mnemonic-number mnemonic-subelement)]
-         ^{:key idx}
-         [view {:style {:flex-direction "row"}}
-          ^{:key "text"}
-          [text {:style {:padding-top 15
-                         :font-weight "bold"
-                         :font-size 18}}
-           mnemonic-number]
-          ^{:key "picker"}
-          [picker {:style {:width 150}
-                   :item-style {:font-size 10}
-                   :selectedValue selected-value
-                   :onValueChange #(rf/dispatch [:select-value idx %1 %2])
-                   :enabled true}
-           (picker-options (:mnemonic-word-choices mnemonic-subelement))]])
-       )
-     @(rf/subscribe [:mnemonic])))])
+   (map-indexed 
+    (fn [idx mnemonic-subelement]
+      (let [selected-value (:mnemonic-chosen-word mnemonic-subelement)
+            mnemonic-number (:mnemonic-number mnemonic-subelement)]
+        ^{:key idx}
+        [view {:style {:flex-direction "row"}}
+         ^{:key "text"}
+         [text {:style {:padding-top 15
+                        :font-weight "bold"
+                        :font-size 18}}
+          mnemonic-number]
+         ^{:key "picker"}
+         [picker {:style {:width 150}
+                  :item-style {:font-size 10}
+                  :selectedValue selected-value
+                  :onValueChange #(rf/dispatch [:select-value idx %1 %2])
+                  :enabled true}
+          (picker-options (:mnemonic-word-choices mnemonic-subelement))]])
+      ) mnemonic)])
 
 
 (defn picker-select-menu
@@ -106,8 +104,7 @@
                                :border-radius 8
                                :color "black"
                                :padding-right 30
-                               :padding-left 20}
-                       :on-value-change #(println "picker-select" %)}]]))])
+                               :padding-left 20}}]]))])
 
 
 (defn navigate->
@@ -150,6 +147,8 @@
   (let [navigation (:navigation props)
         input-value (rf/subscribe [:input-value])
         submitted-number (rf/subscribe [:submitted-number])
+        calculating-mnemonic? (rf/subscribe [:calculating-mnemonic?])
+        number-to-mnemorize (rf/subscribe [:number-to-mnemorize])
         mnemonic (rf/subscribe [:mnemonic])]
     (fn [props]
       [safe-area-view {}
@@ -168,13 +167,13 @@
            :keyboardType "phone-pad"
            :placeholder " Enter a number"
            :on-change-text #(rf/dispatch [:number-input-changed %])
-           :on-submit-editing #(rf/dispatch [:calculate-mnemonic])}]
+           :on-submit-editing #(rf/dispatch [:mnemonic-submitted-for-calculation @number-to-mnemorize])}]
 
          [:> Button
           {:title "mezmorize!"
            :style {:flex 5}
-           :on-press #(rf/dispatch [:calculate-mnemonic])}]]
-        (when-not (empty? @mnemonic)
+           :on-press #(rf/dispatch [:mnemonic-submitted-for-calculation @number-to-mnemorize])}]]
+        (when (not @calculating-mnemonic?)
           [:> View
            [:> Text
             "You can mezmorize the number " @submitted-number " with the simple phrase: "]
@@ -184,7 +183,7 @@
             [:> Text
              "Use the pickers below to change the words in the phrase"
              " to something that you find easy to remember."]]
-           (display-native-pickers @input-value)])]])))
+           (display-native-pickers @mnemonic)])]])))
 
 (def Home
   (let [comp (r/reactify-component -Home)]
