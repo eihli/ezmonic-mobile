@@ -153,13 +153,12 @@
         mnemonic (rf/subscribe [:mnemonic])]
     (fn [props]
       [safe-area-view {}
-       [scroll-view {:style {:padding-top 50}
+       [scroll-view {:style {:padding-top 50 :margin 10}
                      :scroll-enabled false}
         [welcome-modal]
         [:> View
          {:style {:display "flex"
-                  :flexDirection "row"
-                  :padding 10}}
+                  :flexDirection "row"}}
          [:> TextInput
           {:style {:flex 7
                    :height 40
@@ -174,15 +173,18 @@
          [:> Button
           {:title "mezmorize!"
            :style {:flex 5}
-           :on-press #(rf/dispatch [:calculate-mnemonic])}]]]
-       (when-not (empty? @mnemonic)
-         [:> View
-          [text {:style {:padding 10
-                         :font-size 20}}
-           "You can mezmorize the number "
-           @submitted-number
-           " with the simple phrase:"]
-          (display-native-pickers @input-value)])])))
+           :on-press #(rf/dispatch [:calculate-mnemonic])}]]
+        (when-not (empty? @mnemonic)
+          [:> View
+           [:> Text
+            "You can mezmorize the number " @submitted-number " with the simple phrase: "]
+           [:> View
+            [:> Text (s/join " " (map :mnemonic-chosen-word @mnemonic))]]
+           [:> View
+            [:> Text
+             "Use the pickers below to change the words in the phrase"
+             " to something that you find easy to remember."]]
+           (display-native-pickers @input-value)])]])))
 
 (def Home
   (let [comp (r/reactify-component -Home)]
