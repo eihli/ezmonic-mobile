@@ -4,7 +4,7 @@
             [goog.object]
             [cljs-bean.core :refer [bean ->clj ->js]]
             ["react-native" :as rn :refer [AsyncStorage] :rename {AsyncStorage async-storage}]
-            ["react-native" :refer [Button View TextInput]]
+            ["react-native" :refer [Button View TextInput SafeAreaView ScrollView Picker Switch TouchableHighlight Text]]
             ["react" :as react]
             ["create-react-class" :as crc]
             [re-frame.core :as rf]
@@ -19,6 +19,7 @@
             ["react-navigation-stack" :as react-navigation-stack]
             ["react-native-modal" :as react-native-modal :refer [default] :rename {default modal}]))
 
+(rf/dispatch-sync [:initialize-e-db])
 
 (def safe-area-view (r/adapt-react-class (.-SafeAreaView rn)))
 (def view (r/adapt-react-class (.-View rn)))
@@ -140,15 +141,12 @@
       [text paragraph
        "Every consonant sound in the phrase translates to a particular number. Vowels are ignored."]
       [text paragraph
-       "- S, Z and soft C translate to \"0\"
-- T and D as in Tea or Add translate to \"1\"
-- N as in Knee translates to \"2\"
-- M as in Aim translates to \"3\"
-- R as in Ray translates to \"4\"
-- L as in Low translates to \"5\"
-- J and soft G as in Joy or Gyro translates to \"6\"
-- K and hard C as in Key and Cay translates to \"7\"
-- etc..."]]]))
+       "- S, Z and soft C translate to \"0\" - T and D as in Tea or
+Add translate to \"1\" - N as in Knee translates to \"2\" - M as in
+Aim translates to \"3\" - R as in Ray translates to \"4\" - L as in
+Low translates to \"5\" - J and soft G as in Joy or Gyro translates to
+\"6\" - K and hard C as in Key and Cay translates to \"7\" -
+etc..."]]]))
 
 (defn root
   [props]
