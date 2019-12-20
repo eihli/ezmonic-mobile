@@ -131,30 +131,27 @@
             :padding 20
             :border-radius 10}
       [text {:style {:font-size 22
-                     :font-weight "bold"}} "Welcome"]
-      [text paragraph
-       "Here's a quick overview for the first-time users."]
-      [text paragraph
-       "Type in a number you want to remember and click \"mezmorize\"."]
-      [text paragraph
-       "We'll generate an easy to memorize phrase that can be converted back to the number."]
-      [text paragraph
-       "Every consonant sound in the phrase translates to a particular number. Vowels are ignored."]
-      [text paragraph
-       "- S, Z and soft C translate to \"0\" - T and D as in Tea or
-Add translate to \"1\" - N as in Knee translates to \"2\" - M as in
-Aim translates to \"3\" - R as in Ray translates to \"4\" - L as in
-Low translates to \"5\" - J and soft G as in Joy or Gyro translates to
-\"6\" - K and hard C as in Key and Cay translates to \"7\" -
-etc..."]]]))
+                     :font-weight "bold"}} "Welcome"]]]))
 
-(defn root
-  [props]
+(defn home-navigation-options [props]
+  (let [navigation (:navigation (->clj props))]
+    (->js {:title "ezmonic"
+           :headerStyle style/header
+           :headerRight (r/as-element
+                         [touchable-highlight
+                          {:on-press #(navigate-> navigation "settings")}
+                          [text {:style
+                                 {:font-size 30
+                                  :color "black"
+                                  :padding-right 10}}
+                           "☰"]])})))
+
+(defn -Home [props]
   (let [navigation (:navigation props)
         input-value (rf/subscribe [:input-value])
         submitted-number (rf/subscribe [:submitted-number])
         mnemonic (rf/subscribe [:mnemonic])]
-    (fn []
+    (fn [props]
       [safe-area-view {}
        [scroll-view {:style {:padding-top 50}
                      :scroll-enabled false}
@@ -185,21 +182,17 @@ etc..."]]]))
            "You can mezmorize the number "
            @submitted-number
            " with the simple phrase:"]
-          (if ios?
-            (picker-select-menu @input-value)
-            (display-native-pickers @input-value))])])))
+          (display-native-pickers @input-value)])])))
+
+(def Home
+  (let [comp (r/reactify-component -Home)]
+    (doto comp
+      (goog.object/set "navigationOptions" home-navigation-options))
+    comp))
 
 
-(defn screen
-  ([screen]
-   (r/reactify-component screen))
-  ([screen navigation-options]
-   (doto (r/reactify-component screen)
-     (goog.object/set "navigationOptions" navigation-options))))
 
-
-(defn settings-screen
-  [props]
+(defn -Settings [props]
   (let [state (rf/subscribe [:switch])
         navigation (:navigation props)]
     [:> View {:style {:justify-content "flex-start"
@@ -215,130 +208,42 @@ etc..."]]]))
                 :font-weight "bold"}}
        "Show About intro"]]]))
 
+(defn settings-navigation-options [props]
+  (let [{navigation :navigation} props]
+    (->js
+     {:title "Settings"
+      :headerStyle style/header
+      :headerTintColor "black"
+      :headerRight
+      (r/as-element
+       [touchable-highlight
+        {:on-press #(navigate-> navigation "about")}
+        [text {:style
+               {:font-size 17
+                :color "black"
+                :padding-right 10}}
+         "About"]])})))
+(def Settings
+  (let [comp (r/reactify-component -Settings)]
+    (doto  -Settings
+      (goog.object/set "navigationOptions" settings-navigation-options))
+    comp))
 
-(defn about-screen
-  ""
-  [props]
-  (let [paragraph {:style (.-paragraph style/styles)}
-        navigation (:navigation props)]
-    [view {:style {:flex-direction "row"
-                   :padding 10}}
-     [view
-      [text {:style {:padding-bottom 10
-                     :font-size 20
-                     :font-weight "bold"}}
-       "How to use ezmonic"]
-      [text paragraph
-       "Our brains are better at remembering relationships between concrete things than abstract things like numbers."]
-      [text paragraph
-       "Stories and songs were passed down orally for centuries. Epics as long as Homer's Illiad and Odyssey were memorized by their original storytellers and memory champions around the world use these techniques to break world records every year."]
-      [text paragraph
-       "By using a simple technique to convert numbers to nouns that can be stringed together to form a story, you'll be amazed at how quickly you can memorize large numbers."]
-      [text paragraph
-       "All you need to do is learn how to convert phonetic sounds to numbers."]
-      [text paragraph
-       "Here is a quick example."]
-      [text paragraph
-       "Every time you hear the \"T\" or \"D\" sound, such as in the word Tea, or Aid, convert that sound to an \"1\". Every time you hear the \"M\" sound, as in May, or Mow, convert that sound to a \"3\"."]
-      [text paragraph
-       "Now see if you can use that technique to tell me what number is represented by the following pharse."]
-      [text paragraph
-       "\"Timmy met Tom today\" (13311311)."]]]))
+(def app-navigator
+  (create-stack-navigator
+   (->js {:home Home
+          :settings Settings})))
 
+(def app-container
+  (create-app-container app-navigator))
 
-(defn stack-navigator
-  [routes options]
-  (create-stack-navigator (->js routes) (->js options)))
+(defn render []
+  (rn/AppRegistry.registerComponent "Ezmonic" (fn [] app-container)))
 
-(defn app-root
-  []
-  (let [header-style {:backgroundColor "#01BCD4"
-                      :borderBottomColor "#ffffff"
-                      :borderBottomWidth 3}]
-    [:>
-     (create-app-container
-      (stack-navigator {:home
-                        (screen root (fn [obj]
-                                       (let [navigation (:navigation (->clj obj))]
-                                         (->js {:title "ezmonic"
-                                                :headerStyle header-style
-                                                :headerRight
-                                                (r/as-element
-                                                 [touchable-highlight
-                                                  {:on-press #(navigate-> navigation "settings")}
-                                                  [text {:style
-                                                         {:font-size 30
-                                                          :color "black"
-                                                          :padding-right 10}}
-                                                   "☰"]])}))))
-                        :settings
-                        (screen settings-screen (fn [obj]
-                                                  (let [navigation (:navigation (->clj obj))]
-                                                    (->js
-                                                     {:title "Settings"
-                                                      :headerStyle header-style
-                                                      :headerTintColor "black"
-                                                      :headerRight
-                                                      (r/as-element
-                                                       [touchable-highlight
-                                                        {:on-press #(navigate-> navigation "about")}
-                                                        [text {:style
-                                                               {:font-size 17
-                                                                :color "black"
-                                                                :padding-right 10}}
-                                                         "About"]])}))))
-                        :about
-                        (screen about-screen (fn [obj]
-                                               (let [navigation (:navigation (->clj obj))]
-                                                 (->js
-                                                  {:title "About"
-                                                   :headerStyle header-style
-                                                   :headerTintColor "black"}))))}
-                       {:initialRouteName "home"}))]))
+(defn ^:dev/after-load clear-cache-and-render! []
+  (rf/clear-subscription-cache!)
+  (render))
 
-(defonce root-ref (atom nil))
-(defonce root-component-ref (atom nil))
+(defn ^:export main []
+  (render))
 
-(defn render-root [root]
-  (let [first-call? (nil? @root-ref)]
-    (reset! root-ref root)
-
-    (if-not first-call?
-      (when-let [root @root-component-ref]
-        (.forceUpdate ^js root))
-      (let [Root (crc
-                  #js {:componentDidMount
-                       (fn []
-                         (this-as this
-                           (reset! root-component-ref this)))
-                       :componentWillUnmount
-                       (fn []
-                         (reset! root-component-ref nil))
-                       :render
-                       (fn []
-                         (let [body @root-ref]
-                           (if (fn? body)
-                             (body)
-                             body)))})]
-        (rn/AppRegistry.registerComponent "Ezmonic" (fn [] Root))))))
-
-
-(defn start
-  {:dev/after-load true}
-  []
-  (render-root (r/as-element [app-root])))
-
-
-(defn determine-state
-  "Determine if the `arg` should be shown to the end user."
-  [arg]
-   (-> (.getItem async-storage (name arg))
-      (.then #(let [stored-value (read-string %)]
-                (if (nil? stored-value)
-                  (rf/dispatch-sync [arg true])
-                  (rf/dispatch-sync [arg false]))))))
-
-(defn init []
-  (rf/dispatch-sync [:initialize-e-db])
-  (determine-state :show-welcome)
-  (start))

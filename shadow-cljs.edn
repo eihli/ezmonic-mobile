@@ -13,7 +13,7 @@
  :builds
  {:app
   {:target :react-native
-   :init-fn ezmonic.app/init
+   :init-fn ezmonic.app/main
    :output-dir "react-native/app"
    :js-options {:js-package-dirs ["react-native/node_modules"]}
    :compiler-options {:infer-externs :auto}

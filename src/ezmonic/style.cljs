@@ -17,6 +17,9 @@
     :alignItems "center"
     :justifyContent "center"}})
 
+(def header {:backgroundColor "#01BCD4"
+             :borderBottomColor "#ffffff"
+             :borderBottomWidth 3})
 
 (def platform-style
   ((.-select platform)
