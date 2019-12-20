@@ -1,6 +1,7 @@
 (ns ezmonic.app
   (:require [clojure.string :as s]
             [cljs.reader :refer [read-string]]
+            [goog.object]
             [cljs-bean.core :refer [bean ->clj ->js]]
             ["react-native" :as rn :refer [AsyncStorage] :rename {AsyncStorage async-storage}]
             ["react" :as react]
@@ -115,8 +116,8 @@
 
 (defn navigate->
   "Navigate to a given `screen`."
-  [screen]
-  ((.-navigate @(rf/subscribe [:navigation])) screen))
+  [navigation screen]
+  ((:navigate navigation) screen))
 
 
 (defn welcome-modal
@@ -156,8 +157,8 @@
 
 (defn root
   [props]
-  (fn [{:keys [navigation] :as props}]
-    (let [_ (rf/dispatch [:navigation navigation])
+  (fn []
+    (let [navigation (:navigation props)
           input-value (rf/subscribe [:input-value])
           submitted-number (rf/subscribe [:submitted-number])]
       [safe-area-view {}
@@ -212,12 +213,13 @@
    (r/reactify-component screen))
   ([screen navigation-options]
    (doto (r/reactify-component screen)
-     (aset "navigationOptions" (->js navigation-options)))))
+     (goog.object/set "navigationOptions" navigation-options))))
 
 
 (defn settings-screen
-  []
-  (let [state (rf/subscribe [:switch])]
+  [props]
+  (let [state (rf/subscribe [:switch])
+        navigation (:navigation props)]
     [view {:style {:justify-content "flex-start"
                    :flex-wrap "wrap"
                    :padding 10}}
@@ -232,8 +234,9 @@
 
 (defn about-screen
   ""
-  []
-  (let [paragraph {:style (.-paragraph style/styles)}]
+  [props]
+  (let [paragraph {:style (.-paragraph style/styles)}
+        navigation (:navigation props)]
     [view {:style {:flex-direction "row"
                    :padding 10}}
      [view
@@ -270,32 +273,43 @@
                       :borderBottomWidth 3}]
     [:>
      (create-app-container
-      (stack-navigator {:home (screen root {:title "ezmonic"
-                                            :headerStyle header-style
-                                            :headerRight
-                                            (r/as-element
-                                             [touchable-highlight
-                                              {:on-press #(navigate-> "settings")}
-                                              [text {:style
-                                                     {:font-size 30
-                                                      :color "black"
-                                                      :padding-right 10}}
-                                               "☰"]])})
-                        :settings (screen settings-screen {:title "Settings"
-                                                           :headerStyle header-style
-                                                           :headerTintColor "black"
-                                                           :headerRight
-                                                           (r/as-element
-                                                            [touchable-highlight
-                                                             {:on-press #(navigate-> "about")}
-                                                             [text {:style
-                                                                    {:font-size 17
-                                                                     :color "black"
-                                                                     :padding-right 10}}
-                                                              "About"]])})
-                        :about (screen about-screen {:title "About"
-                                                     :headerStyle header-style
-                                                     :headerTintColor "black"})}
+      (stack-navigator {:home
+                        (screen root (fn [obj]
+                                       (let [navigation (:navigation (->clj obj))]
+                                         (->js {:title "ezmonic"
+                                                :headerStyle header-style
+                                                :headerRight
+                                                (r/as-element
+                                                 [touchable-highlight
+                                                  {:on-press #(navigate-> navigation "settings")}
+                                                  [text {:style
+                                                         {:font-size 30
+                                                          :color "black"
+                                                          :padding-right 10}}
+                                                   "☰"]])}))))
+                        :settings
+                        (screen settings-screen (fn [obj]
+                                                  (let [navigation (:navigation (->clj obj))]
+                                                    (->js
+                                                     {:title "Settings"
+                                                      :headerStyle header-style
+                                                      :headerTintColor "black"
+                                                      :headerRight
+                                                      (r/as-element
+                                                       [touchable-highlight
+                                                        {:on-press #(navigate-> navigation "about")}
+                                                        [text {:style
+                                                               {:font-size 17
+                                                                :color "black"
+                                                                :padding-right 10}}
+                                                         "About"]])}))))
+                        :about
+                        (screen about-screen (fn [obj]
+                                               (let [navigation (:navigation (->clj obj))]
+                                                 (->js
+                                                  {:title "About"
+                                                   :headerStyle header-style
+                                                   :headerTintColor "black"}))))}
                        {:initialRouteName "home"}))]))
 
 (defonce root-ref (atom nil))
