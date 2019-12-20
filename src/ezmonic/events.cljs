@@ -38,7 +38,6 @@
    :after (fn [context]
             (assoc-in context [:effects :db :calculating-mnemonic?] false))))
 
-
 (def get-number-input
   (->interceptor
    :id :get-number-input
@@ -51,7 +50,6 @@
  :number-to-mnemorize
  (fn [cofx _]
    (assoc cofx :number-to-mnemorize (get-in cofx [:db :number-to-mnemorize]))))
-
 
 ;; -- Handlers --------------------------------------------------------------
 
@@ -95,14 +93,14 @@
                   :mnemonic-chosen-word (first (second mnemonic-subphrase))})
                (util/e-number->mnemonics val)))
        (print cofx)
-       {:db (assoc
-             (:db cofx)
-             :mnemonic (vec (map
-                             (fn [mnemonic-subphrase]
-                               {:mnemonic-number (first mnemonic-subphrase)
-                                :mnemonic-word-choices (second mnemonic-subphrase)
-                                :mnemonic-chosen-word (first (second mnemonic-subphrase))})
-                             (util/e-number->mnemonics val))))}))))
+       {:db (-> (:db cofx)
+                (assoc :mnemonic (vec (map
+                                 (fn [mnemonic-subphrase]
+                                   {:mnemonic-number (first mnemonic-subphrase)
+                                    :mnemonic-word-choices (second mnemonic-subphrase)
+                                    :mnemonic-chosen-word (first (second mnemonic-subphrase))})
+                                 (util/e-number->mnemonics val))))
+                (assoc :submitted-number val))}))))
 
 
 #_(assoc {} :mnemonic (map

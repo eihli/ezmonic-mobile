@@ -4,6 +4,7 @@
             [goog.object]
             [cljs-bean.core :refer [bean ->clj ->js]]
             ["react-native" :as rn :refer [AsyncStorage] :rename {AsyncStorage async-storage}]
+            ["react-native" :refer [Button View TextInput]]
             ["react" :as react]
             ["create-react-class" :as crc]
             [re-frame.core :as rf]
@@ -160,29 +161,31 @@
        [scroll-view {:style {:padding-top 50}
                      :scroll-enabled false}
         [welcome-modal]
-        [view {:style {:flex-direction "row"
-                       :padding 10}}
-         [textinput {:style {:margin-right 10
-                             :height 50
-                             :width 230
-                             :borderColor "gray"
-                             :borderWidth 1
-                             :font-size 20}
-                     :keyboardType "phone-pad"
-                     :placeholder " Enter a number"
-                     :on-change-text #(rf/dispatch [:number-input-changed %])
-                     :on-submit-editing #(rf/dispatch [:calculate-mnemonic])}]
-         [touchable-highlight {:on-press #(rf/dispatch [:calculate-mnemonic])
-                               :style (.-inputButton style/styles)}
-          [text
-           {:style (.-inputButtonText style/styles)}
-           "mezmorize!"]]]]       
+        [:> View
+         {:style {:display "flex"
+                  :flexDirection "row"
+                  :padding 10}}
+         [:> TextInput
+          {:style {:flex 7
+                   :height 40
+                   :borderWidth 1
+                   :borderColor "grey"
+                   :marginRight 5}
+           :keyboardType "phone-pad"
+           :placeholder " Enter a number"
+           :on-change-text #(rf/dispatch [:number-input-changed %])
+           :on-submit-editing #(rf/dispatch [:calculate-mnemonic])}]
+
+         [:> Button
+          {:title "mezmorize!"
+           :style {:flex 5}
+           :on-press #(rf/dispatch [:calculate-mnemonic])}]]]
        (when-not (empty? @mnemonic)
-         [view
+         [:> View
           [text {:style {:padding 10
                          :font-size 20}}
            "You can mezmorize the number "
-           @input-value
+           @submitted-number
            " with the simple phrase:"]
           (if ios?
             (picker-select-menu @input-value)

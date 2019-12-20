@@ -7,6 +7,7 @@
   (s/keys :req-un [::counter]))
 
 (s/def ::show-welcome? boolean?)
+(s/def ::submitted-number string?)
 (s/def ::number-to-mnemorize string?)
 (s/def ::mnemonic-number string?)
 (s/def ::mnemonic-word-choices (s/coll-of string?))
@@ -22,6 +23,7 @@
 (s/def ::mnemonic (s/coll-of ::mnemonic-subelement))
 
 (s/def ::e-app-db (s/keys :req-un [::show-welcome?
+                                   ::submitted-number
                                    ::mnemonic
                                    ::number-to-mnemorize
                                    ::calculating-mnemonic?
@@ -37,6 +39,7 @@
 
 (defonce e-app-db {:show-welcome? false
                    :show-welcome false
+                   :submitted-number ""
                    :mnemonic []
                    :number-to-mnemorize ""
                    :calculating-mnemonic? false
