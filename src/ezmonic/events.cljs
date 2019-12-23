@@ -25,7 +25,6 @@
 
 (def validate-e-spec
   (do
-    (print "Validating spec")
     (if goog.DEBUG
       (after (partial check-and-throw ::db/e-app-db))
       [])))
@@ -80,7 +79,6 @@
   validate-e-spec]
  (fn [cofx [_ number-to-mnemorize]]
    (let [db (:db cofx)]
-     (print db)
      {:db (assoc db
                  :calculating-mnemonic? true
                  :submitted-number number-to-mnemorize)
@@ -93,7 +91,6 @@
   validate-e-spec]
  (fn [cofx [_ number-to-memorize]]
    (let [db (:db cofx)]
-     (print db)
      {:db (-> (:db cofx)
               (assoc :mnemonic (vec (map
                                      (fn [mnemonic-subphrase]
@@ -102,18 +99,6 @@
                                         :mnemonic-chosen-word (first (second mnemonic-subphrase))})
                                      (util/e-number->mnemonics number-to-memorize))))
               (assoc :calculating-mnemonic? false))})))
-
-
-#_(assoc {} :mnemonic (map
-                        (fn [mnemonic-subphrase]
-                          {:mnemonic-number (first mnemonic-subphrase)
-                           :mnemonic-word-choices (second mnemonic-subphrase)
-                           :mnemonic-chosen-word (first (second mnemonic-subphrase))})
-                        (util/e-number->mnemonics "52")))
-#_(defn do-test []
-  (do
-    (rf/dispatch-sync [:initialize-e-db])
-    (rf/dispatch [:calculate-mnemonic "52"])))
 
 (reg-event-db
  :initialize-db

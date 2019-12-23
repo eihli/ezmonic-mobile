@@ -37,20 +37,9 @@
   (map #(:terminals (get-in ezmonic.data/data %)) combo))
 
 
-(defn split-number
-  [number]
-  "Split a base 10 number into an list of digits."
-  (loop [number number
-         result []]
-    (if (= number 0)
-      result
-      (recur (quot number 10)
-             (cons (rem number 10) result)))))
-
-
 (defn all-phrases
   [number]
-  (let [digits (split-number number)
+  (let [digits (map int (string/split number #""))
         combos (ezminations digits)
         phrases (map combo-to-phrase combos)]
     phrases))
@@ -191,7 +180,8 @@
                        (mapv first phrase-option)))))
 
 
-(defn e-number->mnemonics
+
+(defn -e-number->mnemonics
   "Given a `number`, return all the mnemonics, grouped by the numbers as
   keys and mnemonics as values e.g. for 333 it returns:
 
@@ -205,3 +195,10 @@
                         normalize-consonants
                         (clojure.string/join ""))
                    (mapv first phrase-option)))))
+
+(defn e-number->mnemonics
+  "Splits a long number into multiple smaller numbers
+  so we don't time out while calculating a mnemonic"
+  [number]
+  (vec (apply concat (map -e-number->mnemonics
+                          (map string/join (partition 6 6 nil number))))))

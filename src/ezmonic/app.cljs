@@ -53,8 +53,8 @@
   particular app is not the right fit."
   [mnemonic]
   [view {:style {:flex-direction "row"
-                 :justify-content "flex-start"
                  :flex-wrap "wrap"
+                 :justify-content "space-between"
                  :padding 10}}
    (map-indexed 
     (fn [idx mnemonic-subelement]
@@ -75,36 +75,6 @@
                   :enabled true}
           (picker-options (:mnemonic-word-choices mnemonic-subelement))]])
       ) mnemonic)])
-
-
-(defn picker-select-menu
-  [data]
-  [view {:style {:flex-direction "row"
-                 :justify-content "flex-start"
-                 :flex-wrap "wrap"
-                 :padding 10}}
-   (doall
-    (for [mnemonics (u/number->mnemonics @data)]
-      ^{:key (random-uuid)}
-      [view {:style {:flex-direction "row"
-                     :flex-wrap "wrap"
-                     :align-items "flex-start"
-                     :width 150}}
-       [view {:style {:width 50}}
-        [text {:style {:font-size 20}}
-         (key mnemonics)]]
-       [picker-select {:items (->> (val mnemonics)
-                                   (mapv #(hash-map "label" % "value" %)))
-                       :placeholder {:label "Pick a word" #_"▼"}
-                       :style {:font-size 18
-                               :padding-horizontal 10
-                               :padding-vertical 8
-                               :border-width 0.5
-                               :border-color "purple"
-                               :border-radius 8
-                               :color "black"
-                               :padding-right 30
-                               :padding-left 20}}]]))])
 
 
 (defn navigate->
@@ -165,7 +135,7 @@
                    :borderColor "grey"
                    :marginRight 5}
            :keyboardType "phone-pad"
-           :placeholder " Enter a number"
+           :placeholder "Enter a number"
            :on-change-text #(rf/dispatch [:number-input-changed %])
            :on-submit-editing #(rf/dispatch [:mnemonic-submitted-for-calculation @number-to-mnemorize])}]
 
@@ -188,7 +158,7 @@
           @calculating-mnemonic?
           [:> View
            [:> Text
-            "Calculating mnemonic for " @number-to-mnemorize "..."]])]])))
+            "Calculating mnemonic for " @number-to-mnemorize ". Please wait..."]])]])))
 
 (def Home
   (let [comp (r/reactify-component -Home)]
