@@ -39,7 +39,7 @@
 
 (defn all-phrases
   [number]
-  (let [digits (map int (string/split number #""))
+  (let [digits (map int number)
         combos (ezminations digits)
         phrases (map combo-to-phrase combos)]
     phrases))
@@ -196,9 +196,12 @@
                         (clojure.string/join ""))
                    (mapv first phrase-option)))))
 
+
 (defn e-number->mnemonics
   "Splits a long number into multiple smaller numbers
   so we don't time out while calculating a mnemonic"
   [number]
   (vec (apply concat (map -e-number->mnemonics
-                          (map string/join (partition 6 6 nil number))))))
+                          (map string/join (partition 12 12 nil number))))))
+
+

@@ -68,7 +68,7 @@
                         :font-size 18}}
           mnemonic-number]
          ^{:key "picker"}
-         [picker {:style {:width 150}
+         [picker {:style {:width 140}
                   :item-style {:font-size 10}
                   :selectedValue selected-value
                   :onValueChange #(rf/dispatch [:select-value idx %1 %2])
