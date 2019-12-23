@@ -84,7 +84,8 @@
      {:db (assoc db
                  :calculating-mnemonic? true
                  :submitted-number number-to-mnemorize)
-      :dispatch ^:flush-dom [:calculate-mnemonic number-to-mnemorize]})))
+      :dispatch-later [{:ms 20
+                        :dispatch ^:flush-dom [:calculate-mnemonic number-to-mnemorize]}]})))
 
 (reg-event-fx
  :calculate-mnemonic

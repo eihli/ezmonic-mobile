@@ -173,9 +173,8 @@
           {:title "mezmorize!"
            :style {:flex 5}
            :on-press #(rf/dispatch [:mnemonic-submitted-for-calculation @number-to-mnemorize])}]]
-        [:> Text
-            (str @calculating-mnemonic?)]
-        (when (not @calculating-mnemonic?)
+        (cond
+          (and (not (empty? @submitted-number)) (not @calculating-mnemonic?))
           [:> View
            [:> Text
             "You can mezmorize the number " @submitted-number " with the simple phrase: "]
@@ -185,7 +184,11 @@
             [:> Text
              "Use the pickers below to change the words in the phrase"
              " to something that you find easy to remember."]]
-           (display-native-pickers @mnemonic)])]])))
+           (display-native-pickers @mnemonic)]
+          @calculating-mnemonic?
+          [:> View
+           [:> Text
+            "Calculating mnemonic for " @number-to-mnemorize "..."]])]])))
 
 (def Home
   (let [comp (r/reactify-component -Home)]
