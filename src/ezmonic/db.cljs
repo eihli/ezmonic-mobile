@@ -33,14 +33,6 @@
                                    ::saved-mnemonics
                                    ::navigation]))
 
-#_(def example-db
-  {:show-welcome false
-   :mnemonic [{:mnemonic-number "5"
-               :mnemonic-word-choices ["Lee" "Lie"]
-               :mnemonic-chosen-word "Lee"}]
-   :number-to-mnemorize "5"})
-#_(s/explain ::e-app-db example-db)
-
 (defonce e-app-db {:show-welcome? false
                    :show-welcome false
                    :submitted-number ""

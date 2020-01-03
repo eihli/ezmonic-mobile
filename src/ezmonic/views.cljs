@@ -15,6 +15,7 @@
             [re-frame.core :as rf]
             [reagent.core :as r]
             [ezmonic.helper :refer [ios?]]
+            [ezmonic.db :as db]
             [ezmonic.style :as style]
             ["react-navigation" :as react-navigation]
             ["react-navigation-stack" :as react-navigation-stack]
@@ -193,8 +194,6 @@
     (doto comp
       (goog.object/set "navigationOptions" home-navigation-options))
     comp))
-
-
 
 (defn -Settings [props]
   (let [state (rf/subscribe [:switch])

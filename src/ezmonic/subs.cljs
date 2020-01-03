@@ -66,3 +66,8 @@
  :editable-mnemonic-story
  (fn [db _]
    (:editable-mnemonic-story db)))
+
+(reg-sub
+ :saved-mnemonics
+ (fn [db _]
+   (:saved-mnemonics db)))
