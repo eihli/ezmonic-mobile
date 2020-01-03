@@ -56,7 +56,7 @@
                  :flex-wrap "wrap"
                  :justify-content "space-between"
                  :padding 10}}
-   (map-indexed 
+   (map-indexed
     (fn [idx mnemonic-subelement]
       (let [selected-value (:mnemonic-chosen-word mnemonic-subelement)
             mnemonic-number (:mnemonic-number mnemonic-subelement)]
@@ -140,7 +140,7 @@
            :on-submit-editing #(rf/dispatch [:mnemonic-submitted-for-calculation @number-to-mnemorize])}]
 
          [:> Button
-          {:title "mezmorize!"
+          {:title "mezmorize."
            :style {:flex 5}
            :on-press #(rf/dispatch [:mnemonic-submitted-for-calculation @number-to-mnemorize])}]]
         (cond
@@ -201,7 +201,7 @@
          "About"]])})))
 (def Settings
   (let [comp (r/reactify-component -Settings)]
-    (doto  -Settings
+    (doto comp
       (goog.object/set "navigationOptions" settings-navigation-options))
     comp))
 
@@ -211,15 +211,44 @@
           :settings Settings})))
 
 (def app-container
-  (create-app-container app-navigator))
+  (r/adapt-react-class (create-app-container app-navigator)))
 
-(defn render []
-  (rn/AppRegistry.registerComponent "Ezmonic" (fn [] app-container)))
 
-(defn ^:dev/after-load clear-cache-and-render! []
-  (rf/clear-subscription-cache!)
-  (render))
+(defn home []
+  (fn []
+    [:> Text "foosballss"]))
 
-(defn ^:export main []
-  (render))
+(defonce root-ref (atom nil))
+(defonce root-component-ref (atom nil))
 
+(defn render-root [component]
+  (let [first-call? (nil? @root-ref)]
+    (reset! root-ref component)
+    (if-not first-call?
+      (when-let [root @root-component-ref]
+        (print "Not first call")
+        (.forceUpdate ^js root))
+      (let [Root (r/create-class
+                  {:render (fn []
+                             (let [body @root-ref]
+                               (print "rendering")
+                               (if (fn? body)
+                                 (body)
+                                 body)))
+                   :component-did-mount (fn []
+                                          (this-as this
+                                            (print "Component did mount")
+                                            (print this)
+                                            (reset! root-component-ref this)))
+                   :component-will-unmount (fn []
+                                             (print "Component will unmount")
+                                             (reset! root-component-ref nil))})]
+        (print "First call")
+        (rn/AppRegistry.registerComponent "Ezmonic" (fn [] Root))))))
+
+(defn start ^:dev/after-load []
+  (print "start")
+  (render-root (r/as-element [app-container])))
+
+(defn ^:export init []
+  (start))
