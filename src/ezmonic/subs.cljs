@@ -61,3 +61,8 @@
  :switch
  (fn [db _]
    (:switch db)))
+
+(reg-sub
+ :editable-mnemonic-story
+ (fn [db _]
+   (:editable-mnemonic-story db)))

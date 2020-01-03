@@ -2,7 +2,7 @@
   (:require
    [re-frame.core :refer [reg-event-db after ->interceptor reg-event-fx debug reg-cofx inject-cofx]]
    [clojure.spec.alpha :as s]
-   [ezmonic.db :as db :refer [app-db e-app-db]]
+   [ezmonic.db :as db :refer [e-app-db]]
    [ezmonic.util :as util]
    [re-frame.core :as rf]))
 
@@ -17,13 +17,7 @@
     (let [explain-data (s/explain-data spec db)]
       (throw (ex-info (str "Spec check after failed: " explain-data) explain-data)))))
 
-
 (def validate-spec
-  (if goog.DEBUG
-    (after (partial check-and-throw ::db/app-db))
-    []))
-
-(def validate-e-spec
   (do
     (if goog.DEBUG
       (after (partial check-and-throw ::db/e-app-db))
@@ -53,8 +47,8 @@
 ;; -- Handlers --------------------------------------------------------------
 
 (reg-event-db
- :initialize-e-db
- validate-e-spec
+ :initialize-db
+ validate-spec
  (fn [_ _]
    e-app-db))
 
@@ -76,7 +70,7 @@
 (reg-event-fx
  :mnemonic-submitted-for-calculation
  [debug
-  validate-e-spec]
+  validate-spec]
  (fn [cofx [_ number-to-mnemorize]]
    (let [db (:db cofx)]
      {:db (assoc db
@@ -88,7 +82,7 @@
 (reg-event-fx
  :calculate-mnemonic
  [debug
-  validate-e-spec]
+  validate-spec]
  (fn [cofx [_ number-to-memorize]]
    (let [db (:db cofx)]
      {:db (-> (:db cofx)
@@ -99,18 +93,6 @@
                                         :mnemonic-chosen-word (first (second mnemonic-subphrase))})
                                      (util/e-number->mnemonics number-to-memorize))))
               (assoc :calculating-mnemonic? false))})))
-
-(reg-event-db
- :initialize-db
- validate-spec
- (fn [_ _]
-   app-db))
-
-(reg-event-db
- :inc-counter
- validate-spec
- (fn [db [_ _]]
-   (update db :counter inc)))
 
 (reg-event-db
  :input-value
@@ -142,3 +124,17 @@
  :switch
  (fn [db [_ value]]
    (assoc db :switch value)))
+
+(reg-event-db
+ :editable-mnemonic-story-changed
+ validate-spec
+ (fn [db [_ new-value]]
+   (assoc db :editable-mnemonic-story new-value)))
+
+(reg-event-db
+ :editable-mnemonic-story-submitted
+ validate-spec
+ (fn [db [_ number mnemonic story]]
+   (assoc-in db [:saved-mnemonics number]
+             {::db/mnemonic mnemonic
+              ::db/mnemonic-story story})))

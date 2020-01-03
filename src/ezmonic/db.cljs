@@ -1,11 +1,6 @@
 (ns ezmonic.db
   (:require [clojure.spec.alpha :as s]))
 
-;; spec of app-db
-(s/def ::counter number?)
-(s/def ::app-db
-  (s/keys :req-un [::counter]))
-
 (s/def ::show-welcome? boolean?)
 (s/def ::submitted-number string?)
 (s/def ::number-to-mnemorize string?)
@@ -15,18 +10,27 @@
 (s/def ::mnemonic-chosen-word
   (s/or :word string?
         :empty nil?))
+(s/def ::editable-mnemonic-story string?)
+(s/def ::mnemonic-story string?)
 (s/def ::calculating-mnemonic? boolean?)
+
 (s/def ::mnemonic-subelement
   (s/keys :req-un [::mnemonic-number
                    ::mnemonic-word-choices
                    ::mnemonic-chosen-word]))
 (s/def ::mnemonic (s/coll-of ::mnemonic-subelement))
 
+(s/def ::saved-mnemonic
+  (s/keys :req [::mnemonic
+                ::mnemonic-story]))
+(s/def ::saved-mnemonics (s/map-of string? ::saved-mnemonic))
+
 (s/def ::e-app-db (s/keys :req-un [::show-welcome?
                                    ::submitted-number
                                    ::mnemonic
                                    ::number-to-mnemorize
                                    ::calculating-mnemonic?
+                                   ::saved-mnemonics
                                    ::navigation]))
 
 #_(def example-db
@@ -43,8 +47,6 @@
                    :mnemonic []
                    :number-to-mnemorize ""
                    :calculating-mnemonic? false
-                   :navigation "home"})
-
-;; initial state of app-db
-(defonce app-db {:counter 0
-                 :show-welcome false})
+                   :navigation "home"
+                   :editable-mnemonic-story ""
+                   :saved-mnemonics {}})
