@@ -1,6 +1,6 @@
 (ns ezmonic.views.saved-mnemonics
   (:require [ezmonic.db :as db]
-            [ezmonic.styles :as styles]
+            [ezmonic.style :as style]
             ["react-native" :refer [View
                                     Text
                                     TouchableHighlight]]
@@ -14,7 +14,7 @@
   (this-as this
     (fn [number mnemonic]
       [:> View
-       [:> View styles/flex-row
+       [:> View style/flex-row
         [:> Text number " "]
         [:> TouchableHighlight
          {:on-press (fn []
@@ -38,15 +38,17 @@
          ^{:key number} [saved-mnemonic number mnemonic])]))
   (fn [{:keys [navigation]} props]
     (clj->js
-     {:title "Saved mnemonics"})))
+     {:title "Saved mnemonics"
+      :headerStyle style/header})))
 
 (defnav edit-mnemonic
   [mnemonic]
   [:> View
-   [:> Text "Editing mnemonic: " mnemonic]]
+   [:> Text mnemonic]]
   (fn [{:keys [navigation]} props]
     (clj->js
-     {:title "Edit"})))
+     {:title "Edit mnemonic"
+      :headerStyle style/header})))
 
 (def saved-stack
   (. react-navigation-stack createStackNavigator

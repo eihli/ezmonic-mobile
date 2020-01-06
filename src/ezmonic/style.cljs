@@ -26,6 +26,9 @@
    #js {:ios (m/deep-merge all-styles ios-only-styles)
         :android all-styles}))
 
+(def flex-row
+  {:display :flex
+   :flex-direction :row})
 
 (def styles
   (-> platform-style

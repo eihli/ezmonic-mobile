@@ -17,6 +17,7 @@
             [ezmonic.db :as db]
             [ezmonic.style :as style]
             [ezmonic.views.saved-mnemonics :as saved-mnemonics]
+            [ezmonic.views.help :as help]
             ["react-navigation" :as react-navigation]
             ["react-navigation-stack" :as react-navigation-stack]
             ["react-navigation-tabs" :as react-navigation-tabs]
@@ -97,16 +98,8 @@
 
 (defn home-navigation-options [props]
   (let [navigation (:navigation (->clj props))]
-    (->js {:title "home"
-           :headerStyle style/header
-           :headerRight (r/as-element
-                         [:> TouchableHighlight
-                          {:on-press #(navigate-> navigation "settings")}
-                          [:> Text {:style
-                                    {:font-size 30
-                                     :color "black"
-                                     :padding-right 10}}
-                           "☰"]])})))
+    (->js {:title "ezmonic"
+           :headerStyle style/header})))
 
 (defn mnemonic-utils [submitted-number mnemonic]
   (let [editable-mnemonic-story (rf/subscribe [:editable-mnemonic-story])]
@@ -198,34 +191,15 @@
       (goog.object/set "navigationOptions" home-navigation-options))
     comp))
 
-(defn -Settings [props]
-  (let [navigation (:navigation props)]
-    [:> View {:style {:justify-content "flex-start"
-                      :flex-wrap "wrap"
-                      :padding 10}}
-     [:> Text "Crazy toggle, that does nothing useful... just yet!"]
-     [:> TouchableHighlight
-      {:on-press #(rf/dispatch [:show-welcome true])}
-      [:> Text
-       {:style {:padding-top 20
-                :font-weight "bold"}}
-       "Show About intro"]]]))
-
-(defn settings-navigation-options [props]
-  (let [{navigation :navigation} props]
-    (->js
-     {:title "Settings"})))
-
-(def Settings
-  (let [comp (r/reactify-component -Settings)]
-    (doto comp
-      (goog.object/set "navigationOptions" settings-navigation-options))
-    comp))
+(def home-stack
+  (. react-navigation-stack createStackNavigator
+     (clj->js {:home Home})))
 
 (def app-bottom-tab-navigator
   (create-bottom-tab-navigator
-   (->js {:home Home
-          :saved saved-mnemonics/saved-stack})))
+   (->js {:home home-stack
+          :saved saved-mnemonics/saved-stack
+          :help help/help-stack})))
 
 (def app-container
   (r/adapt-react-class (create-app-container app-bottom-tab-navigator)))
