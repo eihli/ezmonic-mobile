@@ -7,21 +7,31 @@
             ["react-navigation" :as react-navigation]
             ["react-navigation-stack" :as react-navigation-stack]
             [re-frame.core :as rf]
-            [reagent.core :as rg])
+            [reagent.core :as rg]
+            [clojure.string :as string])
   (:require-macros [ezmonic.util :refer [defnav]]))
 
-(defn -saved-mnemonic [number mnemonic]
+(defn -saved-mnemonic [props]
+  ;; This gets passed to .withNavigation which screws
+  ;; up the function args. That's why we are read-string
+  ;; mnemonic from props.
   (this-as this
-    (fn [number mnemonic]
-      [:> View
-       [:> View style/flex-row
-        [:> Text number " "]
-        [:> TouchableHighlight
-         {:on-press (fn []
-                      (. (.. this -props -navigation) navigate "edit"))}
-         [:> Text "Edit"]]]
-       [:> View
-        [:> Text (::db/mnemonic-story mnemonic)]]])))
+    (fn [props]
+      (let [[number mnemonic-str] (js->clj (:children props))
+            mnemonic (cljs.reader/read-string mnemonic-str)]
+        [:> View
+         [:> View style/flex-row
+          [:> Text number " "]
+          [:> TouchableHighlight
+           {:on-press (fn []
+                        (. (.. this -props -navigation) navigate "edit"))}
+           [:> Text "Edit"]]]
+         [:> View
+          [:> Text (string/join " " (map
+                                     :mnemonic-chosen-word
+                                     (::db/mnemonic mnemonic)))]]
+         [:> View
+          [:> Text "" (::db/mnemonic-story mnemonic)]]]))))
 
 (def saved-mnemonic
   (rg/adapt-react-class
