@@ -17,6 +17,7 @@
             [ezmonic.helper :refer [ios?]]
             [ezmonic.db :as db]
             [ezmonic.style :as style]
+            [ezmonic.views.saved-mnemonics :as saved-mnemonics]
             ["react-navigation" :as react-navigation]
             ["react-navigation-stack" :as react-navigation-stack]
             ["react-native-modal" :as react-native-modal :refer [default] :rename {default modal}]))
@@ -25,6 +26,7 @@
 (def PickerItem (.. rn -Picker -Item))
 (def create-stack-navigator (.-createStackNavigator react-navigation-stack))
 (def create-app-container (.-createAppContainer react-navigation))
+(def text (r/adapt-react-class Text))
 
 
 (defn picker-options
@@ -34,7 +36,7 @@
    (fn [idx word]
      ^{:key idx}
      [:> PickerItem {:label word
-                   :value word}])
+                     :value word}])
    words))
 
 (defn native-pickers
@@ -187,7 +189,8 @@
           @calculating-mnemonic?
           [:> View
            [:> Text
-            "Calculating mnemonic for " @number-to-mnemorize ". Please wait..."]])]])))
+            "Calculating mnemonic for " @number-to-mnemorize ". Please wait..."]])
+        [saved-mnemonics/saved-mnemonics]]])))
 
 (def Home
   (let [comp (r/reactify-component -Home)]

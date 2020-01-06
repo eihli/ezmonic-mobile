@@ -23,11 +23,6 @@
    (:calculating-mnemonic? db)))
 
 (reg-sub
- :mnemonic
- (fn [db]
-   (:mnemonic db)))
-
-(reg-sub
  :get-counter
  (fn [db _]
    (:counter db)))

@@ -1,10 +1,20 @@
 (ns ezmonic.events
   (:require
-   [re-frame.core :refer [reg-event-db after ->interceptor reg-event-fx debug reg-cofx inject-cofx]]
+   [re-frame.core :refer [reg-event-db
+                          after
+                          ->interceptor
+                          reg-event-fx
+                          debug
+                          reg-cofx
+                          reg-fx
+                          inject-cofx]]
+   [cljs.reader]
+   [day8.re-frame.async-flow-fx]
    [clojure.spec.alpha :as s]
    [ezmonic.db :as db :refer [e-app-db]]
    [ezmonic.util :as util]
-   [re-frame.core :as rf]))
+   [re-frame.core :as rf]
+   ["react-native" :refer [AsyncStorage]]))
 
 ;; -- Interceptors ------------------------------------------------------------
 ;;
@@ -44,13 +54,32 @@
  (fn [cofx _]
    (assoc cofx :number-to-mnemorize (get-in cofx [:db :number-to-mnemorize]))))
 
-;; -- Handlers --------------------------------------------------------------
+;; -- Async Flows
 
+;; -- Effects --
+(reg-fx
+ :async-storage-get
+ (fn [{:keys [key on-success on-failure]}]
+   (->
+    AsyncStorage
+    (.getItem key)
+    (.then #(rf/dispatch [on-success key % %2]))
+    (.catch #(print "Error " % %2)))))  ;; Better handling
+
+;; -- Handlers --------------------------------------------------------------
 (reg-event-db
+ :async-storage-get-success
+ (fn [db [_ key value]]
+   (assoc db :saved-mnemonics (or (cljs.reader/read-string value) {}))))
+
+(reg-event-fx
  :initialize-db
  validate-spec
  (fn [_ _]
-   e-app-db))
+   {:db e-app-db
+    :async-storage-get {:key "saved-mnemonics"
+                        :on-success :async-storage-get-success
+                        :on-failure :async-storage-get-failure}}))
 
 (reg-event-db
  :show-welcome?
@@ -131,10 +160,34 @@
  (fn [db [_ new-value]]
    (assoc db :editable-mnemonic-story new-value)))
 
-(reg-event-db
+(reg-fx
+ :persist-mnemonics
+ (fn [mnemonics]
+   (-> AsyncStorage
+       (.setItem "saved-mnemonics" (pr-str mnemonics))
+       (.then #(print "Success " mnemonics))
+       (.catch #(print "Error saving: " % %2)))))
+
+(reg-event-fx
  :editable-mnemonic-story-submitted
  validate-spec
- (fn [db [_ number mnemonic story]]
-   (assoc-in db [:saved-mnemonics number]
-             {::db/mnemonic mnemonic
-              ::db/mnemonic-story story})))
+ (fn [{:keys [db]} [_ number mnemonic story]]
+   (let [saved-mnemonics (-> db
+                             (:saved-mnemonics)
+                             (assoc number {::db/mnemonic mnemonic
+                                            ::db/mnemonic-story story}))]
+     {:db (assoc db :saved-mnemonics saved-mnemonics)
+      :persist-mnemonics saved-mnemonics})))
+
+(defn my-test []
+  (-> AsyncStorage
+      (.getItem "saved-mnemonics")
+      (.then #(print % %2))))
+
+(reg-event-fx
+ :update-users
+ (fn [{:keys [db]} [_ number]]
+   (let [users (-> db
+                   (:users)
+                   (assoc "Eric" {:phone-number number}))]
+     {:db (assoc db :users users)})))
