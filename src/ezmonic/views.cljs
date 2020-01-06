@@ -9,7 +9,6 @@
                                            SafeAreaView
                                            ScrollView
                                            Picker
-                                           Switch
                                            TouchableHighlight
                                            Text]]
             [re-frame.core :as rf]
@@ -20,11 +19,14 @@
             [ezmonic.views.saved-mnemonics :as saved-mnemonics]
             ["react-navigation" :as react-navigation]
             ["react-navigation-stack" :as react-navigation-stack]
+            ["react-navigation-tabs" :as react-navigation-tabs]
             ["react-native-modal" :as react-native-modal :refer [default] :rename {default modal}]))
 
 
 (def PickerItem (.. rn -Picker -Item))
 (def create-stack-navigator (.-createStackNavigator react-navigation-stack))
+(def create-bottom-tab-navigator
+  (.-createBottomTabNavigator react-navigation-tabs))
 (def create-app-container (.-createAppContainer react-navigation))
 (def text (r/adapt-react-class Text))
 
@@ -95,7 +97,7 @@
 
 (defn home-navigation-options [props]
   (let [navigation (:navigation (->clj props))]
-    (->js {:title "ezmonic"
+    (->js {:title "home"
            :headerStyle style/header
            :headerRight (r/as-element
                          [:> TouchableHighlight
@@ -164,7 +166,6 @@
       [:> SafeAreaView {}
        [:> ScrollView {:style {:padding-top 20 :margin 10}
                        :scroll-enabled false}
-        [welcome-modal]
         [:> View
          {:style {:display "flex"
                   :flexDirection "row"}}
@@ -189,8 +190,7 @@
           @calculating-mnemonic?
           [:> View
            [:> Text
-            "Calculating mnemonic for " @number-to-mnemorize ". Please wait..."]])
-        [saved-mnemonics/saved-mnemonics]]])))
+            "Calculating mnemonic for " @number-to-mnemorize ". Please wait..."]])]])))
 
 (def Home
   (let [comp (r/reactify-component -Home)]
@@ -199,13 +199,10 @@
     comp))
 
 (defn -Settings [props]
-  (let [state (rf/subscribe [:switch])
-        navigation (:navigation props)]
+  (let [navigation (:navigation props)]
     [:> View {:style {:justify-content "flex-start"
                       :flex-wrap "wrap"
                       :padding 10}}
-     [:> Switch {:onValueChange #(rf/dispatch [:switch %])
-                 :value @state}]
      [:> Text "Crazy toggle, that does nothing useful... just yet!"]
      [:> TouchableHighlight
       {:on-press #(rf/dispatch [:show-welcome true])}
@@ -217,36 +214,21 @@
 (defn settings-navigation-options [props]
   (let [{navigation :navigation} props]
     (->js
-     {:title "Settings"
-      :headerStyle style/header
-      :headerTintColor "black"
-      :headerRight
-      (r/as-element
-       [:> TouchableHighlight
-        {:on-press #(navigate-> navigation "about")}
-        [:> Text {:style
-                  {:font-size 17
-                   :color "black"
-                   :padding-right 10}}
-         "About"]])})))
+     {:title "Settings"})))
+
 (def Settings
   (let [comp (r/reactify-component -Settings)]
     (doto comp
       (goog.object/set "navigationOptions" settings-navigation-options))
     comp))
 
-(def app-navigator
-  (create-stack-navigator
+(def app-bottom-tab-navigator
+  (create-bottom-tab-navigator
    (->js {:home Home
-          :settings Settings})))
+          :saved saved-mnemonics/saved-stack})))
 
 (def app-container
-  (r/adapt-react-class (create-app-container app-navigator)))
-
-
-(defn home []
-  (fn []
-    [:> Text "foosballss"]))
+  (r/adapt-react-class (create-app-container app-bottom-tab-navigator)))
 
 (defonce root-ref (atom nil))
 (defonce root-component-ref (atom nil))
