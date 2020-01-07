@@ -1,6 +1,7 @@
 (ns ezmonic.views.saved-mnemonics
   (:require [ezmonic.db :as db]
             [ezmonic.style :as style]
+            [ezmonic.views.shared :refer [edit-bar]]
             ["react-native" :refer [View
                                     Text
                                     TouchableHighlight]]
@@ -45,7 +46,9 @@
     (fn []
       [:> View
        (for [[number mnemonic] @mnemonics]
-         ^{:key number} [saved-mnemonic number mnemonic])]))
+         ^{:key number}
+         [:> View style/card
+          [saved-mnemonic number mnemonic]])]))
   (fn [{:keys [navigation]} props]
     (clj->js
      {:title "Saved mnemonics"

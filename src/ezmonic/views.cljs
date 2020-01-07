@@ -20,8 +20,7 @@
             [ezmonic.views.help :as help]
             ["react-navigation" :as react-navigation]
             ["react-navigation-stack" :as react-navigation-stack]
-            ["react-navigation-tabs" :as react-navigation-tabs]
-            ["react-native-modal" :as react-native-modal :refer [default] :rename {default modal}]))
+            ["react-navigation-tabs" :as react-navigation-tabs]))
 
 
 (def PickerItem (.. rn -Picker -Item))
@@ -78,23 +77,6 @@
   [navigation screen]
   ((:navigate navigation) screen))
 
-
-(defn welcome-modal
-  ""
-  []
-  (let [paragraph {:style (.-paragraph style/styles)}]
-    [:> modal {:is-visible @(rf/subscribe [:show-welcome])
-               :hideModalContentWhileAnimating true
-               :animation-out "slideOutDown"
-               :swipe-direction ["right" "left" "up" "down"]
-               :on-swipe-complete #(do (.setItem AsyncStorage "show-welcome" "false")
-                                       (rf/dispatch-sync [:show-welcome false]))
-               :on-backdrop-press #(rf/dispatch [:show-welcome false])}
-     [:> View {:background-color "white"
-               :padding 20
-               :border-radius 10}
-      [:> Text {:style {:font-size 22
-                        :font-weight "bold"}} "Welcome"]]]))
 
 (defn home-navigation-options [props]
   (let [navigation (:navigation (->clj props))]

@@ -30,6 +30,16 @@
   {:display :flex
    :flex-direction :row})
 
+(def edit-bar
+  {:display :flex
+   :flex-direction :row
+   :style {:justify-content "space-between"
+           :backgroundColor "#01BBBB"}})
+
+(def card
+  {:border-bottom "3"
+   :border-color "grey"})
+
 (def styles
   (-> platform-style
       ->js
