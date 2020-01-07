@@ -65,5 +65,5 @@
 
 (def saved-stack
   (. react-navigation-stack createStackNavigator
-     (clj->js {:home {:screen saved-mnemonics}
-               :edit {:screen edit-mnemonic}})))
+     (clj->js {::home {:screen saved-mnemonics}
+               ::edit {:screen edit-mnemonic}})))

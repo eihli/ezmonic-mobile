@@ -17,6 +17,7 @@
             [ezmonic.db :as db]
             [ezmonic.style :as style]
             [ezmonic.views.saved-mnemonics :as saved-mnemonics]
+            [ezmonic.navigation :as navigation]
             [ezmonic.views.help :as help]
             ["react-navigation" :as react-navigation]
             ["react-navigation-stack" :as react-navigation-stack]
@@ -179,12 +180,14 @@
 
 (def app-bottom-tab-navigator
   (create-bottom-tab-navigator
-   (->js {:home home-stack
-          :saved saved-mnemonics/saved-stack
-          :help help/help-stack})))
+   (->js {::home home-stack
+          ::saved saved-mnemonics/saved-stack
+          ::help help/help-stack})))
 
 (def app-container
-  (r/adapt-react-class (create-app-container app-bottom-tab-navigator)))
+  (fn []
+    [(r/adapt-react-class (create-app-container app-bottom-tab-navigator))
+     {:ref (fn [r] (reset! navigation/navigator-ref r))}]))
 
 (defonce root-ref (atom nil))
 (defonce root-component-ref (atom nil))
