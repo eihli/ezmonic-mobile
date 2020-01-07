@@ -21,5 +21,7 @@
       :headerStyle style/header})))
 
 (def help-stack
-  (. react-navigation-stack createStackNavigator
-     (clj->js {:home {:screen help}})))
+  (let [stack (. react-navigation-stack createStackNavigator
+                 (clj->js {:home {:screen help}}))]
+    (doto stack
+      (goog.object/set "navigationOptions" #js {:tabBarLabel "Help"}))))

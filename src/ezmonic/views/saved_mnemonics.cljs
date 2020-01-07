@@ -64,6 +64,8 @@
       :headerStyle style/header})))
 
 (def saved-stack
-  (. react-navigation-stack createStackNavigator
-     (clj->js {::home {:screen saved-mnemonics}
-               ::edit {:screen edit-mnemonic}})))
+  (let [stack (. react-navigation-stack createStackNavigator
+                 (clj->js {::home {:screen saved-mnemonics}
+                           ::edit {:screen edit-mnemonic}}))]
+    (doto stack
+      (goog.object/set "navigationOptions" #js {:tabBarLabel "Saved"}))))

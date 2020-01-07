@@ -80,9 +80,8 @@
 
 
 (defn home-navigation-options [props]
-  (let [navigation (:navigation (->clj props))]
-    (->js {:title "ezmonic"
-           :headerStyle style/header})))
+  (->js {:title "ezmonic"
+         :headerStyle style/header}))
 
 (defn mnemonic-utils [submitted-number mnemonic]
   (let [editable-mnemonic-story (rf/subscribe [:editable-mnemonic-story])]
@@ -175,8 +174,10 @@
     comp))
 
 (def home-stack
-  (. react-navigation-stack createStackNavigator
-     (clj->js {:home Home})))
+  (let [stack (. react-navigation-stack createStackNavigator
+                 (clj->js {:home Home}))]
+    (doto stack
+      (goog.object/set "navigationOptions" #js {:tabBarLabel "Home"}))))
 
 (def app-bottom-tab-navigator
   (create-bottom-tab-navigator
