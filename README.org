@@ -2,6 +2,16 @@
 
 ** How to set up the app?
 
+*** The E Way
+
+- `shadow-cljs server`
+- `shadow-cljs watch :app`
+- `npx react-native start`
+- `npx react-native run-android`
+- Connect to socket repl
+
+*** The default way
+
 In the top level of the repo run
 
 : npm install
