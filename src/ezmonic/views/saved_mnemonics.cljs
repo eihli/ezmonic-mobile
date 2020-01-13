@@ -9,7 +9,8 @@
             ["react-navigation-stack" :as react-navigation-stack]
             [re-frame.core :as rf]
             [reagent.core :as rg]
-            [clojure.string :as string])
+            [clojure.string :as string]
+            [ezmonic.navigation :as navigation])
   (:require-macros [ezmonic.util :refer [defnav]]))
 
 (defn -saved-mnemonic [props]
@@ -24,9 +25,10 @@
          [:> View style/flex-row
           [:> Text number " "]
           [:> TouchableHighlight
-           {:on-press (fn []
-                        (. (.. this -props -navigation) navigate "edit"))}
-           [:> Text "Edit"]]]
+           [:> Text
+            {:on-press
+             #(navigation/navigate-to :saved-edit)}
+            "Edit" ]]]
          [:> View
           [:> Text (string/join " " (map
                                      :mnemonic-chosen-word
@@ -65,7 +67,7 @@
 
 (def saved-stack
   (let [stack (. react-navigation-stack createStackNavigator
-                 (clj->js {::home {:screen saved-mnemonics}
-                           ::edit {:screen edit-mnemonic}}))]
+                 #js {:saved-home saved-mnemonics
+                      :saved-edit edit-mnemonic})]
     (doto stack
       (goog.object/set "navigationOptions" #js {:tabBarLabel "Saved"}))))

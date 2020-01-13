@@ -25,10 +25,12 @@
 
 
 (def PickerItem (.. rn -Picker -Item))
-(def create-stack-navigator (.-createStackNavigator react-navigation-stack))
+(def create-stack-navigator
+  (.-createStackNavigator react-navigation-stack))
 (def create-bottom-tab-navigator
   (.-createBottomTabNavigator react-navigation-tabs))
-(def create-app-container (.-createAppContainer react-navigation))
+(def create-app-container
+  (.-createAppContainer react-navigation))
 (def text (r/adapt-react-class Text))
 
 
@@ -71,12 +73,6 @@
                      :enabled true}
           (picker-options (:mnemonic-word-choices mnemonic-subelement))]]))
     mnemonic)])
-
-
-(defn navigate->
-  "Navigate to a given `screen`."
-  [navigation screen]
-  ((:navigate navigation) screen))
 
 
 (defn home-navigation-options [props]
@@ -175,45 +171,33 @@
 
 (def home-stack
   (let [stack (. react-navigation-stack createStackNavigator
-                 (clj->js {:home Home}))]
+                 #js {:home-home Home})]
     (doto stack
       (goog.object/set "navigationOptions" #js {:tabBarLabel "Home"}))))
 
 (def app-bottom-tab-navigator
   (create-bottom-tab-navigator
-   (->js {::home home-stack
-          ::saved saved-mnemonics/saved-stack
-          ::help help/help-stack})))
+   #js {:home home-stack
+        :saved saved-mnemonics/saved-stack
+        :help help/help-stack}))
 
 (def app-container
   (fn []
     [(r/adapt-react-class (create-app-container app-bottom-tab-navigator))
      {:ref (fn [r] (reset! navigation/navigator-ref r))}]))
 
-(defonce root-ref (atom nil))
-(defonce root-component-ref (atom nil))
+(defn make-reloader
+  [component]
+  (let [component-ref (r/atom component)
+        wrapper (r/as-element (fn [] [@component-ref]))]
+    (rn/AppRegistry.registerComponent "Ezmonic" (fn [] wrapper))
+    (fn [comp]
+      (reset! component-ref comp))))
 
-(defn render-root [component]
-  (let [first-call? (nil? @root-ref)]
-    (reset! root-ref component)
-    (if-not first-call?
-      (when-let [root @root-component-ref]
-        (.forceUpdate ^js root))
-      (let [Root (r/create-class
-                  {:render (fn []
-                             (let [body @root-ref]
-                               (if (fn? body)
-                                 (body)
-                                 body)))
-                   :component-did-mount (fn []
-                                          (this-as this
-                                            (reset! root-component-ref this)))
-                   :component-will-unmount (fn []
-                                             (reset! root-component-ref nil))})]
-        (rn/AppRegistry.registerComponent "Ezmonic" (fn [] Root))))))
+(defonce reload (make-reloader app-container))
 
 (defn start ^:dev/after-load []
-  (render-root (r/as-element [app-container])))
+  (reload app-container))
 
 (defn ^:export init []
   (start))
