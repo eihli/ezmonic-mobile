@@ -182,22 +182,6 @@
         :help help/help-stack}))
 
 (def app-container
-  (fn []
-    [(r/adapt-react-class (create-app-container app-bottom-tab-navigator))
-     {:ref (fn [r] (reset! navigation/navigator-ref r))}]))
+  [(r/adapt-react-class (create-app-container app-bottom-tab-navigator))
+   {:ref (fn [r] (reset! navigation/navigator-ref r))}])
 
-(defn make-reloader
-  [component]
-  (let [component-ref (r/atom component)
-        wrapper (r/as-element (fn [] [@component-ref]))]
-    (rn/AppRegistry.registerComponent "Ezmonic" (fn [] wrapper))
-    (fn [comp]
-      (reset! component-ref comp))))
-
-(defonce reload (make-reloader app-container))
-
-(defn start ^:dev/after-load []
-  (reload app-container))
-
-(defn ^:export init []
-  (start))

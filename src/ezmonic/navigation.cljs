@@ -31,4 +31,4 @@
    (.navigate navigation-actions #js {:routeName (name view-id)})))
 
 (defn set-navigator-ref [nav]
-  (reset! navigator-ref nav)))
+  (reset! navigator-ref nav))

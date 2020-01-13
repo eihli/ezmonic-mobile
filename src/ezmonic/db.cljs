@@ -34,7 +34,6 @@
                                    ::navigation]))
 
 (defonce e-app-db {:show-welcome? false
-                   :show-welcome false
                    :submitted-number ""
                    :mnemonic []
                    :number-to-mnemorize ""

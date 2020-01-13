@@ -15,12 +15,11 @@
  :builds
  {:app
   {:target :react-native
-   :init-fn ezmonic.app/init
+   :init-fn ezmonic.core/init
    :output-dir "react-native/app"
    :js-options {:js-package-dirs ["react-native/node_modules"]}
    :compiler-options {:infer-externs :auto
                       :preloads [devtools.core]}
-   :devtools {:repl-init-ns ezmonic.app
+   :devtools {:repl-init-ns ezmonic.core
               :repl-pprint true
-              :autoload true
-              :after-load ezmonic.app/start}}}}
+              :autoload true}}}}
