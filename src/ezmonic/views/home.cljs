@@ -1,38 +1,10 @@
-(ns ezmonic.views
-  (:require [clojure.string :as s]
-            [goog.object]
-            [cljs-bean.core :refer [->clj ->js]]
-            ["react-native" :as rn :refer [AsyncStorage
-                                           Button
-                                           View
-                                           TextInput
-                                           SafeAreaView
-                                           ScrollView
-                                           Picker
-                                           TouchableHighlight
-                                           Text]]
+(ns ezmonic.views.home
+  (:require ["react-native" :as rn]
             [re-frame.core :as rf]
-            [reagent.core :as r]
-            [ezmonic.helper :refer [ios?]]
-            [ezmonic.db :as db]
             [ezmonic.style :as style]
-            [ezmonic.views.saved-mnemonics :as saved-mnemonics]
-            [ezmonic.navigation :as navigation]
-            [ezmonic.views.help :as help]
-            ["react-navigation" :as react-navigation]
-            ["react-navigation-stack" :as react-navigation-stack]
-            ["react-navigation-tabs" :as react-navigation-tabs]))
-
-
-(def PickerItem (.. rn -Picker -Item))
-(def create-stack-navigator
-  (.-createStackNavigator react-navigation-stack))
-(def create-bottom-tab-navigator
-  (.-createBottomTabNavigator react-navigation-tabs))
-(def create-app-container
-  (.-createAppContainer react-navigation))
-(def text (r/adapt-react-class Text))
-
+            [clojure.string :as s]
+            [reagent.core :as r]
+            ["react-navigation-stack" :as react-navigation-stack]))
 
 (defn picker-options
   "From given `data`, display picker options."
@@ -40,8 +12,8 @@
   (map-indexed
    (fn [idx word]
      ^{:key idx}
-     [:> PickerItem {:label word
-                     :value word}])
+     [:> rn/PickerItem {:label word
+                        :value word}])
    words))
 
 (defn native-pickers
@@ -50,55 +22,55 @@
   Uses native picker, which looks fine in Android, but for this
   particular app is not the right fit."
   [mnemonic]
-  [:> View {:style {:flex-direction "row"
-                    :flex-wrap "wrap"
-                    :justify-content "space-between"
-                    :padding 10}}
+  [:> rn/View {:style {:flex-direction "row"
+                       :flex-wrap "wrap"
+                       :justify-content "space-between"
+                       :padding 10}}
    (map-indexed
     (fn [idx mnemonic-subelement]
       (let [selected-value (:mnemonic-chosen-word mnemonic-subelement)
             mnemonic-number (:mnemonic-number mnemonic-subelement)]
         ^{:key idx}
-        [:> View {:style {:flex-direction "row"}}
+        [:> rn/View {:style {:flex-direction "row"}}
          ^{:key "text"}
-         [:> Text {:style {:padding-top 15
-                           :font-weight "bold"
-                           :font-size 18}}
+         [:> rn/Text {:style {:padding-top 15
+                              :font-weight "bold"
+                              :font-size 18}}
           mnemonic-number]
          ^{:key "picker"}
-         [:> Picker {:style {:width 140}
-                     :item-style {:font-size 10}
-                     :selectedValue selected-value
-                     :onValueChange #(rf/dispatch [:select-value idx %1 %2])
-                     :enabled true}
-          (picker-options (:mnemonic-word-choices mnemonic-subelement))]]))
+         [:> rn/Picker {:style {:width 140}
+                        :item-style {:font-size 10}
+                        :selectedValue selected-value
+                        :onValueChange #(rf/dispatch [:select-value idx %1 %2])
+                        :enabled true}
+          (picker-options (:mnemonic-word-choices mnemonic-subelement))]/]))
     mnemonic)])
 
 
 (defn home-navigation-options [props]
-  (->js {:title "ezmonic"
-         :headerStyle style/header}))
+  (clj->js {:title "ezmonic"
+            :headerStyle style/header}))
 
 (defn mnemonic-utils [submitted-number mnemonic]
   (let [editable-mnemonic-story (rf/subscribe [:editable-mnemonic-story])]
     (fn [submitted-number mnemonic]
-      [:> View
-       [:> Text
+      [:> rn/View
+       [:> rn/Text
         "You can mezmorize the number " submitted-number " with the simple phrase: "]
-       [:> View
-        [:> Text
+       [:> rn/View
+        [:> rn/Text
          {:style {:font-weight "bold"}}
          (s/join " " (map :mnemonic-chosen-word mnemonic))]]
-       [:> View
-        [:> Text
+       [:> rn/View
+        [:> rn/Text
          "Use the pickers below to change the words in the phrase"
          " to something that you find easy to remember."]]
        [native-pickers mnemonic]
-       [:> View
-        [:> Text
+       [:> rn/View
+        [:> rn/Text
          "Write a sentence or story that uses those words."
          " Save it for later reference."]
-        [:> TextInput
+        [:> rn/TextInput
          {:style {:borderColor "grey"
                   :borderWidth 1}
           :multiline true
@@ -110,14 +82,14 @@
                                 submitted-number
                                 mnemonic
                                 @editable-mnemonic-story])}]
-        [:> View
+        [:> rn/View
          {:style {:display "flex"
                   :flex-direction "row"
                   :justify-content "space-between"}}
-         [:> Button
+         [:> rn/Button
           {:title "Clear"
            :style {:flex 1}}]
-         [:> Button
+         [:> rn/Button
           {:title "Save"
            :style {:flex 1}
            :on-press #(rf/dispatch
@@ -134,13 +106,13 @@
         number-to-mnemorize (rf/subscribe [:number-to-mnemorize])
         mnemonic (rf/subscribe [:mnemonic])]
     (fn [props]
-      [:> SafeAreaView {}
-       [:> ScrollView {:style {:padding-top 20 :margin 10}
-                       :scroll-enabled false}
-        [:> View
+      [:> rn/SafeAreaView {}
+       [:> rn/ScrollView {:style {:padding-top 20 :margin 10}
+                          :scroll-enabled false}
+        [:> rn/View
          {:style {:display "flex"
                   :flexDirection "row"}}
-         [:> TextInput
+         [:> rn/TextInput
           {:style {:flex 7
                    :height 40
                    :borderWidth 1
@@ -151,7 +123,7 @@
            :on-change-text #(rf/dispatch [:number-input-changed %])
            :on-submit-editing #(rf/dispatch [:mnemonic-submitted-for-calculation @number-to-mnemorize])}]
 
-         [:> Button
+         [:> rn/Button
           {:title "mnemorize"
            :style {:flex 5}
            :on-press #(rf/dispatch [:mnemonic-submitted-for-calculation @number-to-mnemorize])}]]
@@ -159,8 +131,8 @@
           (and (not (empty? @submitted-number)) (not @calculating-mnemonic?))
           [mnemonic-utils @submitted-number @mnemonic]
           @calculating-mnemonic?
-          [:> View
-           [:> Text
+          [:> rn/View
+           [:> rn/Text
             "Calculating mnemonic for " @number-to-mnemorize ". Please wait..."]])]])))
 
 (def Home
@@ -174,14 +146,3 @@
                  #js {:home-home Home})]
     (doto stack
       (goog.object/set "navigationOptions" #js {:tabBarLabel "Home"}))))
-
-(def app-bottom-tab-navigator
-  (create-bottom-tab-navigator
-   #js {:home home-stack
-        :saved saved-mnemonics/saved-stack
-        :help help/help-stack}))
-
-(def app-container
-  [(r/adapt-react-class (create-app-container app-bottom-tab-navigator))
-   {:ref (fn [r] (reset! navigation/navigator-ref r))}])
-
