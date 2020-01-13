@@ -27,7 +27,7 @@
           [:> TouchableHighlight
            [:> Text
             {:on-press
-             #(navigation/navigate-to :saved-edit)}
+             #(navigation/navigate :saved-edit)}
             "Edit" ]]]
          [:> View
           [:> Text (string/join " " (map
