@@ -13,6 +13,7 @@
    [clojure.spec.alpha :as s]
    [ezmonic.db :as db :refer [e-app-db]]
    [ezmonic.util :as util]
+   [ezmonic.navigation :as navigation]
    [re-frame.core :as rf]
    ["react-native" :refer [AsyncStorage]]))
 
@@ -164,6 +165,28 @@
  validate-spec
  (fn [db [_ new-value]]
    (assoc db :editable-mnemonic-story new-value)))
+
+;; Effects
+(rf/reg-fx
+ ::react-navigate
+ (fn [view-id]
+   (navigation/navigate (name view-id))))
+
+;; For simplicity, chose to have only
+;; one key in the database for every
+;; screen's params. Since this is all handled by
+;; events, it's possible for this to get wonky
+;; and out of sync. If one screen expects a certain
+;; type of params but it somehow gets rendered before
+;; the value is updated in `app-db`, then it might
+;; blow up. Pragmatically, I don't think this will
+;; be a problem. But if it is, it should be simple enough
+;; to figure out a robust alternative.
+(rf/reg-event-fx
+ :navigate
+ (fn [{:keys [db]} [_ [view-id params]]]
+   {:db (assoc-in db [:screen-params] params)
+    ::react-navigate view-id}))
 
 (reg-fx
  :persist-mnemonics

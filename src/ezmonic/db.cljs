@@ -24,7 +24,7 @@
   (s/keys :req [::mnemonic
                 ::mnemonic-story]))
 (s/def ::saved-mnemonics (s/map-of string? ::saved-mnemonic))
-
+(s/def ::screen-params ::mnemonic)
 (s/def ::e-app-db (s/keys :req-un [::show-welcome?
                                    ::submitted-number
                                    ::mnemonic

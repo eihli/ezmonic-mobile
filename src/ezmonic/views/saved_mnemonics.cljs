@@ -1,10 +1,14 @@
 (ns ezmonic.views.saved-mnemonics
-  (:require [ezmonic.db :as db]
+  (:require [clojure.string :as s]
+            [ezmonic.db :as db]
             [ezmonic.style :as style]
             [ezmonic.views.shared :refer [edit-bar]]
-            ["react-native" :refer [View
-                                    Text
-                                    TouchableHighlight]]
+            [ezmonic.views.home :as home]
+            ["react-native"
+             :refer [View
+                     Text
+                     TouchableHighlight]
+             :as rn]
             ["react-navigation" :as react-navigation]
             ["react-navigation-stack" :as react-navigation-stack]
             [re-frame.core :as rf]
@@ -27,7 +31,7 @@
           [:> TouchableHighlight
            [:> Text
             {:on-press
-             #(navigation/navigate :saved-edit)}
+             #(rf/dispatch [:navigate [:saved-edit mnemonic]])}
             "Edit" ]]]
          [:> View
           [:> Text (string/join
@@ -55,14 +59,20 @@
           [saved-mnemonic number mnemonic]])]))
   (fn [{:keys [navigation]} props]
     (clj->js
-     {:title "Saved mnemonic"
+     {:title "Saved mnemonics"
       :headerStyle style/header})))
 
+(defn mnemonic-input
+  [mnemonic-story]
+  (let [val (rg/atom mnemonic-story)]
+    [:> rn/TextInput
+     {:value @val}]))
+
 (defnav edit-mnemonic
-  [mnemonic]
-  [:> View
-   [:> Text mnemonic]]
-  (fn [{:keys [navigation]} props]
+  []
+  (let [mnemonic-to-edit (rf/subscribe [:mnemonic-to-edit])]
+    [mnemonic-input (::db/mnemonic @mnemonic-to-edit)])
+  (fn [] 
     (clj->js
      {:title "Edit mnemonic"
       :headerStyle style/header})))

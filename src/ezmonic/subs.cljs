@@ -61,3 +61,18 @@
  :saved-mnemonics
  (fn [db _]
    (:saved-mnemonics db)))
+
+(reg-sub
+ :screen-params
+ (fn [db _]
+   (:screen-params db)))
+
+(reg-sub
+ :mnemonic-to-edit
+ (fn [db _]
+   (:mnemonic-to-edit db)))
+
+(reg-sub
+ :saved-mnemonic
+ (fn [db [_ number]]
+   (get (:saved-mnemonics db) number)))

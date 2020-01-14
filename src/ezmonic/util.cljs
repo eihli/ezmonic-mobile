@@ -205,3 +205,13 @@
                           (map string/join (partition 12 12 nil number))))))
 
 
+;; (defn mnemonic-number
+;;   "Given a mnemonic, returns the number it's a mnemonic for.
+
+;;   This helper is specific to how a mnemonic is saved in app-db.
+;;   A mnemonic in app-db is just a collection of pieces of a mnemonic.
+;;   To get the full original number, we need to map over the collection
+;;   and join together all the individual numbers for each word of the
+;;   mnemonic phrase."
+;;   [mnemonic]
+;;   (string/join "" []))
