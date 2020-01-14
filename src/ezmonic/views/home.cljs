@@ -111,11 +111,7 @@
          {:style {:display "flex"
                   :flexDirection "row"}}
          [:> rn/TextInput
-          {:style {:flex 7
-                   :height 40
-                   :borderWidth 1
-                   :borderColor "grey"
-                   :marginRight 5}
+          {:style style/text-input
            :keyboardType "phone-pad"
            :placeholder "Enter a number"
            :on-change-text #(rf/dispatch [:number-input-changed %])

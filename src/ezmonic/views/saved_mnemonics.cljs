@@ -48,7 +48,7 @@
     react-navigation
     (rg/reactify-component -saved-mnemonic))))
 
-(defnav saved-mnemonics
+(defn saved-mnemonics
   []
   (let [mnemonics (rf/subscribe [:saved-mnemonics])]
     (fn []
@@ -56,11 +56,7 @@
        (for [[number mnemonic] @mnemonics]
          ^{:key number}
          [:> View style/card
-          [saved-mnemonic number mnemonic]])]))
-  (fn [{:keys [navigation]} props]
-    (clj->js
-     {:title "Saved mnemonics"
-      :headerStyle style/header})))
+          [saved-mnemonic number mnemonic]])])))
 
 (defn mnemonic-input
   [mnemonic-story]
@@ -68,18 +64,30 @@
     [:> rn/TextInput
      {:value @val}]))
 
-(defnav edit-mnemonic
+
+(defn edit-mnemonic
   []
-  (let [mnemonic-to-edit (rf/subscribe [:mnemonic-to-edit])]
-    [mnemonic-input (::db/mnemonic @mnemonic-to-edit)])
-  (fn [] 
-    (clj->js
-     {:title "Edit mnemonic"
-      :headerStyle style/header})))
+  (let [mnemonic-to-edit (rf/subscribe [:mnemonic-to-edit])
+        foo (rg/atom "foo")]
+    [:> rn/ScrollView {:style {:padding-top 20 :margin 10}}
+     [:> View
+      [:> Text "Bar"]
+      [views-mnemonics/my-text-input @foo]]]))
 
 (def saved-stack
   (let [stack (. react-navigation-stack createStackNavigator
-                 #js {:saved-home saved-mnemonics
-                      :saved-edit edit-mnemonic})]
+                 (clj->js
+                  {:saved-home (doto (rg/reactify-component saved-mnemonics)
+                                 (goog.object/set
+                                  "navigationOptions"
+                                  (clj->js {:title "Saved mnemonic"
+                                            :headerStyle style/header})))
+                   :saved-edit (doto (rg/reactify-component edit-mnemonic)
+                                 (goog.object/set
+                                  "navigationOptions"
+                                  (clj->js {:title "Edit"
+                                            :headerStyle style/header})))}))]
     (doto stack
       (goog.object/set "navigationOptions" #js {:tabBarLabel "Saved"}))))
+
+
