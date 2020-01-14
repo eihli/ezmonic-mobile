@@ -89,7 +89,9 @@
 (reg-event-db
  :select-value
  (fn [db [_ picker-position item-value item-position]]
-   (assoc-in db [:mnemonic picker-position :mnemonic-chosen-word] item-value)))
+   (assoc-in db
+             [:mnemonic picker-position ::db/mnemonic-chosen-word]
+             item-value)))
 
 (reg-event-db
  :number-input-changed
@@ -114,14 +116,17 @@
   validate-spec]
  (fn [cofx [_ number-to-memorize]]
    (let [db (:db cofx)]
-     {:db (-> (:db cofx)
-              (assoc :mnemonic (vec (map
-                                     (fn [mnemonic-subphrase]
-                                       {:mnemonic-number (first mnemonic-subphrase)
-                                        :mnemonic-word-choices (second mnemonic-subphrase)
-                                        :mnemonic-chosen-word (first (second mnemonic-subphrase))})
-                                     (util/e-number->mnemonics number-to-memorize))))
-              (assoc :calculating-mnemonic? false))})))
+     {:db
+      (-> (:db cofx)
+          (assoc
+           :mnemonic
+           (vec (map
+                 (fn [mnemonic-subphrase]
+                   {::db/mnemonic-number (first mnemonic-subphrase)
+                    ::db/mnemonic-word-choices (second mnemonic-subphrase)
+                    ::db/mnemonic-chosen-word (first (second mnemonic-subphrase))})
+                 (util/e-number->mnemonics number-to-memorize))))
+          (assoc :calculating-mnemonic? false))})))
 
 (reg-event-db
  :input-value

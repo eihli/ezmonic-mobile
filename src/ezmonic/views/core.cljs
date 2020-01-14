@@ -1,21 +1,5 @@
 (ns ezmonic.views.core
-  (:require [clojure.string :as s]
-            [goog.object]
-            [cljs-bean.core :refer [->clj ->js]]
-            ["react-native" :as rn :refer [AsyncStorage
-                                           Button
-                                           View
-                                           TextInput
-                                           SafeAreaView
-                                           ScrollView
-                                           Picker
-                                           TouchableHighlight
-                                           Text]]
-            [re-frame.core :as rf]
-            [reagent.core :as r]
-            [ezmonic.helper :refer [ios?]]
-            [ezmonic.db :as db]
-            [ezmonic.style :as style]
+  (:require [reagent.core :as r]
             [ezmonic.views.saved-mnemonics :as saved-mnemonics]
             [ezmonic.navigation :as navigation]
             [ezmonic.views.help :as help]
@@ -25,7 +9,6 @@
             ["react-navigation-tabs" :as react-navigation-tabs]))
 
 
-(def PickerItem (.. rn -Picker -Item))
 (def create-stack-navigator
   (.-createStackNavigator react-navigation-stack))
 (def create-bottom-tab-navigator
@@ -39,7 +22,24 @@
         :saved saved-mnemonics/saved-stack
         :help help/help-stack}))
 
+;; Since ReactNavigation stores its state as component properties,
+;; we'll use the functionality they give us for persisting
+;; and loading navigation state.
+;;
+;; https://reactnavigation.org/docs/en/state-persistence.html
+(defonce nav-state (atom nil))
+
+(defn persist-navigation-state [state]
+  (js/Promise. (fn [resolve]
+                 (resolve (reset! nav-state state)))))
+
+(defn load-navigation-state []
+  (js/Promise. (fn [resolve]
+                 (resolve @nav-state))))
+
 (def app-container
   [(r/adapt-react-class (create-app-container app-bottom-tab-navigator))
-   {:ref (fn [r] (reset! navigation/navigator-ref r))}])
+   {:ref (fn [r] (reset! navigation/navigator-ref r))
+    :persistNavigationState persist-navigation-state
+    :loadNavigationState load-navigation-state}])
 

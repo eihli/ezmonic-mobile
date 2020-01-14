@@ -21,5 +21,4 @@
    :compiler-options {:infer-externs :auto
                       :preloads [devtools.core]}
    :devtools {:repl-init-ns ezmonic.core
-              :repl-pprint true
-              :autoload true}}}}
+              :repl-pprint true}}}}

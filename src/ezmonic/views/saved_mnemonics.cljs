@@ -30,9 +30,11 @@
              #(navigation/navigate :saved-edit)}
             "Edit" ]]]
          [:> View
-          [:> Text (string/join " " (map
-                                     :mnemonic-chosen-word
-                                     (::db/mnemonic mnemonic)))]]
+          [:> Text (string/join
+                    " "
+                    (map
+                     ::db/mnemonic-chosen-word
+                     (::db/mnemonic mnemonic)))]]
          [:> View
           [:> Text "" (::db/mnemonic-story mnemonic)]]]))))
 
@@ -53,7 +55,7 @@
           [saved-mnemonic number mnemonic]])]))
   (fn [{:keys [navigation]} props]
     (clj->js
-     {:title "Saved mnemonics"
+     {:title "Saved mnemonic"
       :headerStyle style/header})))
 
 (defnav edit-mnemonic

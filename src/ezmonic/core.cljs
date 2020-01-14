@@ -23,7 +23,7 @@
 
 (defonce reload (make-reloader views/app-container))
 
-(defn start ^:dev/after-load []
+(defn ^:dev/after-load start []
   (reload views/app-container))
 
 (defn ^:export init []

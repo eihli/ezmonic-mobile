@@ -15,9 +15,9 @@
 (s/def ::calculating-mnemonic? boolean?)
 
 (s/def ::mnemonic-subelement
-  (s/keys :req-un [::mnemonic-number
-                   ::mnemonic-word-choices
-                   ::mnemonic-chosen-word]))
+  (s/keys :req [::mnemonic-number
+                ::mnemonic-word-choices
+                ::mnemonic-chosen-word]))
 (s/def ::mnemonic (s/coll-of ::mnemonic-subelement))
 
 (s/def ::saved-mnemonic

@@ -2,19 +2,28 @@
   (:require ["react-native" :as rn]
             [re-frame.core :as rf]
             [ezmonic.style :as style]
+            [ezmonic.db :as db]
             [clojure.string :as s]
             [reagent.core :as r]
             ["react-navigation-stack" :as react-navigation-stack]))
 
-(defn picker-options
-  "From given `data`, display picker options."
-  [words]
-  (map-indexed
-   (fn [idx word]
-     ^{:key idx}
-     [:> rn/PickerItem {:label word
+(def PickerItem (.. rn -Picker -Item))
+
+(defn picker
+  [picker-idx mnemonic-subelement]
+  (let [selected-value (::db/mnemonic-chosen-word mnemonic-subelement)]  
+    (into
+     [:> rn/Picker {:style {:width 140}
+                    :item-style {:font-size 10}
+                    :selectedValue selected-value
+                    :onValueChange #(rf/dispatch
+                                     [:select-value picker-idx %1 %2])
+                    :enabled true}]
+     (map-indexed
+      (fn [idx word] ^{:key idx}
+        [:> PickerItem {:label word
                         :value word}])
-   words))
+      (::db/mnemonic-word-choices mnemonic-subelement)))))
 
 (defn native-pickers
   "Display pickers full of mnemonics for a given `number`.
@@ -22,34 +31,23 @@
   Uses native picker, which looks fine in Android, but for this
   particular app is not the right fit."
   [mnemonic]
-  [:> rn/View {:style {:flex-direction "row"
-                       :flex-wrap "wrap"
-                       :justify-content "space-between"
-                       :padding 10}}
-   (map-indexed
-    (fn [idx mnemonic-subelement]
-      (let [selected-value (:mnemonic-chosen-word mnemonic-subelement)
-            mnemonic-number (:mnemonic-number mnemonic-subelement)]
-        ^{:key idx}
-        [:> rn/View {:style {:flex-direction "row"}}
-         ^{:key "text"}
-         [:> rn/Text {:style {:padding-top 15
-                              :font-weight "bold"
-                              :font-size 18}}
-          mnemonic-number]
-         ^{:key "picker"}
-         [:> rn/Picker {:style {:width 140}
-                        :item-style {:font-size 10}
-                        :selectedValue selected-value
-                        :onValueChange #(rf/dispatch [:select-value idx %1 %2])
-                        :enabled true}
-          (picker-options (:mnemonic-word-choices mnemonic-subelement))]/]))
-    mnemonic)])
-
-
-(defn home-navigation-options [props]
-  (clj->js {:title "ezmonic"
-            :headerStyle style/header}))
+  (into [:> rn/View {:style {:flex-direction "row"
+                             :flex-wrap "wrap"
+                             :justify-content "space-between"
+                             :padding 10}}]
+        (map-indexed
+         (fn [idx mnemonic-subelement]
+           (let [mnemonic-number (:db/mnemonic-number mnemonic-subelement)]
+             ^{:key idx}
+             [:> rn/View {:style {:flex-direction "row"}}
+              ^{:key "text"}
+              [:> rn/Text {:style {:padding-top 15
+                                   :font-weight "bold"
+                                   :font-size 18}}
+               mnemonic-number]
+              ^{:key "picker"}
+              [picker idx mnemonic-subelement]]))
+         mnemonic)))
 
 (defn mnemonic-utils [submitted-number mnemonic]
   (let [editable-mnemonic-story (rf/subscribe [:editable-mnemonic-story])]
@@ -60,7 +58,7 @@
        [:> rn/View
         [:> rn/Text
          {:style {:font-weight "bold"}}
-         (s/join " " (map :mnemonic-chosen-word mnemonic))]]
+         (s/join " " (map ::db/mnemonic-chosen-word mnemonic))]]
        [:> rn/View
         [:> rn/Text
          "Use the pickers below to change the words in the phrase"
@@ -105,7 +103,7 @@
         calculating-mnemonic? (rf/subscribe [:calculating-mnemonic?])
         number-to-mnemorize (rf/subscribe [:number-to-mnemorize])
         mnemonic (rf/subscribe [:mnemonic])]
-    (fn [props]
+    (fn []
       [:> rn/SafeAreaView {}
        [:> rn/ScrollView {:style {:padding-top 20 :margin 10}
                           :scroll-enabled false}
@@ -134,6 +132,10 @@
           [:> rn/View
            [:> rn/Text
             "Calculating mnemonic for " @number-to-mnemorize ". Please wait..."]])]])))
+
+(defn home-navigation-options [props]
+  (clj->js {:title "ezmonic"
+            :headerStyle style/header}))
 
 (def Home
   (let [comp (r/reactify-component -Home)]
