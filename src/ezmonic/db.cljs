@@ -3,7 +3,6 @@
 
 (s/def ::show-welcome? boolean?)
 (s/def ::submitted-number string?)
-(s/def ::number-to-mnemorize string?)
 (s/def ::mnemonic-number string?)
 (s/def ::mnemonic-word-choices (s/coll-of string?))
 (s/def ::navigation string?)
@@ -28,7 +27,6 @@
 (s/def ::e-app-db (s/keys :req-un [::show-welcome?
                                    ::submitted-number
                                    ::mnemonic
-                                   ::number-to-mnemorize
                                    ::calculating-mnemonic?
                                    ::saved-mnemonics
                                    ::navigation]))
@@ -36,7 +34,6 @@
 (defonce e-app-db {:show-welcome? false
                    :submitted-number ""
                    :mnemonic []
-                   :number-to-mnemorize ""
                    :calculating-mnemonic? false
                    :navigation "home"
                    :editable-mnemonic-story ""

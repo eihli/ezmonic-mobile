@@ -12,19 +12,20 @@
 (defn picker
   [picker-idx mnemonic-subelement]
   (let [val (r/atom (::db/mnemonic-chosen-word mnemonic-subelement))]  
-    (into
-     [:> rn/Picker {:style {:width 140}
-                    :item-style {:font-size 10}
-                    :selectedValue @val
-                    :onValueChange (fn [v]
-                                     (reset! val v)
-                                     (r/flush))
-                    :enabled true}]
-     (map-indexed
-      (fn [idx word] 
-        ^{:key idx} [:> PickerItem {:label word
-                                    :value word}])
-      (::db/mnemonic-word-choices mnemonic-subelement)))))
+    (fn [picker-idx mnemonic-subelement]
+      (into
+       [:> rn/Picker {:style {:width 140}
+                      :item-style {:font-size 10}
+                      :selectedValue @val
+                      :onValueChange (fn [v]
+                                       (reset! val v)
+                                       (r/flush))
+                      :enabled true}]
+       (map-indexed
+        (fn [idx word] 
+          ^{:key idx} [:> PickerItem {:label word
+                                      :value word}])
+        (::db/mnemonic-word-choices mnemonic-subelement))))))
 
 (defn native-pickers
   "Display pickers full of mnemonics for a given `number`.
@@ -97,41 +98,48 @@
                         mnemonic
                         @editable-mnemonic-story])}]]]])))
 
+(defn number-input
+  []
+  (let [number (r/atom "")]
+    (fn []
+      [:> rn/View
+       {:style {:display "flex"
+                :flexDirection "row"}}
+       [:> rn/TextInput
+        {:style (merge
+                 style/text-input
+                 {:flex 7
+                  :height 40})
+         :keyboardType "phone-pad"
+         :placeholder "Enter a number"
+         :value @number
+         :on-change-text (fn [text]
+                           (reset! number text)
+                           (r/flush))
+         :on-submit-editing #(rf/dispatch [:mnemonic-submitted-for-calculation @number])}]
+       [:> rn/Button
+        {:title "mnemorize"
+         :style {:flex 5}
+         :on-press #(rf/dispatch [:mnemonic-submitted-for-calculation @number])}]])))
+
 (defn -Home [props]
   (let [navigation (:navigation props)
         input-value (rf/subscribe [:input-value])
         submitted-number (rf/subscribe [:submitted-number])
         calculating-mnemonic? (rf/subscribe [:calculating-mnemonic?])
-        number-to-mnemorize (rf/subscribe [:number-to-mnemorize])
         mnemonic (rf/subscribe [:mnemonic])]
     (fn []
       [:> rn/SafeAreaView {}
        [:> rn/ScrollView {:style {:padding-top 20 :margin 10}
                           :scroll-enabled false}
-        [:> rn/View
-         {:style {:display "flex"
-                  :flexDirection "row"}}
-         [:> rn/TextInput
-          {:style (merge
-                   style/text-input
-                   {:flex 7
-                    :height 40})
-           :keyboardType "phone-pad"
-           :placeholder "Enter a number"
-           :on-change-text #(rf/dispatch [:number-input-changed %])
-           :on-submit-editing #(rf/dispatch [:mnemonic-submitted-for-calculation @number-to-mnemorize])}]
-
-         [:> rn/Button
-          {:title "mnemorize"
-           :style {:flex 5}
-           :on-press #(rf/dispatch [:mnemonic-submitted-for-calculation @number-to-mnemorize])}]]
+        [number-input]
         (cond
           (and (not (empty? @submitted-number)) (not @calculating-mnemonic?))
           [mnemonic-utils @submitted-number @mnemonic]
           @calculating-mnemonic?
           [:> rn/View
            [:> rn/Text
-            "Calculating mnemonic for " @number-to-mnemorize ". Please wait..."]])]])))
+            "Calculating mnemonic for " @submitted-number ". Please wait..."]])]])))
 
 (defn home-navigation-options [props]
   (clj->js {:title "ezmonic"

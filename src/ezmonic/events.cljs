@@ -48,13 +48,6 @@
    :before (fn [context]
              ())))
 
-;; -- Coeffects
-
-(reg-cofx
- :number-to-mnemorize
- (fn [cofx _]
-   (assoc cofx :number-to-mnemorize (get-in cofx [:db :number-to-mnemorize]))))
-
 ;; -- Async Flows
 
 ;; -- Effects --
@@ -93,11 +86,6 @@
    (assoc-in db
              [:mnemonic picker-position ::db/mnemonic-chosen-word]
              item-value)))
-
-(reg-event-db
- :number-input-changed
- (fn [db [_ number]]
-   (assoc db :number-to-mnemorize number)))
 
 (reg-event-fx
  :mnemonic-submitted-for-calculation

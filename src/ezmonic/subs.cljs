@@ -8,11 +8,6 @@
    (:show-welcome? db)))
 
 (reg-sub
- :number-to-mnemorize
- (fn [db]
-   (:number-to-mnemorize db)))
-
-(reg-sub
  :mnemonic
  (fn [db]
    (:mnemonic db)))
