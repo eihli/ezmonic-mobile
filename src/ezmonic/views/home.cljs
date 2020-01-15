@@ -91,7 +91,7 @@
 
 (defn -Home
   []
-  (let [submitted-val (r/atom "1234")
+  (let [submitted-val (r/atom "")
         calculating-mnemonic? (rf/subscribe [:calculating-mnemonic?])]
     (fn []
       (let [mnemonic (r/atom @(rf/subscribe [:new-mnemonic]))]

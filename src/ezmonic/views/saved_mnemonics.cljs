@@ -32,13 +32,9 @@
          #(rf/dispatch [:navigate [:saved-edit number]])}
         "Edit" ]]]
      [:> View
-      [:> Text (string/join
-                " "
-                (map
-                 ::db/mnemonic-chosen-word
-                 (::db/mnemonic mnemonic)))]]
+      [:> Text (string/join " " (map ::db/chosen-word (::db/elements mnemonic)))]]
      [:> View
-      [:> Text "" (::db/mnemonic-story mnemonic)]]]))
+      [:> Text (::db/story mnemonic)]]]))
 
 (defn saved-mnemonics
   []
@@ -53,31 +49,10 @@
 (defn edit-mnemonic
   []
   (let [number @(rf/subscribe [:screen-params])
-        mnemonic @(rf/subscribe [:saved-mnemonic number])
-        editable-mnemonic (rg/atom mnemonic)]
+        mnemonic @(rf/subscribe [:saved-mnemonic number])]
+    (print mnemonic)
     [:> rn/ScrollView {:style {:padding-top 20 :margin 10}}
-     [:> View
-      [:> Text number]
-      [shared/native-pickers editable-mnemonic]
-      [:> Text
-       "Give this mnemonic a name. "
-       " Write a sentence or story that uses these words."
-       " Save it for reference."]      
-      [text-input (rg/cursor editable-mnemonic [:db/mnemonic-story])]
-      [:> rn/View
-       {:style {:display "flex"
-                :flex-direction "row"
-                :justify-content "space-between"}}
-       [:> rn/Button
-        {:title "Clear"
-         :style {:flex 1}}]
-       [:> rn/Button
-        {:title "Saves"
-         :style {:flex 1}
-         :on-press #(rf/dispatch
-                     [:editable-mnemonic-story-submitted
-                      number
-                      @editable-mnemonic])}]]]]))
+     [shared/mnemonic-form mnemonic]]))
 
 (def saved-stack
   (let [stack (. react-navigation-stack createStackNavigator

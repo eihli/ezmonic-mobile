@@ -64,7 +64,9 @@
 (reg-event-db
  :async-storage-get-success
  (fn [db [_ key value]]
-   (assoc db :saved-mnemonics (or (cljs.reader/read-string value) {}))))
+   (print value)
+   (print (cljs.reader/read-string value))
+   (assoc db ::db/new-mnemonics (or (cljs.reader/read-string value) {}))))
 
 (reg-event-fx
  :initialize-db
@@ -169,6 +171,14 @@
        (.setItem "saved-mnemonics" (pr-str mnemonics))
        (.then #(print "Success " mnemonics))
        (.catch #(print "Error saving: " % %2)))))
+
+(reg-event-fx
+ :save-mnemonic
+ validate-spec
+ (fn [{:keys [db]} [_ mnemonic]]
+   (let [db (assoc-in db [::db/new-mnemonics (::db/number mnemonic)] mnemonic)]
+     {:db db
+     :persist-mnemonics (::db/new-mnemonics db)})))
 
 (reg-event-fx
  :editable-mnemonic-story-submitted
