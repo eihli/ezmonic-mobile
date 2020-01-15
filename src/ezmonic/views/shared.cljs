@@ -81,11 +81,11 @@
          :on-submit-editing #(on-submit @val)}]])))
 
 (defn mnemonic-form
-  [mnemonic {:keys [on-save]}]
+  [mnemonic {:keys [on-save on-delete]}]
   (let [mnemonic-edition (rg/atom mnemonic)
         name (rg/cursor mnemonic-edition [::db/name])
         story (rg/cursor mnemonic-edition [::db/story])]
-    (fn [mnemonic]
+    (fn [mnemonic {:keys [on-save on-delete]}]
       [:> rn/View
        [:> rn/View
         [:> rn/Text "Number: " (::db/number @mnemonic-edition)]]
@@ -120,8 +120,13 @@
                  :flex-direction "row"
                  :justify-content "space-between"}}
         [:> rn/Button
-         {:title "Clear"
-          :style {:flex 1}}]
+         {:title "Delete"
+          :style {:flex 1}
+          :color "red"
+          :on-press (fn []
+                      (if on-delete
+                        (on-delete @mnemonic))
+                      (rf/dispatch [:delete-mnemonic mnemonic]))}]
         [:> rn/Button
          {:title "Save"
           :style {:flex 1}

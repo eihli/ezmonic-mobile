@@ -64,7 +64,7 @@
 (reg-event-db
  :async-storage-get-success
  (fn [db [_ key value]]
-   (assoc db ::db/new-mnemonics (or (cljs.reader/read-string value) {}))))
+   (assoc db ::db/mnemonics (or (cljs.reader/read-string value) {}))))
 
 (reg-event-fx
  :initialize-db
@@ -101,7 +101,7 @@
      {:db
       (-> (:db cofx)
           (assoc
-           ::db/new-mnemonic
+           ::db/mnemonic
            {::db/name ""
             ::db/number number-to-memorize
             ::db/story ""
@@ -174,9 +174,19 @@
  :save-mnemonic
  validate-spec
  (fn [{:keys [db]} [_ mnemonic]]
-   (let [db (assoc-in db [::db/new-mnemonics (::db/number mnemonic)] mnemonic)]
+   (let [db (assoc-in db [::db/mnemonics (::db/number mnemonic)] mnemonic)]
      {:db db
-     :persist-mnemonics (::db/new-mnemonics db)})))
+      :persist-mnemonics (::db/mnemonics db)})))
+
+(reg-event-fx
+ :delete-mnemonic
+ validate-spec
+ (fn [{:keys [db]} [_ mnemonic]]
+   (let [number (::db/number mnemonic)
+         db (update-in db [::db/mnemonics] dissoc number)]
+     {:db db
+      :persist-mnemonics (::db/mnemonics db)
+      ::react-navigate :saved-home})))
 
 (reg-event-fx
  :editable-mnemonic-story-submitted

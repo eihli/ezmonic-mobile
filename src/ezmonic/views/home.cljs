@@ -93,7 +93,7 @@
   (let [submitted-val (r/atom "")
         calculating-mnemonic? (rf/subscribe [:calculating-mnemonic?])]
     (fn []
-      (let [mnemonic (r/atom @(rf/subscribe [:new-mnemonic]))]
+      (let [mnemonic (r/atom @(rf/subscribe [:mnemonic]))]
         [:> rn/SafeAreaView {}
          [:> rn/ScrollView {:style {:margin 10}}
           [number-input

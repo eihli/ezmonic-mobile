@@ -4,7 +4,6 @@
 (s/def ::navigation string?)
 (s/def ::calculating-mnemonic? boolean?)
 
-;; Refactor to a more reasonable data model
 (s/def ::name string?)
 (s/def ::number string?)
 (s/def ::story string?)

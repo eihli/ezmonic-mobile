@@ -40,7 +40,7 @@
 (reg-sub
  :saved-mnemonics
  (fn [db _]
-   (::db/new-mnemonics db)))
+   (::db/mnemonics db)))
 
 (reg-sub
  :screen-params
@@ -55,9 +55,5 @@
 (reg-sub
  :saved-mnemonic
  (fn [db [_ number]]
-   (get (::db/new-mnemonics db) number)))
+   (get (::db/mnemonics db) number)))
 
-(reg-sub
- :new-mnemonic
- (fn [db [_]]
-   (::db/new-mnemonic db)))
