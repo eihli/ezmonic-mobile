@@ -122,9 +122,9 @@
          :style {:flex 5}
          :on-press #(rf/dispatch [:mnemonic-submitted-for-calculation @number])}]])))
 
-(defn -Home [props]
-  (let [navigation (:navigation props)
-        input-value (rf/subscribe [:input-value])
+(defn -Home
+  []
+  (let [input-value (rf/subscribe [:input-value])
         submitted-number (rf/subscribe [:submitted-number])
         calculating-mnemonic? (rf/subscribe [:calculating-mnemonic?])
         mnemonic (rf/subscribe [:mnemonic])]
