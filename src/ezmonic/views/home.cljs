@@ -13,19 +13,22 @@
   [picker-idx mnemonic-subelement]
   (let [val (r/atom (::db/mnemonic-chosen-word mnemonic-subelement))]  
     (fn [picker-idx mnemonic-subelement]
-      (into
-       [:> rn/Picker {:style {:width 140}
-                      :item-style {:font-size 10}
-                      :selectedValue @val
-                      :onValueChange (fn [v]
-                                       (reset! val v)
-                                       (r/flush))
-                      :enabled true}]
-       (map-indexed
-        (fn [idx word] 
-          ^{:key idx} [:> PickerItem {:label word
-                                      :value word}])
-        (::db/mnemonic-word-choices mnemonic-subelement))))))
+      [:> rn/View
+       [:> rn/Text {:style {:margin-left "auto"
+                            :margin-right "auto"}} (::db/mnemonic-number mnemonic-subelement)]
+       (into
+        [:> rn/Picker {:style {:width 140}
+                       :item-style {:font-size 10}
+                       :selectedValue @val
+                       :onValueChange (fn [v]
+                                        (reset! val v)
+                                        (r/flush))
+                       :enabled true}]
+        (map-indexed
+         (fn [idx word]
+           ^{:key idx} [:> PickerItem {:label word
+                                       :value word}])
+         (::db/mnemonic-word-choices mnemonic-subelement)))])))
 
 (defn native-pickers
   "Display pickers full of mnemonics for a given `number`.
@@ -56,15 +59,9 @@
     (fn [submitted-number mnemonic]
       [:> rn/View
        [:> rn/Text
-        "You can mezmorize the number " submitted-number " with the simple phrase: "]
-       [:> rn/View
-        [:> rn/Text
-         {:style {:font-weight "bold"}}
-         (s/join " " (map ::db/mnemonic-chosen-word mnemonic))]]
-       [:> rn/View
-        [:> rn/Text
-         "Use the pickers below to change the words in the phrase"
-         " to something that you find easy to remember."]]
+        "You can mezmorize the number " submitted-number " with the following words."
+        " Use the pickers to change the words into a phrase"
+        " that you find easy to remember."]
        [native-pickers mnemonic]
        [:> rn/View
         [:> rn/Text
@@ -101,7 +98,8 @@
 (defn number-input
   []
   (let [number (r/atom "")]
-    (fn []
+    (fn [{:keys [on-submit]}]
+      (print "number-input " @number)
       [:> rn/View
        {:style {:display "flex"
                 :flexDirection "row"}}
@@ -116,30 +114,32 @@
          :on-change-text (fn [text]
                            (reset! number text)
                            (r/flush))
-         :on-submit-editing #(rf/dispatch [:mnemonic-submitted-for-calculation @number])}]
+         :on-submit-editing #(on-submit @number)}]
        [:> rn/Button
         {:title "mnemorize"
          :style {:flex 5}
-         :on-press #(rf/dispatch [:mnemonic-submitted-for-calculation @number])}]])))
+         :on-press #(on-submit @number)}]])))
 
 (defn -Home
   []
-  (let [input-value (rf/subscribe [:input-value])
-        submitted-number (rf/subscribe [:submitted-number])
+  (let [submitted-val (atom "")
         calculating-mnemonic? (rf/subscribe [:calculating-mnemonic?])
         mnemonic (rf/subscribe [:mnemonic])]
     (fn []
       [:> rn/SafeAreaView {}
        [:> rn/ScrollView {:style {:padding-top 20 :margin 10}
                           :scroll-enabled false}
-        [number-input]
+        [number-input
+         {:on-submit (fn [val]
+                       (reset! submitted-val val)
+                       (rf/dispatch [:mnemonic-submitted-for-calculation val]))}]
         (cond
-          (and (not (empty? @submitted-number)) (not @calculating-mnemonic?))
-          [mnemonic-utils @submitted-number @mnemonic]
+          (and (not (empty? @submitted-val)) (not @calculating-mnemonic?))
+          [mnemonic-utils @submitted-val @mnemonic]
           @calculating-mnemonic?
           [:> rn/View
            [:> rn/Text
-            "Calculating mnemonic for " @submitted-number ". Please wait..."]])]])))
+            "Calculating mnemonic for " @submitted-val ". Please wait..."]])]])))
 
 (defn home-navigation-options [props]
   (clj->js {:title "ezmonic"
