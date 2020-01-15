@@ -55,15 +55,14 @@
               [picker idx mnemonic-subelement]]))
          mnemonic)))
 
-(defn mnemonic-utils [submitted-number mnemonic]
-  (let [story (r/cursor mnemonic [::db/story])]
-    (fn [submitted-number mnemonic]
-      [:> rn/View
-       [:> rn/Text
-        "You can mezmorize the number " submitted-number " with the following words."
-        " Use the pickers to change the words into a phrase"
-        " that you find easy to remember."]
-       [shared/mnemonic-form mnemonic]])))
+(defn mnemonic-utils [mnemonic]
+  [:> rn/View
+   [:> rn/Text
+    "You can mezmorize the number " (::db/number @mnemonic) " with the words"
+    " " (s/join " " (map ::db/chosen-word (::db/elements @mnemonic)))
+    " Use the pickers below to change the words into a phrase"
+    " that you find easy to remember."]
+   [shared/mnemonic-form @mnemonic]])
 
 (defn number-input
   []
@@ -104,7 +103,7 @@
                          (rf/dispatch [:mnemonic-submitted-for-calculation val]))}]
           (cond
             (and (not (empty? @submitted-val)) (not @calculating-mnemonic?))
-            [mnemonic-utils @submitted-val mnemonic]
+            [mnemonic-utils mnemonic]
             @calculating-mnemonic?
             [:> rn/View
              [:> rn/Text

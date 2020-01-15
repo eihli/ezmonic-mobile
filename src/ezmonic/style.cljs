@@ -42,8 +42,7 @@
 
 (def text-input
   {:borderWidth 1
-   :borderColor "grey"
-   :marginRight 5})
+   :borderColor "grey"})
 
 (def styles
   (-> platform-style

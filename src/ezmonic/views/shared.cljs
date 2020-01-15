@@ -64,26 +64,28 @@
     @elements)))
 
 (defn text-input
-  ;; https://github.com/reagent-project/reagent/issues/119#issuecomment-141396203
-  [{:keys [val on-submit]}]
-  [:> rn/View
-   [:> rn/TextInput
-    {:style style/text-input
-     :value @val
-     :text-align-vertical "top"
-     :multiline true
-     :number-of-lines 5
-     :placeholder "E.g. 3.14159 -> A METEOR (3.14) made of a single giant TULIP (159) caused the dinoflowers to become extinct."
-     :on-change-text (fn [text]
-                       (print text)
-                       (reset! val text)
-                       (rg/flush))
-     :on-submit-editing #(on-submit @val)}]])
+  [{:keys [initial-val on-submit]}]
+  (let [val (atom initial-val)]
+    (fn [initial-val]
+      [:> rn/View
+       [:> rn/TextInput
+        {:style style/text-input
+         :value @val
+         :text-align-vertical "top"
+         :multiline true
+         :number-of-lines 5
+         :placeholder "E.g. 3.14159265 -> A METEOR (3.14) landed on and killed my favorite TULIP (159). It's now an ANGEL (265) in the sky."
+         :on-change-text (fn [text]
+                           (print text)
+                           (reset! val text)
+                           (rg/flush))
+         :on-submit-editing #(on-submit @val)}]])))
 
 (defn mnemonic-form
   [mnemonic]
-  (let [mnemonic-edition (rg/atom @mnemonic)
-        name (rg/cursor mnemonic-edition [::db/name])]
+  (let [mnemonic-edition (rg/atom mnemonic)
+        name (rg/cursor mnemonic-edition [::db/name])
+        story (rg/cursor mnemonic-edition [::db/story])]
     (fn [mnemonic]
       [:> rn/View
        [:> rn/View
@@ -100,11 +102,20 @@
           :on-change-text (fn [text]
                             (reset! name text)
                             (rg/flush))}]]
-       [:> Text
-        "Write a sentence or story that uses those words."
-        " Save it for later reference."]
-       [text-input
-        {:val (rg/cursor mnemonic-edition [::db/story])}]
+       [:> rn/View
+        [:> Text
+         "Write a sentence or story that uses those words."
+         " Save it for later reference."]
+        [:> rn/TextInput
+         {:value @story
+          :style style/text-input
+          :text-align-vertical "top"
+          :multiline true
+          :number-of-lines 5
+          :placeholder "E.g. 3.14159265 -> A METEOR (3.14) landed on and killed my favorite TULIP (159). It's now an ANGEL (265) in the sky."
+          :on-change-text (fn [text]
+                            (reset! story text)
+                            (rg/flush))}]]
        [:> rn/View
         {:style {:display "flex"
                  :flex-direction "row"
