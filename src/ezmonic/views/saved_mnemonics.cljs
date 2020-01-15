@@ -19,22 +19,20 @@
   (:require-macros [ezmonic.util :refer [defnav]]))
 
 (defn saved-mnemonic [number mnemonic]
-  ;; This gets passed to .withNavigation which screws
-  ;; up the function args. That's why we are read-string
-  ;; mnemonic from props.
   (fn [number mnemonic]
     [:> View
      [:> View style/flex-row
-      [:> Text number " "]
+      [:> Text "Name: " (::db/name mnemonic) " "]
       [:> TouchableHighlight
        [:> Text
         {:on-press
          #(rf/dispatch [:navigate [:saved-edit number]])}
         "Edit" ]]]
+     [:> Text "Number: " (::db/number mnemonic)]
      [:> View
-      [:> Text (string/join " " (map ::db/chosen-word (::db/elements mnemonic)))]]
+      [:> Text "Words: " (string/join " " (map ::db/chosen-word (::db/elements mnemonic)))]]
      [:> View
-      [:> Text (::db/story mnemonic)]]]))
+      [:> Text "Story: " (::db/story mnemonic)]]]))
 
 (defn saved-mnemonics
   []
@@ -52,7 +50,10 @@
         mnemonic @(rf/subscribe [:saved-mnemonic number])]
     (print mnemonic)
     [:> rn/ScrollView {:style {:padding-top 20 :margin 10}}
-     [shared/mnemonic-form mnemonic]]))
+     [shared/mnemonic-form
+      mnemonic
+      {:on-save (fn [mnemonic]
+                  (rf/dispatch [:navigate [:saved-home]]))}]]))
 
 (def saved-stack
   (let [stack (. react-navigation-stack createStackNavigator

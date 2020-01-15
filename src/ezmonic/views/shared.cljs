@@ -82,7 +82,7 @@
          :on-submit-editing #(on-submit @val)}]])))
 
 (defn mnemonic-form
-  [mnemonic]
+  [mnemonic {:keys [on-save]}]
   (let [mnemonic-edition (rg/atom mnemonic)
         name (rg/cursor mnemonic-edition [::db/name])
         story (rg/cursor mnemonic-edition [::db/story])]
@@ -126,4 +126,7 @@
         [:> rn/Button
          {:title "Save"
           :style {:flex 1}
-          :on-press #(rf/dispatch [:save-mnemonic @mnemonic-edition])}]]])))
+          :on-press (fn []
+                      (if on-save
+                        (on-save @mnemonic-edition))
+                      (rf/dispatch [:save-mnemonic @mnemonic-edition]))}]]])))
