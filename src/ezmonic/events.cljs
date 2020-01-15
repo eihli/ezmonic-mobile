@@ -76,11 +76,6 @@
                         :on-failure :async-storage-get-failure}}))
 
 (reg-event-db
- :show-welcome?
- (fn [db [_ value]]
-   (assoc db :show-welcome? value)))
-
-(reg-event-db
  :select-value
  (fn [db [_ picker-position item-value item-position]]
    (assoc-in db
@@ -137,11 +132,6 @@
  :navigation
  (fn [db [_ value]]
    (assoc db :navigation value)))
-
-(reg-event-db
- :show-welcome
- (fn [db [_ value]]
-   (assoc db :show-welcome value)))
 
 (reg-event-db
  :switch

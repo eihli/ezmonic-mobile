@@ -1,12 +1,6 @@
 (ns ezmonic.subs
   (:require [re-frame.core :refer [reg-sub]]))
 
-
-(reg-sub
- :show-welcome?
- (fn [db]
-   (:show-welcome? db)))
-
 (reg-sub
  :mnemonic
  (fn [db]
@@ -41,11 +35,6 @@
  :navigation
  (fn [db _]
    (:navigation db)))
-
-(reg-sub
- :show-welcome
- (fn [db _]
-   (:show-welcome db)))
 
 (reg-sub
  :editable-mnemonic-story

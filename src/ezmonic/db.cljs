@@ -1,7 +1,6 @@
 (ns ezmonic.db
   (:require [clojure.spec.alpha :as s]))
 
-(s/def ::show-welcome? boolean?)
 (s/def ::submitted-number string?)
 (s/def ::mnemonic-number string?)
 (s/def ::mnemonic-word-choices (s/coll-of string?))
@@ -24,15 +23,13 @@
                 ::mnemonic-story]))
 (s/def ::saved-mnemonics (s/map-of string? ::saved-mnemonic))
 (s/def ::screen-params ::mnemonic)
-(s/def ::e-app-db (s/keys :req-un [::show-welcome?
-                                   ::submitted-number
+(s/def ::e-app-db (s/keys :req-un [::submitted-number
                                    ::mnemonic
                                    ::calculating-mnemonic?
                                    ::saved-mnemonics
                                    ::navigation]))
 
-(defonce e-app-db {:show-welcome? false
-                   :submitted-number ""
+(defonce e-app-db {:submitted-number ""
                    :mnemonic []
                    :calculating-mnemonic? false
                    :navigation "home"
