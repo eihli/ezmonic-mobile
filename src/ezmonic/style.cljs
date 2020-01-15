@@ -41,9 +41,7 @@
    :border-color "grey"})
 
 (def text-input
-  {:flex 7
-   :height 40
-   :borderWidth 1
+  {:borderWidth 1
    :borderColor "grey"
    :marginRight 5})
 

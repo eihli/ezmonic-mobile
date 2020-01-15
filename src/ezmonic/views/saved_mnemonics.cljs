@@ -2,6 +2,7 @@
   (:require [clojure.string :as s]
             [ezmonic.db :as db]
             [ezmonic.style :as style]
+            [ezmonic.views.mnemonics :refer [text-input]]
             [ezmonic.views.shared :refer [edit-bar]]
             [ezmonic.views.home :as home]
             ["react-native"
@@ -21,26 +22,25 @@
   ;; This gets passed to .withNavigation which screws
   ;; up the function args. That's why we are read-string
   ;; mnemonic from props.
-  (this-as this
-    (fn [props]
-      (let [[number mnemonic-str] (js->clj (:children props))
-            mnemonic (cljs.reader/read-string mnemonic-str)]
-        [:> View
-         [:> View style/flex-row
-          [:> Text number " "]
-          [:> TouchableHighlight
-           [:> Text
-            {:on-press
-             #(rf/dispatch [:navigate [:saved-edit mnemonic]])}
-            "Edit" ]]]
-         [:> View
-          [:> Text (string/join
-                    " "
-                    (map
-                     ::db/mnemonic-chosen-word
-                     (::db/mnemonic mnemonic)))]]
-         [:> View
-          [:> Text "" (::db/mnemonic-story mnemonic)]]]))))
+  (fn [props]
+    (let [[number mnemonic-str] (js->clj (:children props))
+          mnemonic (cljs.reader/read-string mnemonic-str)]
+      [:> View
+       [:> View style/flex-row
+        [:> Text number " "]
+        [:> TouchableHighlight
+         [:> Text
+          {:on-press
+           #(rf/dispatch [:navigate [:saved-edit mnemonic]])}
+          "Edit" ]]]
+       [:> View
+        [:> Text (string/join
+                  " "
+                  (map
+                   ::db/mnemonic-chosen-word
+                   (::db/mnemonic mnemonic)))]]
+       [:> View
+        [:> Text "" (::db/mnemonic-story mnemonic)]]])))
 
 (def saved-mnemonic
   (rg/adapt-react-class
@@ -67,12 +67,9 @@
 
 (defn edit-mnemonic
   []
-  (let [mnemonic-to-edit (rf/subscribe [:mnemonic-to-edit])
-        foo (rg/atom "foo")]
-    [:> rn/ScrollView {:style {:padding-top 20 :margin 10}}
-     [:> View
-      [:> Text "Bar"]
-      [views-mnemonics/my-text-input @foo]]]))
+  [:> rn/ScrollView {:style {:padding-top 20 :margin 10}}
+   [:> View
+    ^{:key "1"} [text-input "Input"]]])
 
 (def saved-stack
   (let [stack (. react-navigation-stack createStackNavigator
@@ -89,5 +86,4 @@
                                             :headerStyle style/header})))}))]
     (doto stack
       (goog.object/set "navigationOptions" #js {:tabBarLabel "Saved"}))))
-
 

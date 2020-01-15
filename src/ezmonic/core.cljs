@@ -26,14 +26,18 @@
 
 (defn make-reloader
   [component]
-  (let [component-ref (r/atom component)]
+  (let [component-ref (r/atom component)
+        wrapper-ref (r/atom nil)]
     (letfn [(render []
+              (print "re-render")
               (let [component @component-ref]
                 (if (fn? component)
                   (component)
                   component)))]
       (let [wrapper (r/create-class
-                     {:render render
+                     {:constructor (fn [this props]
+                                     (reset! wrapper-ref this))
+                      :render render
                       :component-did-mount
                       (fn []
                         (.addEventListener rn/AppState "change" on-app-state-change))
@@ -44,11 +48,17 @@
         
         (rn/AppRegistry.registerComponent "Ezmonic" (fn [] wrapper))
         (fn [comp]
-          (reset! component-ref comp))))))
+          (reset! component-ref comp)
+          ;; For some reason, views that were far removed from the navigators
+          ;; weren't being re-rendered on edit/save. This forceUpdate fixes that.
+          (if @wrapper-ref
+            (.forceUpdate ^js/object @wrapper-ref)))))))
 
 (defonce reload (make-reloader views/app-container))
 
 (defn ^:dev/after-load start []
+  (print "reload")
+  (rf/clear-subscription-cache!)
   (reload views/app-container))
 
 (defn ^:export init []

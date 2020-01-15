@@ -111,7 +111,10 @@
          {:style {:display "flex"
                   :flexDirection "row"}}
          [:> rn/TextInput
-          {:style style/text-input
+          {:style (merge
+                   style/text-input
+                   {:flex 7
+                    :height 40})
            :keyboardType "phone-pad"
            :placeholder "Enter a number"
            :on-change-text #(rf/dispatch [:number-input-changed %])

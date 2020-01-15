@@ -37,7 +37,7 @@
   (js/Promise. (fn [resolve]
                  (resolve @nav-state))))
 
-(def app-container
+(defn app-container []
   [(r/adapt-react-class (create-app-container app-bottom-tab-navigator))
    {:ref (fn [r] (reset! navigation/navigator-ref r))
     :persistNavigationState persist-navigation-state
