@@ -1,5 +1,6 @@
 (ns ezmonic.subs
-  (:require [re-frame.core :refer [reg-sub]]))
+  (:require [re-frame.core :refer [reg-sub]]
+            [ezmonic.db :as db]))
 
 (reg-sub
  :mnemonic
@@ -20,11 +21,6 @@
  :input-value
  (fn [db _]
    (:input-value db)))
-
-(reg-sub
- :submitted-number
- (fn [db _]
-   (:submitted-number db)))
 
 (reg-sub
  :picker-data
@@ -60,3 +56,8 @@
  :saved-mnemonic
  (fn [db [_ number]]
    (get (:saved-mnemonics db) number)))
+
+(reg-sub
+ :new-mnemonic
+ (fn [db [_]]
+   (::db/new-mnemonic db)))

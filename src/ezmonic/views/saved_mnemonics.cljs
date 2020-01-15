@@ -3,7 +3,7 @@
             [ezmonic.db :as db]
             [ezmonic.style :as style]
             [ezmonic.views.mnemonics :refer [text-input]]
-            [ezmonic.views.shared :refer [edit-bar]]
+            [ezmonic.views.shared :refer [edit-bar] :as shared]
             [ezmonic.views.home :as home]
             ["react-native"
              :refer [View
@@ -18,35 +18,27 @@
             [ezmonic.navigation :as navigation])
   (:require-macros [ezmonic.util :refer [defnav]]))
 
-(defn -saved-mnemonic [props]
+(defn saved-mnemonic [number mnemonic]
   ;; This gets passed to .withNavigation which screws
   ;; up the function args. That's why we are read-string
   ;; mnemonic from props.
-  (fn [props]
-    (let [[number mnemonic-str] (js->clj (:children props))
-          mnemonic (cljs.reader/read-string mnemonic-str)]
-      [:> View
-       [:> View style/flex-row
-        [:> Text number " "]
-        [:> TouchableHighlight
-         [:> Text
-          {:on-press
-           #(rf/dispatch [:navigate [:saved-edit number]])}
-          "Edit" ]]]
-       [:> View
-        [:> Text (string/join
-                  " "
-                  (map
-                   ::db/mnemonic-chosen-word
-                   (::db/mnemonic mnemonic)))]]
-       [:> View
-        [:> Text "" (::db/mnemonic-story mnemonic)]]])))
-
-(def saved-mnemonic
-  (rg/adapt-react-class
-   (.withNavigation
-    react-navigation
-    (rg/reactify-component -saved-mnemonic))))
+  (fn [number mnemonic]
+    [:> View
+     [:> View style/flex-row
+      [:> Text number " "]
+      [:> TouchableHighlight
+       [:> Text
+        {:on-press
+         #(rf/dispatch [:navigate [:saved-edit number]])}
+        "Edit" ]]]
+     [:> View
+      [:> Text (string/join
+                " "
+                (map
+                 ::db/mnemonic-chosen-word
+                 (::db/mnemonic mnemonic)))]]
+     [:> View
+      [:> Text "" (::db/mnemonic-story mnemonic)]]]))
 
 (defn saved-mnemonics
   []
@@ -58,21 +50,34 @@
          [:> View style/card
           [saved-mnemonic number mnemonic]])])))
 
-(defn mnemonic-input
-  [mnemonic-story]
-  (let [val (rg/atom mnemonic-story)]
-    [:> rn/TextInput
-     {:value @val}]))
-
 (defn edit-mnemonic
   []
   (let [number @(rf/subscribe [:screen-params])
-        mnemonic @(rf/subscribe [:saved-mnemonic number])]
+        mnemonic @(rf/subscribe [:saved-mnemonic number])
+        editable-mnemonic (rg/atom mnemonic)]
     [:> rn/ScrollView {:style {:padding-top 20 :margin 10}}
      [:> View
       [:> Text number]
-      [home/native-pickers (::db/mnemonic mnemonic)]
-      [text-input (::db/mnemonic-story mnemonic)]]]))
+      [shared/native-pickers editable-mnemonic]
+      [:> Text
+       "Give this mnemonic a name. "
+       " Write a sentence or story that uses these words."
+       " Save it for reference."]      
+      [text-input (rg/cursor editable-mnemonic [:db/mnemonic-story])]
+      [:> rn/View
+       {:style {:display "flex"
+                :flex-direction "row"
+                :justify-content "space-between"}}
+       [:> rn/Button
+        {:title "Clear"
+         :style {:flex 1}}]
+       [:> rn/Button
+        {:title "Saves"
+         :style {:flex 1}
+         :on-press #(rf/dispatch
+                     [:editable-mnemonic-story-submitted
+                      number
+                      @editable-mnemonic])}]]]]))
 
 (def saved-stack
   (let [stack (. react-navigation-stack createStackNavigator

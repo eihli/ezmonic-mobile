@@ -88,9 +88,7 @@
   validate-spec]
  (fn [cofx [_ number-to-mnemorize]]
    (let [db (:db cofx)]
-     {:db (assoc db
-                 :calculating-mnemonic? true
-                 :submitted-number number-to-mnemorize)
+     {:db (assoc db :calculating-mnemonic? true)
       :dispatch-later [{:ms 20
                         :dispatch ^:flush-dom [:calculate-mnemonic number-to-mnemorize]}]})))
 
@@ -103,24 +101,22 @@
      {:db
       (-> (:db cofx)
           (assoc
-           :mnemonic
-           (vec (map
-                 (fn [mnemonic-subphrase]
-                   {::db/mnemonic-number (first mnemonic-subphrase)
-                    ::db/mnemonic-word-choices (second mnemonic-subphrase)
-                    ::db/mnemonic-chosen-word (first (second mnemonic-subphrase))})
-                 (util/e-number->mnemonics number-to-memorize))))
+           ::db/new-mnemonic
+           {::db/name ""
+            ::db/number number-to-memorize
+            ::db/story ""
+            ::db/elements (vec (map
+                                (fn [mnemonic-subphrase]
+                                  {::db/number (first mnemonic-subphrase)
+                                   ::db/word-choices (second mnemonic-subphrase)
+                                   ::db/chosen-word (first (second mnemonic-subphrase))})
+                                (util/e-number->mnemonics number-to-memorize)))})
           (assoc :calculating-mnemonic? false))})))
 
 (reg-event-db
  :input-value
  (fn [db [_ value]]
    (assoc db :input-value value)))
-
-(reg-event-db
- :submitted-number
- (fn [db [_ value]]
-   (assoc db :submitted-number value)))
 
 (reg-event-db
  :picker-data
@@ -177,11 +173,10 @@
 (reg-event-fx
  :editable-mnemonic-story-submitted
  validate-spec
- (fn [{:keys [db]} [_ number mnemonic story]]
+ (fn [{:keys [db]} [_ number mnemonic]]
    (let [saved-mnemonics (-> db
                              (:saved-mnemonics)
-                             (assoc number {::db/mnemonic mnemonic
-                                            ::db/mnemonic-story story}))]
+                             (assoc number mnemonic))]
      {:db (assoc db :saved-mnemonics saved-mnemonics)
       :persist-mnemonics saved-mnemonics})))
 

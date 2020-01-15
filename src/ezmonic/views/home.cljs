@@ -2,6 +2,7 @@
   (:require ["react-native" :as rn]
             [re-frame.core :as rf]
             [ezmonic.style :as style]
+            [ezmonic.views.shared :as shared]
             [ezmonic.db :as db]
             [clojure.string :as s]
             [reagent.core :as r]
@@ -55,45 +56,14 @@
          mnemonic)))
 
 (defn mnemonic-utils [submitted-number mnemonic]
-  (let [editable-mnemonic-story (rf/subscribe [:editable-mnemonic-story])]
+  (let [story (r/cursor mnemonic [::db/story])]
     (fn [submitted-number mnemonic]
       [:> rn/View
        [:> rn/Text
         "You can mezmorize the number " submitted-number " with the following words."
         " Use the pickers to change the words into a phrase"
         " that you find easy to remember."]
-       [native-pickers mnemonic]
-       [:> rn/View
-        [:> rn/Text
-         "Write a sentence or story that uses those words."
-         " Save it for later reference."]
-        [:> rn/TextInput
-         {:style {:borderColor "grey"
-                  :borderWidth 1}
-          :multiline true
-          :text-align-vertical "top"
-          :number-of-lines 3
-          :on-change-text #(rf/dispatch [:editable-mnemonic-story-changed %])
-          :on-submit-editing #(rf/dispatch
-                               [:editable-mnemonic-story-submitted
-                                submitted-number
-                                mnemonic
-                                @editable-mnemonic-story])}]
-        [:> rn/View
-         {:style {:display "flex"
-                  :flex-direction "row"
-                  :justify-content "space-between"}}
-         [:> rn/Button
-          {:title "Clear"
-           :style {:flex 1}}]
-         [:> rn/Button
-          {:title "Save"
-           :style {:flex 1}
-           :on-press #(rf/dispatch
-                       [:editable-mnemonic-story-submitted
-                        submitted-number
-                        mnemonic
-                        @editable-mnemonic-story])}]]]])))
+       [shared/mnemonic-form mnemonic]])))
 
 (defn number-input
   []
@@ -122,24 +92,23 @@
 
 (defn -Home
   []
-  (let [submitted-val (atom "")
-        calculating-mnemonic? (rf/subscribe [:calculating-mnemonic?])
-        mnemonic (rf/subscribe [:mnemonic])]
+  (let [submitted-val (r/atom "1234")
+        calculating-mnemonic? (rf/subscribe [:calculating-mnemonic?])]
     (fn []
-      [:> rn/SafeAreaView {}
-       [:> rn/ScrollView {:style {:padding-top 20 :margin 10}
-                          :scroll-enabled false}
-        [number-input
-         {:on-submit (fn [val]
-                       (reset! submitted-val val)
-                       (rf/dispatch [:mnemonic-submitted-for-calculation val]))}]
-        (cond
-          (and (not (empty? @submitted-val)) (not @calculating-mnemonic?))
-          [mnemonic-utils @submitted-val @mnemonic]
-          @calculating-mnemonic?
-          [:> rn/View
-           [:> rn/Text
-            "Calculating mnemonic for " @submitted-val ". Please wait..."]])]])))
+      (let [mnemonic (r/atom @(rf/subscribe [:new-mnemonic]))]
+        [:> rn/SafeAreaView {}
+         [:> rn/ScrollView {:style {:padding-top 20 :margin 10}}
+          [number-input
+           {:on-submit (fn [val]
+                         (reset! submitted-val val)
+                         (rf/dispatch [:mnemonic-submitted-for-calculation val]))}]
+          (cond
+            (and (not (empty? @submitted-val)) (not @calculating-mnemonic?))
+            [mnemonic-utils @submitted-val mnemonic]
+            @calculating-mnemonic?
+            [:> rn/View
+             [:> rn/Text
+              "Calculating mnemonic for " @submitted-val ". Please wait..."]])]]))))
 
 (defn home-navigation-options [props]
   (clj->js {:title "ezmonic"

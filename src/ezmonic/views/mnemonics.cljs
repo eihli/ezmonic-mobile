@@ -7,17 +7,15 @@
 (defn text-input
   ;; https://github.com/reagent-project/reagent/issues/119#issuecomment-141396203
   [val]
-  (let [value (reagent/atom val)]
-    (fn [v]
-      [:> rn/View
-       [:> rn/TextInput
-        {:style style/text-input
-         :value @value
-         :text-align-vertical "top"
-         :multiline true
-         :number-of-lines 5
-         :on-change-text (fn [text]
-                           (print text)
-                           (reset! value text)
-                           (reagent/flush))}]])))
+  [:> rn/View
+   [:> rn/TextInput
+    {:style style/text-input
+     :value @val
+     :text-align-vertical "top"
+     :multiline true
+     :number-of-lines 5
+     :on-change-text (fn [text]
+                       (print text)
+                       (reset! val text)
+                       (reagent/flush))}]])
 

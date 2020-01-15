@@ -1,8 +1,15 @@
 (ns ezmonic.views.shared
   (:require [ezmonic.style :as style]
-            ["react-native" :refer [View
-                                    Text
-                                    TouchableHighlight]]))
+            [ezmonic.db :as db]
+            [reagent.core :as rg]
+            [re-frame.core :as rf]
+            ["react-native"
+             :refer [View
+                     Text
+                     TouchableHighlight]
+             :as rn]))
+
+(def PickerItem (.. rn -Picker -Item))
 
 (defn edit-bar [text navigation nav-path]
   [:> View style/edit-bar
@@ -11,3 +18,101 @@
     {:on-press (fn []
                  (. navigation navigate "edit"))}
     [:> Text "Edit"]]])
+
+
+(defn picker
+  [picker-idx subel-cursor]
+  (let [val (rg/cursor subel-cursor [::db/chosen-word])]
+    (fn [picker-idx mnemonic-subelement]
+      [:> rn/View 
+       [:> rn/Text {:style {:margin-left "auto"
+                            :margin-right "auto"}}
+        (::db/number mnemonic-subelement)]]
+      (into
+       [:> rn/Picker {:style {:width 140}
+                      :item-style {:font-size 10}
+                      :selectedValue @val
+                      :onValueChange (fn [v]
+                                       (reset! val v)
+                                       (rg/flush))
+                      :enabled true}]
+       (map-indexed
+        (fn [idx word] 
+          ^{:key idx} [:> PickerItem {:label word
+                                      :value word}])
+        (::db/word-choices @subel-cursor))))))
+
+(defn native-pickers
+  "Display pickers full of mnemonics for a given `number`.
+
+  Uses native picker, which looks fine in Android, but for this
+  particular app is not the right fit."
+  [elements]
+  (into
+   [:> rn/View {:style {:flex-direction "row"
+                        :flex-wrap "wrap"
+                        :justify-content "space-between"
+                        :padding 10}}]
+   (map-indexed
+    (fn [idx element]
+      ^{:key idx}
+      [:> rn/View 
+       [:> rn/Text {:style {:margin-left "auto"
+                            :margin-right "auto"}}
+        (::db/number element)]
+       [picker idx (rg/cursor elements [idx])]])
+    @elements)))
+
+(defn text-input
+  ;; https://github.com/reagent-project/reagent/issues/119#issuecomment-141396203
+  [{:keys [val on-submit]}]
+  [:> rn/View
+   [:> rn/TextInput
+    {:style style/text-input
+     :value @val
+     :text-align-vertical "top"
+     :multiline true
+     :number-of-lines 5
+     :placeholder "E.g. 3.14159 -> A METEOR (3.14) made of a single giant TULIP (159) caused the dinoflowers to become extinct."
+     :on-change-text (fn [text]
+                       (print text)
+                       (reset! val text)
+                       (rg/flush))
+     :on-submit-editing #(on-submit @val)}]])
+
+(defn mnemonic-form
+  [mnemonic]
+  (let [mnemonic-edition (rg/atom @mnemonic)
+        name (rg/cursor mnemonic-edition [::db/name])]
+    (fn [mnemonic]
+      [:> rn/View
+       [:> rn/View
+        [:> rn/Text "Number: " (::db/number @mnemonic-edition)]]
+       [:> rn/View
+        [:> rn/Text "Words: "]
+        [native-pickers (rg/cursor mnemonic-edition [::db/elements])]]
+       [:> rn/View
+        [:> rn/Text "Name"]
+        [:> rn/TextInput
+         {:value @name
+          :style style/text-input
+          :placeholder "E.g. Jenny's number"
+          :on-change-text (fn [text]
+                            (reset! name text)
+                            (rg/flush))}]]
+       [:> Text
+        "Write a sentence or story that uses those words."
+        " Save it for later reference."]
+       [text-input
+        {:val (rg/cursor mnemonic-edition [::db/story])}]
+       [:> rn/View
+        {:style {:display "flex"
+                 :flex-direction "row"
+                 :justify-content "space-between"}}
+        [:> rn/Button
+         {:title "Clear"
+          :style {:flex 1}}]
+        [:> rn/Button
+         {:title "Save"
+          :style {:flex 1}
+          :on-press #(rf/dispatch [:save-mnemonic @mnemonic-edition])}]]])))

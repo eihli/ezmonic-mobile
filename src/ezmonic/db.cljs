@@ -1,7 +1,6 @@
 (ns ezmonic.db
   (:require [clojure.spec.alpha :as s]))
 
-(s/def ::submitted-number string?)
 (s/def ::mnemonic-number string?)
 (s/def ::mnemonic-word-choices (s/coll-of string?))
 (s/def ::navigation string?)
@@ -23,15 +22,37 @@
                 ::mnemonic-story]))
 (s/def ::saved-mnemonics (s/map-of string? ::saved-mnemonic))
 (s/def ::screen-params ::mnemonic)
-(s/def ::e-app-db (s/keys :req-un [::submitted-number
-                                   ::mnemonic
+(s/def ::e-app-db (s/keys :req-un [::mnemonic
                                    ::calculating-mnemonic?
                                    ::saved-mnemonics
                                    ::navigation]))
 
-(defonce e-app-db {:submitted-number ""
-                   :mnemonic []
+;; Refactor to a more reasonable data model
+(s/def ::name string?)
+(s/def ::number string?)
+(s/def ::story string?)
+(s/def ::chosen-word string?)
+(s/def ::word-choices (s/coll-of string?))
+(s/def ::element
+  (s/keys :req [::number
+                ::word-choices
+                ::chosen-word]))
+(s/def ::elements (s/coll-of ::element))
+(s/def ::new-mnemonic
+  (s/keys :req [::name
+                ::number
+                ::story
+                ::elements]))
+(s/def ::new-mnemonics
+  (s/map-of ::name ::new-mnemonic))
+
+(defonce e-app-db {:mnemonic []
                    :calculating-mnemonic? false
                    :navigation "home"
                    :editable-mnemonic-story ""
-                   :saved-mnemonics {}})
+                   :saved-mnemonics {}
+                   ::new-mnemonic {::name ""
+                                   ::number ""
+                                   ::story ""
+                                   ::elements []} ;; Transient
+                   ::new-mnemonics {}}) ;; Saved
