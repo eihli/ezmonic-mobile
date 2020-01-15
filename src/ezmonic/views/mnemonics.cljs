@@ -15,7 +15,6 @@
      :multiline true
      :number-of-lines 5
      :on-change-text (fn [text]
-                       (print text)
                        (reset! val text)
                        (reagent/flush))}]])
 

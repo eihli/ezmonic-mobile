@@ -64,8 +64,6 @@
 (reg-event-db
  :async-storage-get-success
  (fn [db [_ key value]]
-   (print value)
-   (print (cljs.reader/read-string value))
    (assoc db ::db/new-mnemonics (or (cljs.reader/read-string value) {}))))
 
 (reg-event-fx
@@ -189,11 +187,6 @@
                              (assoc number mnemonic))]
      {:db (assoc db :saved-mnemonics saved-mnemonics)
       :persist-mnemonics saved-mnemonics})))
-
-(defn my-test []
-  (-> AsyncStorage
-      (.getItem "saved-mnemonics")
-      (.then #(print % %2))))
 
 (reg-event-fx
  :update-users

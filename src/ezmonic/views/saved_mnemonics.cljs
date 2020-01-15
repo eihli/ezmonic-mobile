@@ -55,7 +55,6 @@
   []
   (let [number @(rf/subscribe [:screen-params])
         mnemonic @(rf/subscribe [:saved-mnemonic number])]
-    (print mnemonic)
     [:> rn/ScrollView {:style {:padding-top 20 :margin 10}}
      [shared/mnemonic-form
       mnemonic

@@ -76,7 +76,6 @@
          :number-of-lines 5
          :placeholder "E.g. 3.14159265 -> A METEOR (3.14) landed on and killed my favorite TULIP (159). It's now an ANGEL (265) in the sky."
          :on-change-text (fn [text]
-                           (print text)
                            (reset! val text)
                            (rg/flush))
          :on-submit-editing #(on-submit @val)}]])))

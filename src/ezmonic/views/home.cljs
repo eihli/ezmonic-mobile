@@ -68,7 +68,6 @@
   []
   (let [number (r/atom "")]
     (fn [{:keys [on-submit]}]
-      (print "number-input " @number)
       [:> rn/View
        {:style {:display "flex"
                 :flexDirection "row"}}

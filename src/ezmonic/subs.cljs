@@ -5,7 +5,7 @@
 (reg-sub
  :mnemonic
  (fn [db]
-   (:mnemonic db)))
+   (::db/mnemonic db)))
 
 (reg-sub
  :calculating-mnemonic?

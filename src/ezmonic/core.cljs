@@ -29,7 +29,6 @@
   (let [component-ref (r/atom component)
         wrapper-ref (r/atom nil)]
     (letfn [(render []
-              (print "re-render")
               (let [component @component-ref]
                 (if (fn? component)
                   (component)
@@ -57,7 +56,6 @@
 (defonce reload (make-reloader views/app-container))
 
 (defn ^:dev/after-load start []
-  (print "reload")
   (rf/clear-subscription-cache!)
   (reload views/app-container))
 
