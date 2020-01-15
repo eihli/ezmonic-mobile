@@ -11,18 +11,19 @@
 
 (defn picker
   [picker-idx mnemonic-subelement]
-  (let [selected-value (::db/mnemonic-chosen-word mnemonic-subelement)]  
+  (let [val (r/atom (::db/mnemonic-chosen-word mnemonic-subelement))]  
     (into
      [:> rn/Picker {:style {:width 140}
                     :item-style {:font-size 10}
-                    :selectedValue selected-value
-                    :onValueChange #(rf/dispatch
-                                     [:select-value picker-idx %1 %2])
+                    :selectedValue @val
+                    :onValueChange (fn [v]
+                                     (reset! val v)
+                                     (r/flush))
                     :enabled true}]
      (map-indexed
-      (fn [idx word] ^{:key idx}
-        [:> PickerItem {:label word
-                        :value word}])
+      (fn [idx word] 
+        ^{:key idx} [:> PickerItem {:label word
+                                    :value word}])
       (::db/mnemonic-word-choices mnemonic-subelement)))))
 
 (defn native-pickers

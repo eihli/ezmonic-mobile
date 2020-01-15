@@ -31,7 +31,7 @@
         [:> TouchableHighlight
          [:> Text
           {:on-press
-           #(rf/dispatch [:navigate [:saved-edit mnemonic]])}
+           #(rf/dispatch [:navigate [:saved-edit number]])}
           "Edit" ]]]
        [:> View
         [:> Text (string/join
@@ -64,12 +64,15 @@
     [:> rn/TextInput
      {:value @val}]))
 
-
 (defn edit-mnemonic
   []
-  [:> rn/ScrollView {:style {:padding-top 20 :margin 10}}
-   [:> View
-    ^{:key "1"} [text-input "Input"]]])
+  (let [number @(rf/subscribe [:screen-params])
+        mnemonic @(rf/subscribe [:saved-mnemonic number])]
+    [:> rn/ScrollView {:style {:padding-top 20 :margin 10}}
+     [:> View
+      [:> Text number]
+      [home/native-pickers (::db/mnemonic mnemonic)]
+      [text-input (::db/mnemonic-story mnemonic)]]]))
 
 (def saved-stack
   (let [stack (. react-navigation-stack createStackNavigator
