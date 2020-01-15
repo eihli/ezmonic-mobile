@@ -21,6 +21,10 @@
              :borderBottomColor "#ffffff"
              :borderBottomWidth 3})
 
+(def heading
+  {:fontSize 20
+   :fontWeight "bold"})
+
 (def platform-style
   ((.-select platform)
    #js {:ios (m/deep-merge all-styles ios-only-styles)
@@ -37,8 +41,9 @@
            :backgroundColor "#01BBBB"}})
 
 (def card
-  {:border-bottom "3"
-   :border-color "grey"})
+  {:borderBottomWidth 1
+   :borderColor "grey"
+   :padding-top 5})
 
 (def text-input
   {:borderWidth 1

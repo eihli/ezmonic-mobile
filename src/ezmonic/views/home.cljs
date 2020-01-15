@@ -96,7 +96,7 @@
     (fn []
       (let [mnemonic (r/atom @(rf/subscribe [:new-mnemonic]))]
         [:> rn/SafeAreaView {}
-         [:> rn/ScrollView {:style {:padding-top 20 :margin 10}}
+         [:> rn/ScrollView {:style {:margin 10}}
           [number-input
            {:on-submit (fn [val]
                          (reset! submitted-val val)

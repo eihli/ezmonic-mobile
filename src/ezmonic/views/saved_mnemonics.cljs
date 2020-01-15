@@ -21,18 +21,24 @@
 (defn saved-mnemonic [number mnemonic]
   (fn [number mnemonic]
     [:> View
-     [:> View style/flex-row
-      [:> Text "Name: " (::db/name mnemonic) " "]
-      [:> TouchableHighlight
-       [:> Text
-        {:on-press
-         #(rf/dispatch [:navigate [:saved-edit number]])}
-        "Edit" ]]]
+     [:> Text "Name: " (::db/name mnemonic) " "]
      [:> Text "Number: " (::db/number mnemonic)]
      [:> View
       [:> Text "Words: " (string/join " " (map ::db/chosen-word (::db/elements mnemonic)))]]
      [:> View
-      [:> Text "Story: " (::db/story mnemonic)]]]))
+      [:> Text "Story: " (::db/story mnemonic)]]
+     ;; Button displayed last so it will be drawn over other elements
+     ;; without the use of zIndex.
+     ;; This would probably be better as a two-column layout and force stuff
+     ;; to wrap.
+     [:> View
+      {:position "absolute"
+       :top 0
+       :right 0}
+      [:> rn/Button 
+       {:on-press
+        #(rf/dispatch [:navigate [:saved-edit number]])
+        :title "Edit"} ]]]))
 
 (defn saved-mnemonics
   []
@@ -41,7 +47,8 @@
       [:> View
        (for [[number mnemonic] @mnemonics]
          ^{:key number}
-         [:> View style/card
+         [:> View
+          {:style style/card}
           [saved-mnemonic number mnemonic]])])))
 
 (defn edit-mnemonic
