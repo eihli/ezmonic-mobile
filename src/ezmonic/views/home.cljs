@@ -56,14 +56,7 @@
          mnemonic)))
 
 (defn mnemonic-utils [mnemonic]
-  [:> rn/View
-   [:> rn/Text
-    "You can mezmorize the number " (::db/number @mnemonic) " with the words"
-    " " (s/join " " (map ::db/chosen-word (::db/elements @mnemonic)))
-    " Use the pickers below to change the words into a phrase"
-    " that you find easy to remember."]
-   [shared/mnemonic-form @mnemonic {:on-save (fn [mnemonic]
-                                               (rf/dispatch [:navigate [:saved-home]]))}]])
+  )
 
 (defn number-input
   []
@@ -103,7 +96,16 @@
                          (rf/dispatch [:mnemonic-submitted-for-calculation val]))}]
           (cond
             (and (not (empty? @submitted-val)) (not @calculating-mnemonic?))
-            [mnemonic-utils mnemonic]
+            [:> rn/View
+             [:> rn/Text
+              "You can mezmorize the number " (::db/number @mnemonic) " with the words"
+              " " (s/join " " (map ::db/chosen-word (::db/elements @mnemonic)))
+              " Use the pickers below to change the words into a phrase"
+              " that you find easy to remember."]
+             [shared/mnemonic-form @mnemonic {:on-save (fn [mnemonic]
+                                                         (rf/dispatch [:navigate [:saved-home]]))
+                                              :on-reset (fn [mnemonic]
+                                                          (reset! submitted-val ""))}]]
             @calculating-mnemonic?
             [:> rn/View
              [:> rn/Text

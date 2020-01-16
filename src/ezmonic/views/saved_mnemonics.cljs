@@ -59,7 +59,9 @@
      [shared/mnemonic-form
       mnemonic
       {:on-save (fn [mnemonic]
-                  (rf/dispatch [:navigate [:saved-home]]))}]]))
+                  (rf/dispatch [:navigate [:saved-home]]))
+       :on-delete (fn [mnemonic]
+                    (rf/dispatch [:delete-mnemonic mnemonic]))}]]))
 
 (def saved-stack
   (let [stack (. react-navigation-stack createStackNavigator

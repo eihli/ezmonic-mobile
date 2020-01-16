@@ -29,7 +29,7 @@
                             :margin-right "auto"}}
         (::db/number mnemonic-subelement)]]
       (into
-       [:> rn/Picker {:style {:width 140}
+       [:> rn/Picker {:style {:width 170}
                       :item-style {:font-size 10}
                       :selectedValue @val
                       :onValueChange (fn [v]
@@ -55,7 +55,7 @@
    (map-indexed
     (fn [idx element]
       ^{:key idx}
-      [:> rn/View 
+      [:> rn/View {:style {:borderWidth 1}}
        [:> rn/Text {:style {:margin-left "auto"
                             :margin-right "auto"}}
         (::db/number element)]
@@ -79,8 +79,29 @@
                            (rg/flush))
          :on-submit-editing #(on-submit @val)}]])))
 
+
+(defn save-button [{:keys [on-save] :or {on-save identity}}]
+  [:> rn/Button
+   {:title "Save"
+    :style {:flex 1}
+    :on-press on-save}])
+
+(defn delete-button [{:keys [on-delete] :or {on-save identity}}]
+  [:> rn/Button
+   {:title "Delete"
+    :style {:flex 1}
+    :color "red"
+    :on-press on-delete}])
+
+(defn clear-button [{:keys [on-clear] :or {on-clear identity}}]
+  [:> rn/Button
+   {:title "Delete"
+    :style {:flex 1}
+    :color "red"
+    :on-press on-clear}])
+
 (defn mnemonic-form
-  [mnemonic {:keys [on-save on-delete]}]
+  [mnemonic {:keys [on-save on-delete on-reset]}]
   (let [mnemonic-edition (rg/atom mnemonic)
         name (rg/cursor mnemonic-edition [::db/name])
         story (rg/cursor mnemonic-edition [::db/story])]
@@ -119,13 +140,13 @@
                  :flex-direction "row"
                  :justify-content "space-between"}}
         [:> rn/Button
-         {:title "Delete"
+         {:title (if on-delete "Delete" "Reset")
           :style {:flex 1}
-          :color "red"
+          :color (if on-delete "red" "grey")
           :on-press (fn []
                       (if on-delete
-                        (on-delete @mnemonic))
-                      (rf/dispatch [:delete-mnemonic mnemonic]))}]
+                        (on-delete mnemonic)
+                        (on-reset mnemonic)))}]
         [:> rn/Button
          {:title "Save"
           :style {:flex 1}
