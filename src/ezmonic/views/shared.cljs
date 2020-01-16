@@ -51,8 +51,7 @@
   (into
    [:> rn/View {:style {:flex-direction "row"
                         :flex-wrap "wrap"
-                        :justify-content "space-between"
-                        :padding 10}}]
+                        :justify-content "space-between"}}]
    (map-indexed
     (fn [idx element]
       ^{:key idx}

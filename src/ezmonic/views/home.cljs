@@ -62,7 +62,8 @@
     " " (s/join " " (map ::db/chosen-word (::db/elements @mnemonic)))
     " Use the pickers below to change the words into a phrase"
     " that you find easy to remember."]
-   [shared/mnemonic-form @mnemonic]])
+   [shared/mnemonic-form @mnemonic {:on-save (fn [mnemonic]
+                                               (rf/dispatch [:navigate [:saved-home]]))}]])
 
 (defn number-input
   []
