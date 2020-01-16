@@ -1,6 +1,7 @@
 (ns ezmonic.views.help
   (:require [ezmonic.db :as db]
             [ezmonic.style :as style]
+            [ezmonic.views.shared :as shared]
             ["react-native"
              :refer [View
                      Text
@@ -21,7 +22,7 @@
    "L"
    "J, soft G"
    "K, NG"
-   "F"
+   "F, V"
    "B, P"])
 
 (def numbers (vec (map str (range 10))))
@@ -34,8 +35,8 @@
    "Lay or Eel"
    "Joy or Edge"
    "Key or Quay or Hang"
-   "Foe or Half"
-   "Pay or Ape"])
+   "Foe or Halve"
+   "Bay or Ape"])
 
 (defn row
   [number consonant description bg-color]
@@ -65,7 +66,7 @@
 
 (defnav help
   []
-  [:> rn/ScrollView
+  [shared/safe-scroll-wrapper
    [:> View
     [:> Text {:style style/heading} "Quickref"]
     [:> Text "The following table is a quick overview for how to convert consonant sounds to numbers."]
@@ -88,7 +89,7 @@
     [:> Text {:style style/heading} "Step by step"]
     [div "Each consonant sound of each keyword can be translated back to a number."]
     [div "Note! We strictly care about consonant sounds (and only some of them)."]
-    [div "Vowels are ignored, as well as some letters like H, W."]
+    [div "Vowels sounds are ignored, as well as some other sounds like H and W."]
     [div "And we only care about the sound! So a word like RACE with a soft C translates differently than CAKE with a hard C."]
     [div "Here's how you would translate that METEOR story back into Pi."]
     [div "The M in METEOR translates to 3. Just look at the table."]

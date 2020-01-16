@@ -174,16 +174,17 @@
  :save-mnemonic
  validate-spec
  (fn [{:keys [db]} [_ mnemonic]]
-   (let [db (assoc-in db [::db/mnemonics (::db/number mnemonic)] mnemonic)]
+   (let [uuid (random-uuid)
+         mnemonic (merge mnemonic {::db/uuid uuid})
+         db (assoc-in db [::db/mnemonics uuid] mnemonic)]
      {:db db
       :persist-mnemonics (::db/mnemonics db)})))
 
 (reg-event-fx
  :delete-mnemonic
  validate-spec
- (fn [{:keys [db]} [_ mnemonic]]
-   (let [number (::db/number mnemonic)
-         db (update-in db [::db/mnemonics] dissoc number)]
+ (fn [{:keys [db]} [_ uuid]]
+   (let [db (update-in db [::db/mnemonics] dissoc uuid)]
      {:db db
       :persist-mnemonics (::db/mnemonics db)
       ::react-navigate :saved-home})))

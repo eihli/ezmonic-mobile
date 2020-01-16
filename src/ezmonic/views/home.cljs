@@ -55,9 +55,6 @@
               [picker idx mnemonic-subelement]]))
          mnemonic)))
 
-(defn mnemonic-utils [mnemonic]
-  )
-
 (defn number-input
   []
   (let [number (r/atom "")]

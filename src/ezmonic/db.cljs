@@ -4,6 +4,7 @@
 (s/def ::navigation string?)
 (s/def ::calculating-mnemonic? boolean?)
 
+(s/def ::uuid uuid?)
 (s/def ::name string?)
 (s/def ::number string?)
 (s/def ::story string?)
@@ -15,13 +16,14 @@
                 ::chosen-word]))
 (s/def ::elements (s/coll-of ::element))
 (s/def ::mnemonic
-  (s/keys :req [::name
+  (s/keys :req [::uuid
+                ::name
                 ::number
                 ::story
                 ::elements]))
 (s/def ::screen-params ::mnemonic)
 (s/def ::mnemonics
-  (s/map-of ::name ::mnemonic))
+  (s/map-of ::uuid ::mnemonic))
 
 (s/def ::e-app-db (s/keys :req [::mnemonic
                                 ::calculating-mnemonic?

@@ -44,7 +44,7 @@
   []
   (let [mnemonics (rf/subscribe [:saved-mnemonics])]
     (fn []
-      [:> View
+      [shared/safe-scroll-wrapper
        (for [[number mnemonic] @mnemonics]
          ^{:key number}
          [:> View
@@ -55,13 +55,13 @@
   []
   (let [number @(rf/subscribe [:screen-params])
         mnemonic @(rf/subscribe [:saved-mnemonic number])]
-    [:> rn/ScrollView {:style {:padding-top 20 :margin 10}}
+    [shared/safe-scroll-wrapper
      [shared/mnemonic-form
       mnemonic
       {:on-save (fn [mnemonic]
                   (rf/dispatch [:navigate [:saved-home]]))
        :on-delete (fn [mnemonic]
-                    (rf/dispatch [:delete-mnemonic mnemonic]))}]]))
+                    (rf/dispatch [:delete-mnemonic (::db/uuid mnemonic)]))}]]))
 
 (def saved-stack
   (let [stack (. react-navigation-stack createStackNavigator

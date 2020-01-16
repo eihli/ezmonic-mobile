@@ -3,6 +3,7 @@
             [ezmonic.db :as db]
             [reagent.core :as rg]
             [re-frame.core :as rf]
+            [clojure.string :as string]
             ["react-native"
              :refer [View
                      Text
@@ -10,6 +11,24 @@
              :as rn]))
 
 (def PickerItem (.. rn -Picker -Item))
+
+(defn safe-scroll-wrapper
+  [& children]
+  [:> rn/SafeAreaView
+   (into
+    [:> rn/ScrollView {:style {:margin 10}}]
+    children)])
+
+(safe-scroll-wrapper [:foo] [:bar])
+
+
+(defn foo [& args]
+  (reduce + args))
+
+(defn bar
+  [& args]
+  (into [] args))
+
 
 (defn edit-bar [text navigation nav-path]
   [:> View style/edit-bar
@@ -55,7 +74,7 @@
    (map-indexed
     (fn [idx element]
       ^{:key idx}
-      [:> rn/View {:style {:borderWidth 1}}
+      [:> rn/View
        [:> rn/Text {:style {:margin-left "auto"
                             :margin-right "auto"}}
         (::db/number element)]
@@ -137,19 +156,19 @@
                             (rg/flush))}]]
        [:> rn/View
         {:style {:display "flex"
+                 :padding-top 2
                  :flex-direction "row"
                  :justify-content "space-between"}}
         [:> rn/Button
          {:title (if on-delete "Delete" "Reset")
-          :style {:flex 1}
-          :color (if on-delete "red" "grey")
+          :color "red"
           :on-press (fn []
                       (if on-delete
                         (on-delete mnemonic)
                         (on-reset mnemonic)))}]
         [:> rn/Button
          {:title "Save"
-          :style {:flex 1}
+          :disabled (empty? (string/trim @name))
           :on-press (fn []
                       (if on-save
                         (on-save @mnemonic-edition))

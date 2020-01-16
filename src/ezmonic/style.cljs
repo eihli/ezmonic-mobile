@@ -22,8 +22,9 @@
              :borderBottomWidth 3})
 
 (def heading
-  {:fontSize 20
-   :fontWeight "bold"})
+  {:font-size 20
+   :font-weight "bold"
+   :margin-top 15})
 
 (def platform-style
   ((.-select platform)
