@@ -16,7 +16,7 @@
                 ::chosen-word]))
 (s/def ::elements (s/coll-of ::element))
 (s/def ::mnemonic
-  (s/keys :req [::uuid
+  (s/keys :opt [::uuid
                 ::name
                 ::number
                 ::story
@@ -32,9 +32,6 @@
 
 (defonce e-app-db {::calculating-mnemonic? false
                    ::navigation "home"
-                   ::mnemonic {::name ""
-                               ::number ""
-                               ::story ""
-                               ::elements []} ;; Transient
+                   ::mnemonic {} ;; Transient
                    ::mnemonics {}}) ;; Saved
 

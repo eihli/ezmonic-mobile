@@ -174,7 +174,7 @@
  :save-mnemonic
  validate-spec
  (fn [{:keys [db]} [_ mnemonic]]
-   (let [uuid (random-uuid)
+   (let [uuid (or (::db/uuid mnemonic) (random-uuid))
          mnemonic (merge mnemonic {::db/uuid uuid})
          db (assoc-in db [::db/mnemonics uuid] mnemonic)]
      {:db db

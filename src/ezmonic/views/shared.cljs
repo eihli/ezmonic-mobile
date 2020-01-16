@@ -168,7 +168,9 @@
                         (on-reset mnemonic)))}]
         [:> rn/Button
          {:title "Save"
-          :disabled (empty? (string/trim @name))
+          :disabled (or
+                     (empty? (string/trim @name))
+                     (= mnemonic @mnemonic-edition))
           :on-press (fn []
                       (if on-save
                         (on-save @mnemonic-edition))
