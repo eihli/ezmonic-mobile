@@ -1,7 +1,9 @@
 (ns ezmonic.views.help
   (:require [ezmonic.db :as db]
             [ezmonic.style :as style]
-            [ezmonic.views.shared :as shared]
+            [ezmonic.views.shared
+             :refer [div center-quote]
+             :as shared]
             ["react-native"
              :refer [View
                      Text
@@ -50,19 +52,6 @@
                      :flex-basis 0}} consonant]
    [:> Text {:style {:flex-grow 1
                      :flex-basis 0}} description]])
-
-(defn div
-  [text]
-  [:> View
-   [:> Text text]])
-
-(defn center-quote
-  [text]
-  [:> View
-   {:style {:display "flex"
-            :align-items "center"}}
-   [:> Text {:style {:margin-right 40
-                     :margin-left 40}} text]])
 
 (defnav help
   []

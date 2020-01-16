@@ -12,6 +12,19 @@
 
 (def PickerItem (.. rn -Picker -Item))
 
+(defn div
+  [text]
+  [:> View
+   [:> Text text]])
+
+(defn center-quote
+  [text]
+  [:> View
+   {:style {:display "flex"
+            :align-items "center"}}
+   [:> Text {:style {:margin-right 40
+                     :margin-left 40}} text]])
+
 (defn safe-scroll-wrapper
   [& children]
   [:> rn/SafeAreaView
@@ -132,18 +145,17 @@
         [:> rn/Text "Words: "]
         [native-pickers (rg/cursor mnemonic-edition [::db/elements])]]
        [:> rn/View
-        [:> rn/Text "Name"]
+        [:> rn/Text "Name:"]
         [:> rn/TextInput
          {:value @name
-          :style style/text-input
+          :style (merge style/text-input
+                        {:height 40})
           :placeholder "E.g. Jenny's number"
           :on-change-text (fn [text]
                             (reset! name text)
                             (rg/flush))}]]
        [:> rn/View
-        [:> Text
-         "Write a sentence or story that uses those words."
-         " Save it for later reference."]
+        [:> Text "Story:"]
         [:> rn/TextInput
          {:value @story
           :style style/text-input

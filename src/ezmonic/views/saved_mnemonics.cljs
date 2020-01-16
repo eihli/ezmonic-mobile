@@ -25,8 +25,9 @@
      [:> Text "Number: " (::db/number mnemonic)]
      [:> View
       [:> Text "Words: " (string/join " " (map ::db/chosen-word (::db/elements mnemonic)))]]
-     [:> View
-      [:> Text "Story: " (::db/story mnemonic)]]
+     (if (not (empty? (::db/story mnemonic)))
+       [:> View
+        [:> Text "Story: " (::db/story mnemonic)]])
      ;; Button displayed last so it will be drawn over other elements
      ;; without the use of zIndex.
      ;; This would probably be better as a two-column layout and force stuff

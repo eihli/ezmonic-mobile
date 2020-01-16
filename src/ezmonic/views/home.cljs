@@ -2,7 +2,9 @@
   (:require ["react-native" :as rn]
             [re-frame.core :as rf]
             [ezmonic.style :as style]
-            [ezmonic.views.shared :as shared]
+            [ezmonic.views.shared
+             :refer [div center-quote]
+             :as shared]
             [ezmonic.db :as db]
             [clojure.string :as s]
             [reagent.core :as r]
@@ -66,7 +68,8 @@
         {:style (merge
                  style/text-input
                  {:flex 7
-                  :height 40})
+                  :height 40
+                  :margin-right 2})
          :keyboardType "phone-pad"
          :placeholder "Enter a number"
          :value @number
@@ -94,11 +97,10 @@
           (cond
             (and (not (empty? @submitted-val)) (not @calculating-mnemonic?))
             [:> rn/View
-             [:> rn/Text
-              "You can mezmorize the number " (::db/number @mnemonic) " with the words"
-              " " (s/join " " (map ::db/chosen-word (::db/elements @mnemonic)))
-              " Use the pickers below to change the words into a phrase"
-              " that you find easy to remember."]
+             [div (str "You can memorize the number " (::db/number @mnemonic) " with the words:")]
+             [center-quote (s/join " " (map ::db/chosen-word (::db/elements @mnemonic)))]
+             [div "Use the pickers below to choose words you find memorable. Give the mnemonic a name and write a vivid story to help you remember. Save it for later reference."]
+             
              [shared/mnemonic-form @mnemonic {:on-save (fn [mnemonic]
                                                          (rf/dispatch [:navigate [:saved-home]]))
                                               :on-reset (fn [mnemonic]
