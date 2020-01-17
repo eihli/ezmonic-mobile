@@ -1,5 +1,5 @@
 (ns ezmonic.e-data
-  (:require [cljs.reader :as reader]j)
+  (:require [cljs.reader :as reader])
   (:require-macros [ezmonic.util :refer [slurp]]))
 
 (defonce data
