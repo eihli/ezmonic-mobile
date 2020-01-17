@@ -69,6 +69,9 @@
                      (reset! val (.-key v))
                      (rg/flush))}])))
 
+(defn search-url [word]
+  (str "https://google.com/search?q=define+" (string/lower-case word)))
+
 (defn native-pickers
   "Display pickers full of mnemonics for a given `number`.
 
@@ -80,12 +83,21 @@
                         :flex-wrap "wrap"}}]
    (map-indexed
     (fn [idx element]
-      ^{:key idx}
-      [:> rn/View {:margin 2}
-       [:> rn/Text {:style {:margin-left "auto"
-                            :margin-right "auto"}}
-        (::db/number element)]
-       [modal-selector idx (rg/cursor elements [idx])]])
+      (let [el-cursor (rg/cursor elements [idx])]
+        ^{:key idx}
+        [:> rn/View {:margin 2}
+         [:> rn/View {:display "flex"
+                      :flex-direction "row"
+                      :justify-content "flex-start"
+                      :margin-left "auto"
+                      :margin-right "auto"}
+          [:> rn/Text
+           (::db/number element)]
+          [:> TouchableHighlight
+           {:on-press
+            #(.openURL rn/Linking (search-url (::db/chosen-word @el-cursor)))}
+           [:> rn/Text " 🔎"]]]
+         [modal-selector idx (rg/cursor elements [idx])]]))
     @elements)))
 
 (defn text-input
