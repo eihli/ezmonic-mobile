@@ -22,7 +22,7 @@
    "M"
    "R"
    "L"
-   "J, soft G"
+   "J, SH, soft G"
    "K, NG"
    "F, V"
    "B, P"])
@@ -35,8 +35,8 @@
    "Mow or Aim"
    "Row or Ear"
    "Lay or Eel"
-   "Joy or Edge"
-   "Key or Quay or Hang"
+   "Joy, Edge, or Ash"
+   "Key, Quay or Hang"
    "Foe or Halve"
    "Bay or Ape"])
 
