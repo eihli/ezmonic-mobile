@@ -50,7 +50,7 @@
          :placeholder "Enter a number"
          :value @number
          :on-change-text (fn [text]
-                           (reset! number text)
+                           (reset! number (s/replace text #"\D" ""))
                            (r/flush))
          :on-submit-editing #(on-submit @number)}]
        [:> rn/Button
