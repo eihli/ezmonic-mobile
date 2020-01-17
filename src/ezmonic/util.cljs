@@ -2,7 +2,8 @@
   (:require [clojure.math.combinatorics :refer [selections]]
             [clojure.set]
             [clojure.string :as string]
-            [ezmonic.data]))
+            [ezmonic.data]
+            [ezmonic.e-data :as data]))
 
 
 (defn connections
@@ -34,7 +35,7 @@
 
 (defn combo-to-phrase
   [combo]
-  (map #(:terminals (get-in ezmonic.data/data %)) combo))
+  (map #(:terminals (get-in data/data %)) combo))
 
 
 (defn all-phrases

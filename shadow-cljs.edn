@@ -1,5 +1,6 @@
 {:source-paths ["src"
-                "dev"]
+                "dev"
+                "src/resources"]
 
  :dependencies [[cider/cider-nrepl "0.22.4"]
                 [binaryage/devtools "0.9.11"]
