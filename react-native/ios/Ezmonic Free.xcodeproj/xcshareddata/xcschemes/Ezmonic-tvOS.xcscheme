@@ -29,8 +29,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "Ezmonic-tvOS.app"
-               BlueprintName = "Ezmonic-tvOS"
+               BuildableName = "Ezmonic Free-tvOS.app"
+               BlueprintName = "Ezmonic Free-tvOS"
                ReferencedContainer = "container:Ezmonic Free.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,8 +43,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "Ezmonic-tvOSTests.xctest"
-               BlueprintName = "Ezmonic-tvOSTests"
+               BuildableName = "Ezmonic Free-tvOSTests.xctest"
+               BlueprintName = "Ezmonic Free-tvOSTests"
                ReferencedContainer = "container:Ezmonic Free.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -59,8 +59,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "Ezmonic-tvOS.app"
-            BlueprintName = "Ezmonic-tvOS"
+            BuildableName = "Ezmonic Free-tvOS.app"
+            BlueprintName = "Ezmonic Free-tvOS"
             ReferencedContainer = "container:Ezmonic Free.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -70,8 +70,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "Ezmonic-tvOSTests.xctest"
-               BlueprintName = "Ezmonic-tvOSTests"
+               BuildableName = "Ezmonic Free-tvOSTests.xctest"
+               BlueprintName = "Ezmonic Free-tvOSTests"
                ReferencedContainer = "container:Ezmonic Free.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -92,8 +92,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "Ezmonic-tvOS.app"
-            BlueprintName = "Ezmonic-tvOS"
+            BuildableName = "Ezmonic Free-tvOS.app"
+            BlueprintName = "Ezmonic Free-tvOS"
             ReferencedContainer = "container:Ezmonic Free.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -109,8 +109,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "Ezmonic-tvOS.app"
-            BlueprintName = "Ezmonic-tvOS"
+            BuildableName = "Ezmonic Free-tvOS.app"
+            BlueprintName = "Ezmonic Free-tvOS"
             ReferencedContainer = "container:Ezmonic Free.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

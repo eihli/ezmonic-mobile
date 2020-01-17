@@ -41,7 +41,7 @@
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* EzmonicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EzmonicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* Ezmonic FreeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ezmonic FreeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* EzmonicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EzmonicTests.m; sourceTree = "<group>"; };
 		0306E9ADE42D62692867561E /* Pods-Ezmonic-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ezmonic-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Ezmonic-tvOS/Pods-Ezmonic-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -54,8 +54,8 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Ezmonic/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Ezmonic/main.m; sourceTree = "<group>"; };
 		2237BD96CD6605867C344A4D /* libPods-Ezmonic-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ezmonic-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E47B1E0B4A5D006451C7 /* Ezmonic-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ezmonic-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* Ezmonic-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ezmonic-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E47B1E0B4A5D006451C7 /* Ezmonic Free-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ezmonic Free-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* Ezmonic Free-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ezmonic Free-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A971AEEBEA2E2B3EC722591 /* Pods-EzmonicTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EzmonicTests.debug.xcconfig"; path = "Target Support Files/Pods-EzmonicTests/Pods-EzmonicTests.debug.xcconfig"; sourceTree = "<group>"; };
 		983F081006D795DA091DAAAA /* Pods-EzmonicTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EzmonicTests.release.xcconfig"; path = "Target Support Files/Pods-EzmonicTests/Pods-EzmonicTests.release.xcconfig"; sourceTree = "<group>"; };
 		AE1031A7F2E780EE221B4F54 /* libPods-Ezmonic-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ezmonic-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,9 +175,9 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* Ezmonic Free.app */,
-				00E356EE1AD99517003FC87E /* EzmonicTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* Ezmonic-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* Ezmonic-tvOSTests.xctest */,
+				00E356EE1AD99517003FC87E /* Ezmonic FreeTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* Ezmonic Free-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* Ezmonic Free-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -200,9 +200,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* EzmonicTests */ = {
+		00E356ED1AD99517003FC87E /* Ezmonic FreeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "EzmonicTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Ezmonic FreeTests" */;
 			buildPhases = (
 				EAC616F77840B78AE5528DFB /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -214,14 +214,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = EzmonicTests;
+			name = "Ezmonic FreeTests";
 			productName = EzmonicTests;
-			productReference = 00E356EE1AD99517003FC87E /* EzmonicTests.xctest */;
+			productReference = 00E356EE1AD99517003FC87E /* Ezmonic FreeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* Ezmonic */ = {
+		13B07F861A680F5B00A75B9A /* Ezmonic Free */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Ezmonic" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Ezmonic Free" */;
 			buildPhases = (
 				EA322182481BA053E22B7EA0 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -234,14 +234,14 @@
 			);
 			dependencies = (
 			);
-			name = Ezmonic;
+			name = "Ezmonic Free";
 			productName = Ezmonic;
 			productReference = 13B07F961A680F5B00A75B9A /* Ezmonic Free.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* Ezmonic-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* Ezmonic Free-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Ezmonic-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Ezmonic Free-tvOS" */;
 			buildPhases = (
 				91BB0C7C8CB526F805E14052 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -254,14 +254,14 @@
 			);
 			dependencies = (
 			);
-			name = "Ezmonic-tvOS";
+			name = "Ezmonic Free-tvOS";
 			productName = "Ezmonic-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* Ezmonic-tvOS.app */;
+			productReference = 2D02E47B1E0B4A5D006451C7 /* Ezmonic Free-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* Ezmonic-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* Ezmonic Free-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Ezmonic-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Ezmonic Free-tvOSTests" */;
 			buildPhases = (
 				F6D66C7E61962647D49277DA /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -273,9 +273,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "Ezmonic-tvOSTests";
+			name = "Ezmonic Free-tvOSTests";
 			productName = "Ezmonic-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* Ezmonic-tvOSTests.xctest */;
+			productReference = 2D02E4901E0B4A5D006451C7 /* Ezmonic Free-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -316,10 +316,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Ezmonic */,
-				00E356ED1AD99517003FC87E /* EzmonicTests */,
-				2D02E47A1E0B4A5D006451C7 /* Ezmonic-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* Ezmonic-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* Ezmonic Free */,
+				00E356ED1AD99517003FC87E /* Ezmonic FreeTests */,
+				2D02E47A1E0B4A5D006451C7 /* Ezmonic Free-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* Ezmonic Free-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -555,12 +555,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* Ezmonic */;
+			target = 13B07F861A680F5B00A75B9A /* Ezmonic Free */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* Ezmonic-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* Ezmonic Free-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -597,7 +597,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ezmonic.app/Ezmonic";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ezmonic Free.app/Ezmonic Free";
 			};
 			name = Debug;
 		};
@@ -617,7 +617,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ezmonic.app/Ezmonic";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ezmonic Free.app/Ezmonic Free";
 			};
 			name = Release;
 		};
@@ -742,7 +742,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Ezmonic-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ezmonic-tvOS.app/Ezmonic-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ezmonic Free-tvOS.app/Ezmonic Free-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
@@ -769,7 +769,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Ezmonic-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ezmonic-tvOS.app/Ezmonic-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ezmonic Free-tvOS.app/Ezmonic Free-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -878,7 +878,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "EzmonicTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Ezmonic FreeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -887,7 +887,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Ezmonic" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Ezmonic Free" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -896,7 +896,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Ezmonic-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Ezmonic Free-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -905,7 +905,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Ezmonic-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Ezmonic Free-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
