@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Ezmonic.xcodeproj">
+      location = "group:/Users/eihli/code/ezmonic-mobile/react-native/ios/Ezmonic Free.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
