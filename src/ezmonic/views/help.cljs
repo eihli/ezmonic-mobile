@@ -29,7 +29,7 @@
 
 (def numbers (vec (map str (range 10))))
 (def descriptions
-  ["Ass or Zoo"
+  ["Ace or Zoo"
    "Tea or Doe"
    "Nay or Knee"
    "Mow or Aim"
