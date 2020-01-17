@@ -4,6 +4,9 @@
             [reagent.core :as rg]
             [re-frame.core :as rf]
             [clojure.string :as string]
+            ["react-native-modal-selector"
+             :as rn-modal-selector
+             :default ModalSelector]
             ["react-native"
              :refer [View
                      Text
@@ -51,28 +54,20 @@
                  (. navigation navigate "edit"))}
     [:> Text "Edit"]]])
 
-
-(defn picker
+(defn modal-selector
   [picker-idx subel-cursor]
-  (let [val (rg/cursor subel-cursor [::db/chosen-word])]
-    (fn [picker-idx mnemonic-subelement]
-      [:> rn/View 
-       [:> rn/Text {:style {:margin-left "auto"
-                            :margin-right "auto"}}
-        (::db/number mnemonic-subelement)]]
-      (into
-       [:> rn/Picker {:style {:width 170}
-                      :item-style {:font-size 10}
-                      :selectedValue @val
-                      :onValueChange (fn [v]
-                                       (reset! val v)
-                                       (rg/flush))
-                      :enabled true}]
-       (map-indexed
-        (fn [idx word] 
-          ^{:key idx} [:> PickerItem {:label word
-                                      :value word}])
-        (::db/word-choices @subel-cursor))))))
+  (let [data (map (fn [word] {:key word :label word})
+                  (::db/word-choices @subel-cursor))
+        init-value (::db/chosen-word @subel-cursor)
+        val (rg/cursor subel-cursor [::db/chosen-word])]
+    (fn [picker-idx subel-cursor]
+      (print init-value)
+      [:> ModalSelector
+       {:selected-key init-value
+        :data data
+        :on-change (fn [v]
+                     (reset! val (.-key v))
+                     (rg/flush))}])))
 
 (defn native-pickers
   "Display pickers full of mnemonics for a given `number`.
@@ -91,7 +86,7 @@
        [:> rn/Text {:style {:margin-left "auto"
                             :margin-right "auto"}}
         (::db/number element)]
-       [picker idx (rg/cursor elements [idx])]])
+       [modal-selector idx (rg/cursor elements [idx])]])
     @elements)))
 
 (defn text-input
