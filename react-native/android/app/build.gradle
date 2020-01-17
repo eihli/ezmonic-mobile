@@ -150,18 +150,10 @@ android {
             keyPassword 'android'
         }
         release {
-            if (project.hasProperty('EZMONIC_UPLOAD_STORE_FILE')) {
-                storeFile file(EZMONIC_UPLOAD_STORE_FILE)
-                keyAlias EZMONIC_UPLOAD_KEY_ALIAS
-                def sPassword = null
-                def kPassword = null
-                if (System.console() != null)
-                    sPassword = System.console().readLine("\\\\nEnter store password ")
-                if (System.console() != null)
-                    kPassword = System.console().readLine("\\\\nEnter key password ")
-                keyPassword kPassword
-                storePassword sPassword
-            }
+            storeFile file('ezmonic-upload-key.keystore')
+            keyAlias 'ezmonic-upload-key'
+            keyPassword 'q09d6h3k19k'
+            storePassword 'q09d6h3k19k'
         }
     }
     buildTypes {

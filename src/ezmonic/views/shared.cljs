@@ -77,12 +77,11 @@
   [elements]
   (into
    [:> rn/View {:style {:flex-direction "row"
-                        :flex-wrap "wrap"
-                        :justify-content "space-between"}}]
+                        :flex-wrap "wrap"}}]
    (map-indexed
     (fn [idx element]
       ^{:key idx}
-      [:> rn/View
+      [:> rn/View {:margin 2}
        [:> rn/Text {:style {:margin-left "auto"
                             :margin-right "auto"}}
         (::db/number element)]

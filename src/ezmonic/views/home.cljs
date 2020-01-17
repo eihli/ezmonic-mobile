@@ -33,30 +33,6 @@
                                        :value word}])
          (::db/mnemonic-word-choices mnemonic-subelement)))])))
 
-(defn native-pickers
-  "Display pickers full of mnemonics for a given `number`.
-
-  Uses native picker, which looks fine in Android, but for this
-  particular app is not the right fit."
-  [mnemonic]
-  (into [:> rn/View {:style {:flex-direction "row"
-                             :flex-wrap "wrap"
-                             :justify-content "space-between"
-                             :padding 10}}]
-        (map-indexed
-         (fn [idx mnemonic-subelement]
-           (let [mnemonic-number (:db/mnemonic-number mnemonic-subelement)]
-             ^{:key idx}
-             [:> rn/View {:style {:flex-direction "row"}}
-              ^{:key "text"}
-              [:> rn/Text {:style {:padding-top 15
-                                   :font-weight "bold"
-                                   :font-size 18}}
-               mnemonic-number]
-              ^{:key "picker"}
-              [picker idx mnemonic-subelement]]))
-         mnemonic)))
-
 (defn number-input
   []
   (let [number (r/atom "")]
