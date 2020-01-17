@@ -104,7 +104,7 @@
               ["ZH" "fricative"]))
 
 
-(def not-really-vowels #{"ER" "W"})
+(def not-really-vowels #{"ER"})
 
 
 (def consonants
@@ -129,18 +129,16 @@
    Ignore the `OW2` since it's not a consonant.
    V         -> 8
    ER0 -> ER -> 4  ;; The 0/1/2 at the end is the stress, we don't care about it.
-   W         -> 3
+   Ignore the W
    ER1 -> ER -> 4
    K         -> 7"
   {"T" 1
    "CH" 6
    "K" 7
-   "HH" 2
    "L" 5
    "JH" 6
    "G" 7
    "M" 3
-   "W" 3
    "S" 0
    "Z" 0
    "R" 4
@@ -205,13 +203,3 @@
                           (map string/join (partition 12 12 nil number))))))
 
 
-;; (defn mnemonic-number
-;;   "Given a mnemonic, returns the number it's a mnemonic for.
-
-;;   This helper is specific to how a mnemonic is saved in app-db.
-;;   A mnemonic in app-db is just a collection of pieces of a mnemonic.
-;;   To get the full original number, we need to map over the collection
-;;   and join together all the individual numbers for each word of the
-;;   mnemonic phrase."
-;;   [mnemonic]
-;;   (string/join "" []))
