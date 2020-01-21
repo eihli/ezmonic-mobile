@@ -22,4 +22,10 @@
    :compiler-options {:infer-externs :auto
                       :preloads [devtools.core]}
    :devtools {:repl-init-ns ezmonic.core
-              :repl-pprint true}}}}
+              :repl-pprint true}}
+  :release
+  {:target :react-native
+   :init-fn ezmonic.prod/init
+   :output-dir "react-native/app"
+   :js-options {:js-package-dirs ["react-native/node_modules"]}
+   :compiler-options {:infer-externs :auto}}}}
