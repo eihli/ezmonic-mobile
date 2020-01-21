@@ -3,10 +3,16 @@
             [clojure.set]
             [clojure.string :as string]
             [ezmonic.data]
+            [cognitect.transit :as transit]
             [ezmonic.e-data :as data]))
 
 
-(defonce json-data (js/require "../../assets/number-to-word-tree.json"))
+(defn get-number-to-word-tree []
+  (let [reader (transit/reader :json)
+        data (goog.object.get (js/require "./number-to-word-tree.js") "default")]
+    (reader/read data)))
+
+(defonce number-to-word-tree (get-number-to-word-tree))
 
 (defn connections
   [length]
@@ -32,13 +38,8 @@
       (map vector (rest digits) connection)))
    (connections (dec (count digits)))))
 
-(defn json-get-in [obj keys]
-  (if (or (nil? obj) (empty? keys))
-    obj
-    (recur (goog.object/get obj (first keys)) (rest keys))))
-
 (defn -terminals [combo-el]
-  (json-get-in json-data (conj (vec (map str combo-el)) "terminals")))
+  (get-in number-to-word-tree (conj combo-el :terminals)))
 
 (defn combo-to-phrase
   [combo]
