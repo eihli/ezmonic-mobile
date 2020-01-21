@@ -10,7 +10,7 @@
 (defn get-number-to-word-tree []
   (let [reader (transit/reader :json)
         data (goog.object.get (js/require "./number-to-word-tree.js") "default")]
-    (reader/read data)))
+    (transit/read reader data)))
 
 (defonce number-to-word-tree (get-number-to-word-tree))
 
