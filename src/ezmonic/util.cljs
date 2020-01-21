@@ -6,10 +6,11 @@
             [ezmonic.e-data :as data]))
 
 
+(defonce json-data (js/require "../../assets/number-to-word-tree.json"))
+
 (defn connections
   [length]
   (selections [0 1] length))
-
 
 (defn joiner
   [acc [digit join]]
@@ -21,7 +22,6 @@
      (vec (conj (peek acc) digit)))
     (conj acc [digit])))
 
-
 (defn ezminations
   [digits]
   (map
@@ -32,11 +32,17 @@
       (map vector (rest digits) connection)))
    (connections (dec (count digits)))))
 
+(defn json-get-in [obj keys]
+  (if (or (nil? obj) (empty? keys))
+    obj
+    (recur (goog.object/get obj (first keys)) (rest keys))))
+
+(defn -terminals [combo-el]
+  (json-get-in json-data (conj (vec (map str combo-el)) "terminals")))
 
 (defn combo-to-phrase
   [combo]
-  (map #(:terminals (get-in data/data %)) combo))
-
+  (map -terminals combo))
 
 (defn all-phrases
   [number]
@@ -45,7 +51,6 @@
         phrases (map combo-to-phrase combos)]
     phrases))
 
-
 (defn shortest
   [coll]
   (reduce
@@ -53,7 +58,6 @@
       %1
       %2)
    coll))
-
 
 (defn all-mezmorizations
   [number]
@@ -115,7 +119,8 @@
    not-really-vowels
    (into #{} (map first (filter #(and
                                   (not= (second %) "vowel")
-                                  (not= (second %) "semivowel"))
+                                  (not= (second %) "semivowel")
+                                  (not= (second %) "aspirate"))
                                 phones)))))
 
 
