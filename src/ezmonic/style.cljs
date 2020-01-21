@@ -48,10 +48,10 @@
 
 (def text-input
   {:borderWidth 1
+   :color "black"
    :borderColor "grey"})
 
 (def styles
   (-> platform-style
       ->js
       rn/StyleSheet.create))
-
