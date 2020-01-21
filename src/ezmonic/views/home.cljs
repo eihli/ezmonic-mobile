@@ -14,7 +14,7 @@
 
 (defn picker
   [picker-idx mnemonic-subelement]
-  (let [val (r/atom (::db/mnemonic-chosen-word mnemonic-subelement))]  
+  (let [val (r/atom (::db/mnemonic-chosen-word mnemonic-subelement))]
     (fn [picker-idx mnemonic-subelement]
       [:> rn/View
        [:> rn/Text {:style {:margin-left "auto"
@@ -45,9 +45,11 @@
                  style/text-input
                  {:flex 7
                   :height 40
-                  :margin-right 2})
+                  :margin-right 2
+                  :padding-left 4})
          :keyboardType "phone-pad"
          :placeholder "Enter a number"
+         :placeholder-text-color "grey"
          :value @number
          :on-change-text (fn [text]
                            (reset! number (s/replace text #"\D" ""))
@@ -76,7 +78,7 @@
              [div (str "You can memorize the number " (::db/number @mnemonic) " with the words:")]
              [center-quote (s/join " " (map ::db/chosen-word (::db/elements @mnemonic)))]
              [div "Use the pickers below to choose words you find memorable. Give the mnemonic a name and write a vivid story to help you remember. Save it for later reference."]
-             
+
              [shared/mnemonic-form @mnemonic {:on-save (fn [mnemonic]
                                                          (rf/dispatch [:navigate [:saved-home]]))
                                               :on-reset (fn [mnemonic]
