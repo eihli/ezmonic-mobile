@@ -23,6 +23,7 @@
 
 (def heading
   {:font-size 20
+   :margin-bottom 7
    :font-weight "bold"
    :margin-top 15})
 

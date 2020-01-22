@@ -18,6 +18,7 @@
 (defn div
   [text]
   [:> View
+   {:style {:margin-bottom 5}}
    [:> Text text]])
 
 (defn center-quote
