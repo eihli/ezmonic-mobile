@@ -46,6 +46,13 @@
   (map -terminals combo))
 
 (defn all-phrases
+  ;; Returns them in order longest to shortest.
+  ;; For the number 4567,
+  ;; Returns [<4-word mnemonics>, <3-words>, <2-words>, <1-words>]
+  ;; Note these are lists of lists of lists.
+  ;; 2-words would be [[[4..][567...]] [[45...][67...]]]
+  ;; Will be nil if can't form phrase.
+  ;; [[nil] [[45...][67...]]] means there are no [[4..][567]] phrases
   [number]
   (let [digits (map int number)
         combos (ezminations digits)
@@ -60,7 +67,23 @@
       %2)
    coll))
 
+(defn available-phrases
+  ;; This also orders them from shortest to longest
+  ;; since that's a more natural order. The ones we probably care
+  ;; about are the fewest words to make up a mnemonic.
+  [number]
+  (reverse
+   (filter
+    (fn [phrase]
+      ((complement some) nil? phrase))
+    (all-phrases number))))
+
 (defn all-mezmorizations
+  ;; Shortest list of options to complete a mnemonic.
+  ;; Given 3141592153, returns
+  ;; a list of 31415 words and a list of 92153 words.
+  ;; Technically, not "words" but a list of a word.
+  ;; [word, phone, phone, phone, phone]
   [number]
   (shortest
    (filter
@@ -202,9 +225,33 @@
                    (mapv first phrase-option)))))
 
 
-(defn e-number->mnemonics
+(defn all-mnemonic-options
+  [number]
+  (let [all-mnemonic-possibilities (available-phrases number)]
+    (map
+     (fn [mnemonic-possibilities]
+       (map
+        (fn [mnemonic-possibility]
+          (list (->> mnemonic-possibility
+                     first
+                     strip-vowels
+                     normalize-consonants
+                     (clojure.string/join ""))
+                (mapv first mnemonic-possibility)))
+        mnemonic-possibilities))
+     all-mnemonic-possibilities)))
+
+(defn e-all-mnemonic-options
   "Splits a long number into multiple smaller numbers
   so we don't time out while calculating a mnemonic"
+  [number]
+  (vec (apply concat (map all-mnemonic-options
+                          (map string/join (partition 12 12 nil number))))))
+
+(defn e-number->mnemonics
+  "Splits a long number into multiple smaller numbers
+  so we don't time out while calculating a mnemonic
+  DEPRECATED"
   [number]
   (vec (apply concat (map -e-number->mnemonics
                           (map string/join (partition 12 12 nil number))))))
