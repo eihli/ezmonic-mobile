@@ -158,6 +158,7 @@
           :style (merge style/text-input
                         {:height 40})
           :placeholder "E.g. Jenny's number"
+          :placeholder-text-color "grey"
           :on-change-text (fn [text]
                             (reset! name text)
                             (rg/flush))}]]
