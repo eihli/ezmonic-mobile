@@ -4,13 +4,13 @@
             [clojure.string :as string]
             [ezmonic.data]
             [cognitect.transit :as transit]
-            [ezmonic.e-data :as data]))
-
+            [ezmonic.e-data :as data]
+            [ezmonic.number-to-word-tree :as mnemonic-data]))
 
 (defn get-number-to-word-tree []
   (let [reader (transit/reader :json)
-        data (goog.object.get (js/require "./number-to-word-tree.js") "default")]
-    (transit/read reader data)))
+        data mnemonic-data/number-to-word-tree]
+    (transit/read reader data))) 
 
 (defonce number-to-word-tree (get-number-to-word-tree))
 
