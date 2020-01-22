@@ -113,6 +113,32 @@
                                 (util/e-number->mnemonics number-to-memorize)))})
           (assoc :calculating-mnemonic? false))})))
 
+(reg-event-fx
+ :calculate-all-mnemonics
+ [debug
+  validate-spec]
+ (fn [cofx [_ number-to-memorize]]
+   (let [db (:db cofx)]
+     {:db
+      (-> (:db cofx)
+          (assoc
+           ::db/all-possible-mnemonic
+           {::db/name ""
+            ::db/number number-to-memorize
+            ::db/story ""
+            ::db/all-possible-elements
+            (let [all-mnemonic-options util/e-all-mnemonic-options]
+              (vec (map
+                    (fn [mnemonic-options]
+                      (map
+                       (fn [mnemonic-subphrase]
+                         {::db/number (first mnemonic-subphrase)
+                          ::db/word-choices (second mnemonic-subphrase)
+                          ::db/chosen-word (first (second mnemonic-subphrase))})
+                       mnemonic-options))
+                    all-mnemonic-options)))})
+          (assoc :calculating-mnemonic? false))})))
+
 (reg-event-db
  :input-value
  (fn [db [_ value]]
