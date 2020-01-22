@@ -34,42 +34,43 @@
          (::db/mnemonic-word-choices mnemonic-subelement)))])))
 
 (defn number-input
-  []
-  (let [number (r/atom "")]
-    (fn [{:keys [on-submit]}]
-      [:> rn/View
-       {:style {:display "flex"
-                :flexDirection "row"}}
-       [:> rn/TextInput
-        {:style (merge
-                 style/text-input
-                 {:flex 7
-                  :height 40
-                  :margin-right 2
-                  :padding-left 4})
-         :keyboardType "phone-pad"
-         :placeholder "Enter a number"
-         :placeholder-text-color "grey"
-         :value @number
-         :on-change-text (fn [text]
-                           (reset! number (s/replace text #"\D" ""))
-                           (r/flush))
-         :on-submit-editing #(on-submit @number)}]
-       [:> rn/Button
-        {:title "mnemorize"
-         :style {:flex 5}
-         :on-press #(on-submit @number)}]])))
+  [{:keys [on-submit number]}]
+  (fn [{:keys [on-submit number]}]
+    [:> rn/View
+     {:style {:display "flex"
+              :flexDirection "row"}}
+     [:> rn/TextInput
+      {:style (merge
+               style/text-input
+               {:flex 7
+                :height 40
+                :margin-right 2
+                :padding-left 4})
+       :keyboardType "phone-pad"
+       :placeholder "Enter a number"
+       :placeholder-text-color "grey"
+       :value @number
+       :on-change-text (fn [text]
+                         (reset! number (s/replace text #"\D" ""))
+                         (r/flush))
+       :on-submit-editing #(on-submit @number)}]
+     [:> rn/Button
+      {:title "mnemorize"
+       :style {:flex 5}
+       :on-press #(on-submit @number)}]]))
 
 (defn -Home
   []
   (let [submitted-val (r/atom "")
+        number (r/atom "")
         calculating-mnemonic? (rf/subscribe [:calculating-mnemonic?])]
     (fn []
       (let [mnemonic (r/atom @(rf/subscribe [:mnemonic]))]
         [:> rn/SafeAreaView {}
          [:> rn/ScrollView {:style {:margin 10}}
           [number-input
-           {:on-submit (fn [val]
+           {:number number
+            :on-submit (fn [val]
                          (reset! submitted-val val)
                          (rf/dispatch [:mnemonic-submitted-for-calculation val]))}]
           (cond
@@ -82,6 +83,7 @@
              [shared/mnemonic-form @mnemonic {:on-save (fn [mnemonic]
                                                          (rf/dispatch [:navigate [:saved-home]]))
                                               :on-reset (fn [mnemonic]
+                                                          (reset! number "")
                                                           (reset! submitted-val ""))}]]
             @calculating-mnemonic?
             [:> rn/View
