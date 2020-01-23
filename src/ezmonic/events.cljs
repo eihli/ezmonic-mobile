@@ -90,8 +90,6 @@
    (let [db (:db cofx)]
      {:db (assoc db :calculating-mnemonic? true)
       :dispatch-later [{:ms 20
-                        :dispatch ^:flush-dom [:calculate-mnemonic number-to-mnemorize]}
-                       {:ms 20
                         :dispatch ^:flush-dom [:calculate-all-mnemonics number-to-mnemorize]}]})))
 
 (reg-event-fx
@@ -130,7 +128,7 @@
             ::db/story ""
             ::db/all-possible-elements
             (let [all-mnemonic-options
-                  (sort-by count (util/e-all-mnemonic-options number-to-memorize))]
+                  (util/e-all-mnemonic-options number-to-memorize)]
               (vec (map
                     (fn [mnemonic-options]
                       (vec

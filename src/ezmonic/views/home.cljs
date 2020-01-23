@@ -65,8 +65,7 @@
         number (r/atom "")
         calculating-mnemonic? (rf/subscribe [:calculating-mnemonic?])]
     (fn []
-      (let [mnemonic (r/atom @(rf/subscribe [:mnemonic]))
-            all-possible-mnemonic (r/atom @(rf/subscribe [:all-possible-mnemonic]))]
+      (let [all-possible-mnemonic (r/atom @(rf/subscribe [:all-possible-mnemonic]))]
         [:> rn/SafeAreaView {}
          [:> rn/ScrollView {:style {:margin 10}}
           [number-input
@@ -78,10 +77,9 @@
             (and
              (not (empty? @all-possible-mnemonic))
              (not (empty? @submitted-val))
-             (not (empty? @mnemonic))
              (not @calculating-mnemonic?))
             [:> rn/View
-             [shared/mnemonic-form mnemonic @all-possible-mnemonic
+             [shared/new-mnemonic-form all-possible-mnemonic
               {:on-save (fn [mnemonic]
                           (rf/dispatch [:navigate [:saved-home]]))
                :on-reset (fn []

@@ -18,7 +18,25 @@
   [length]
   (selections [0 1] length))
 
+(defn zeros [coll] (filter #(= % 0) coll))
+(defn ones [coll] (filter #(= % 1) coll))
+
+(defn filter-to-threshold
+  [coll min-filter percentage]
+  (filter
+   #(or (< (/ (count (zeros %)) (count %))
+           percentage)
+        (<= (count %) min-filter))
+   coll))
+
 (defn joiner
+  ;; This is the hack to get around not doing dynamic programming.
+  ;; "12345"
+  ;; [0 0 0 1]
+  ;; [1, 2, 3, 45]
+  ;; [0 0 1 1]
+  ;; [1, 2, 345]
+  ;; 1's are where we join words
   [acc [digit join]]
   (if (= join 1)
     (conj
@@ -36,7 +54,10 @@
       joiner
       [[(first digits)]]
       (map vector (rest digits) connection)))
-   (connections (dec (count digits)))))
+   (filter-to-threshold
+    (connections (dec (count digits)))
+    3
+    0.5)))
 
 (defn -terminals [combo-el]
   (get-in number-to-word-tree (conj combo-el :terminals)))
@@ -245,8 +266,7 @@
   "Splits a long number into multiple smaller numbers
   so we don't time out while calculating a mnemonic"
   [number]
-  (vec (apply concat (map all-mnemonic-options
-                          (map string/join (partition 12 12 nil number))))))
+  (all-mnemonic-options number))
 
 (defn e-number->mnemonics
   "Splits a long number into multiple smaller numbers

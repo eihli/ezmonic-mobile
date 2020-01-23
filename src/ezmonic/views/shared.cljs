@@ -138,6 +138,98 @@
     :color "red"
     :on-press on-clear}])
 
+(defn new-mnemonic-form
+  [all-possible-mnemonic {:keys [on-save on-delete on-reset]}]
+  (let [all-elements-idx (rg/atom 0)
+        mnemonic-edition (let [{name ::db/name
+                                story ::db/story
+                                number ::db/number} @all-possible-mnemonic
+                               elements (first (::db/all-possible-elements @all-possible-mnemonic))]
+                           (rg/atom {::db/name name
+                                     ::db/story story
+                                     ::db/number number
+                                     ::db/elements elements}))
+        name (rg/cursor mnemonic-edition [::db/name])
+        story (rg/cursor mnemonic-edition [::db/story])]
+    (fn [all-possible-mnemonic {:keys [on-save on-delete]}]
+      [:> rn/View
+       [:> View
+        [div (str "You can memorize the number " (::db/number @mnemonic-edition) " with the words:")]
+        [center-quote (string/join " " (map ::db/chosen-word (::db/elements @mnemonic-edition)))]
+        [div "Use the pickers below to choose words you find memorable. Give the mnemonic a name and write a vivid story to help you remember. Save it for later reference."]
+        [div "Don't like the words in the pickers? Use the arrows to change how the number is divided into the pickers."]
+        [:> View {:style style/flex-row}
+         [:> rn/Button
+          {:title "<-"
+           :style {:flex-grow 1
+                   :flex-basis 0}
+           :disabled (= @all-elements-idx 0)
+           :on-press (fn []
+                       (swap! all-elements-idx dec)
+                       (swap! mnemonic-edition
+                              #(assoc % ::db/elements
+                                      (get-in @all-possible-mnemonic
+                                              [::db/all-possible-elements @all-elements-idx])))
+                       (rf/dispatch [:switch-elements @all-elements-idx]))}]
+         [:> rn/Button
+          {:title "->"
+           :style {:flex-grow 1
+                   :flex-basis 0}
+           :disabled (= (+ 1 @all-elements-idx)
+                        (count (::db/all-possible-elements @all-possible-mnemonic)))
+           :on-press (fn []
+                       (swap! all-elements-idx inc)
+                       (swap! mnemonic-edition
+                              #(assoc % ::db/elements
+                                      (get-in @all-possible-mnemonic
+                                              [::db/all-possible-elements @all-elements-idx])))
+                       (rf/dispatch [:switch-elements @all-elements-idx]))}]]]
+       [:> rn/View
+        [:> rn/Text "Number: " (::db/number @mnemonic-edition)]]
+       [:> rn/View
+        [:> rn/Text "Words: "]
+        [native-pickers
+         (rg/cursor mnemonic-edition [::db/elements])]]
+       [:> rn/View
+        [:> rn/Text "Name:"]
+        [:> rn/TextInput
+         {:value @name
+          :style (merge style/text-input
+                        {:height 40})
+          :placeholder "E.g. Jenny's number"
+          :placeholder-text-color "grey"
+          :on-change-text (fn [text]
+                            (reset! name text)
+                            (print @mnemonic-edition)
+                            (rg/flush))}]]
+       [:> rn/View
+        [:> Text "Story:"]
+        [:> rn/TextInput
+         {:value @story
+          :style style/text-input
+          :text-align-vertical "top"
+          :multiline true
+          :number-of-lines 5
+          :placeholder "E.g. 3.14159265 -> A METEOR (3.14) landed on and killed my favorite TULIP (159). It's now an ANGEL (265) in the sky."
+          :on-change-text (fn [text]
+                            (reset! story text)
+                            (rg/flush))}]]
+       [:> rn/View
+        {:style {:display "flex"
+                 :padding-top 2
+                 :flex-direction "row"
+                 :justify-content "space-between"}}
+        [:> rn/Button
+         {:title "Reset"
+          :color "red"
+          :on-press on-reset}]
+        [:> rn/Button
+         {:title "Save"
+          :on-press (fn []
+                      (if on-save
+                        (on-save @mnemonic-edition))
+                      (rf/dispatch [:save-mnemonic @mnemonic-edition]))}]]])))
+
 (defn mnemonic-form
   [mnemonic all-possible-mnemonic {:keys [on-save on-delete on-reset]}]
   (let [all-elements-idx (rg/atom 0)
