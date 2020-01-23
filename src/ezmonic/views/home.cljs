@@ -37,27 +37,32 @@
   [{:keys [on-submit number]}]
   (fn [{:keys [on-submit number]}]
     [:> rn/View
-     {:style {:display "flex"
-              :flexDirection "row"}}
-     [:> rn/TextInput
-      {:style (merge
-               style/text-input
-               {:flex 7
-                :height 40
-                :margin-right 2
-                :padding-left 4})
-       :keyboardType "phone-pad"
-       :placeholder "Enter a number"
-       :placeholder-text-color "grey"
-       :value @number
-       :on-change-text (fn [text]
-                         (reset! number (s/replace text #"\D" ""))
-                         (r/flush))
-       :on-submit-editing #(on-submit @number)}]
-     [:> rn/Button
-      {:title "mnemorize"
-       :style {:flex 5}
-       :on-press #(on-submit @number)}]]))
+     [:> rn/View
+      {:style {:display "flex"
+               :flexDirection "row"}}
+      [:> rn/TextInput
+       {:style (merge
+                style/text-input
+                {:flex 7
+                 :height 40
+                 :margin-right 2
+                 :padding-left 4})
+        :keyboardType "phone-pad"
+        :placeholder "Enter a number"
+        :placeholder-text-color "grey"
+        :value @number
+        :on-change-text (fn [text]
+                          (reset! number (s/replace text #"\D" ""))
+                          (r/flush))
+        :on-submit-editing #(on-submit @number)}]
+      [:> rn/Button
+       {:title "mnemorize"
+        :style {:flex 5}
+        :on-press #(on-submit @number)}]]
+     (if (> (count @number) 16)
+       [:> rn/View
+        [:> rn/Text {:style {:color "red"}}
+         "We don't limit the length of the number you can compute, but numbers over ~16 digits may take a really long time. Some computations may cause the application to lock and require a restart."]])]))
 
 (defn -Home
   []

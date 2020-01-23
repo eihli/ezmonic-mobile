@@ -22,7 +22,8 @@
    :compiler-options {:infer-externs :auto
                       :preloads [devtools.core]}
    :devtools {:repl-init-ns ezmonic.core
-              :repl-pprint true}}
+              :repl-pprint true
+              :repl-timeout 60000}}
   :release
   {:target :react-native
    :init-fn ezmonic.prod/init
