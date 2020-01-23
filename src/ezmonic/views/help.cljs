@@ -96,7 +96,7 @@
 
   (fn [{:keys [navigation]} props]
     (clj->js
-     {:title "Help"
+     {:title "help"
       :headerStyle style/header})))
 
 (def help-stack

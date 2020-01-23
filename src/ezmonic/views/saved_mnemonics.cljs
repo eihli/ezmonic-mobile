@@ -71,12 +71,12 @@
                   {:saved-home (doto (rg/reactify-component saved-mnemonics)
                                  (goog.object/set
                                   "navigationOptions"
-                                  (clj->js {:title "Saved mnemonic"
+                                  (clj->js {:title "saved mnemonics"
                                             :headerStyle style/header})))
                    :saved-edit (doto (rg/reactify-component edit-mnemonic)
                                  (goog.object/set
                                   "navigationOptions"
-                                  (clj->js {:title "Edit"
+                                  (clj->js {:title "edit"
                                             :headerStyle style/header})))}))]
     (doto stack
       (goog.object/set "navigationOptions" #js {:tabBarLabel "Saved"}))))
