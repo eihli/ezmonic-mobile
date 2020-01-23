@@ -45,7 +45,7 @@
                       (fn []
                         (.removeEventListener rn/AppState "change" on-app-state-change))})]
         
-        (rn/AppRegistry.registerComponent "Ezmonic" (fn [] wrapper))
+        (rn/AppRegistry.registerComponent "Ezmonic Free" (fn [] wrapper))
         (fn [comp]
           (reset! component-ref comp)
           ;; For some reason, views that were far removed from the navigators

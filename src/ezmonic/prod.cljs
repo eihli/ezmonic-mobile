@@ -11,7 +11,7 @@
 
 (defn start []
   (rn/AppRegistry.registerComponent
-   "Ezmonic"
+   "Ezmonic Free"
    (fn [] (r/reactify-component views/app-container))))
 
 (defn ^:export init []

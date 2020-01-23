@@ -1,6 +1,6 @@
 {
-  "name": "Ezmonic",
-  "version": "0.0.1",
+  "name": "Ezmonic Free",
+  "version": "0.2.2",
   "private": true,
   "devDependencies": {
     "shadow-cljs": "^2.8.74"
