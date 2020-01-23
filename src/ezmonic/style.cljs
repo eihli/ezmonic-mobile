@@ -33,8 +33,9 @@
         :android all-styles}))
 
 (def flex-row
-  {:display :flex
-   :flex-direction :row})
+  {:display "flex"
+   :flex-direction "row"
+   :justify-content "space-between"})
 
 (def edit-bar
   {:display :flex

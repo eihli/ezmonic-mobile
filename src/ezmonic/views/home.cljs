@@ -81,10 +81,6 @@
              (not (empty? @mnemonic))
              (not @calculating-mnemonic?))
             [:> rn/View
-             [div (str "You can memorize the number " (::db/number @mnemonic) " with the words:")]
-             [center-quote (s/join " " (map ::db/chosen-word (::db/elements @mnemonic)))]
-             [div "Use the pickers below to choose words you find memorable. Give the mnemonic a name and write a vivid story to help you remember. Save it for later reference."]
-
              [shared/mnemonic-form mnemonic @all-possible-mnemonic
               {:on-save (fn [mnemonic]
                           (rf/dispatch [:navigate [:saved-home]]))

@@ -146,31 +146,38 @@
         story (rg/cursor mnemonic-edition [::db/story])]
     (fn [mnemonic all-possible-mnemonic {:keys [on-save on-delete]}]
       [:> rn/View
-       (if all-possible-mnemonic
+       (if all-possible-mnemonic ;; We are in the creation area
          [:> View
-          [:> Text
-           "Click the arrows to try splitting the number into different combinations of words."]
-          [:> rn/Button
-           {:title "<-"
-            :disabled (= @all-elements-idx 0)
-            :on-press (fn []
-                        (swap! all-elements-idx dec)
-                        (swap! mnemonic-edition
-                               #(assoc % ::db/elements
-                                       (get-in all-possible-mnemonic
-                                               [::db/all-possible-elements @all-elements-idx])))
-                        (rf/dispatch [:switch-elements @all-elements-idx]))}]
-          [:> rn/Button
-           {:title "->"
-            :disabled (= (+ 1 @all-elements-idx)
-                         (count (::db/all-possible-elements all-possible-mnemonic)))
-            :on-press (fn []
-                        (swap! all-elements-idx inc)
-                        (swap! mnemonic-edition
-                               #(assoc % ::db/elements
-                                       (get-in all-possible-mnemonic
-                                               [::db/all-possible-elements @all-elements-idx])))
-                        (rf/dispatch [:switch-elements @all-elements-idx]))}]])
+          [div (str "You can memorize the number " (::db/number @mnemonic) " with the words:")]
+          [center-quote (string/join " " (map ::db/chosen-word (::db/elements @mnemonic-edition)))]
+          [div "Use the pickers below to choose words you find memorable. Give the mnemonic a name and write a vivid story to help you remember. Save it for later reference."]
+          [div "Don't like the words in the pickers? Use the arrows to change how the number is divided into the pickers."]
+          [:> View {:style style/flex-row}
+           [:> rn/Button
+            {:title "<-"
+             :style {:flex-grow 1
+                     :flex-basis 0}
+             :disabled (= @all-elements-idx 0)
+             :on-press (fn []
+                         (swap! all-elements-idx dec)
+                         (swap! mnemonic-edition
+                                #(assoc % ::db/elements
+                                        (get-in all-possible-mnemonic
+                                                [::db/all-possible-elements @all-elements-idx])))
+                         (rf/dispatch [:switch-elements @all-elements-idx]))}]
+           [:> rn/Button
+            {:title "->"
+             :style {:flex-grow 1
+                     :flex-basis 0}
+             :disabled (= (+ 1 @all-elements-idx)
+                          (count (::db/all-possible-elements all-possible-mnemonic)))
+             :on-press (fn []
+                         (swap! all-elements-idx inc)
+                         (swap! mnemonic-edition
+                                #(assoc % ::db/elements
+                                        (get-in all-possible-mnemonic
+                                                [::db/all-possible-elements @all-elements-idx])))
+                         (rf/dispatch [:switch-elements @all-elements-idx]))}]]])
        [:> rn/View
         [:> rn/Text "Number: " (::db/number @mnemonic)]]
        [:> rn/View
