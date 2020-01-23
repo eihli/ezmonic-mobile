@@ -65,7 +65,8 @@
         number (r/atom "")
         calculating-mnemonic? (rf/subscribe [:calculating-mnemonic?])]
     (fn []
-      (let [mnemonic (r/atom @(rf/subscribe [:mnemonic]))]
+      (let [mnemonic (r/atom @(rf/subscribe [:mnemonic]))
+            all-possible-mnemonic (r/atom @(rf/subscribe [:all-possible-mnemonic]))]
         [:> rn/SafeAreaView {}
          [:> rn/ScrollView {:style {:margin 10}}
           [number-input
@@ -74,17 +75,22 @@
                          (reset! submitted-val val)
                          (rf/dispatch [:mnemonic-submitted-for-calculation val]))}]
           (cond
-            (and (not (empty? @submitted-val)) (not @calculating-mnemonic?))
+            (and
+             (not (empty? @all-possible-mnemonic))
+             (not (empty? @submitted-val))
+             (not (empty? @mnemonic))
+             (not @calculating-mnemonic?))
             [:> rn/View
              [div (str "You can memorize the number " (::db/number @mnemonic) " with the words:")]
              [center-quote (s/join " " (map ::db/chosen-word (::db/elements @mnemonic)))]
              [div "Use the pickers below to choose words you find memorable. Give the mnemonic a name and write a vivid story to help you remember. Save it for later reference."]
 
-             [shared/mnemonic-form @mnemonic {:on-save (fn [mnemonic]
-                                                         (rf/dispatch [:navigate [:saved-home]]))
-                                              :on-reset (fn [mnemonic]
-                                                          (reset! number "")
-                                                          (reset! submitted-val ""))}]]
+             [shared/mnemonic-form mnemonic @all-possible-mnemonic
+              {:on-save (fn [mnemonic]
+                          (rf/dispatch [:navigate [:saved-home]]))
+               :on-reset (fn []
+                           (reset! number "")
+                           (reset! submitted-val ""))}]]
             @calculating-mnemonic?
             [:> rn/View
              [:> rn/Text

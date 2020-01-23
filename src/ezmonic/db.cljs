@@ -37,12 +37,10 @@
                                 ::all-possible-mnemonic
                                 ::calculating-mnemonic?
                                 ::mnemonics
-                                ::navigation
-                                ::all-possible-mnemonics]))
+                                ::navigation]))
 
 (defonce e-app-db {::calculating-mnemonic? false
                    ::navigation "home"
-                   ::all-possible-mnemonic: {}
+                   ::all-possible-mnemonic {}
                    ::mnemonic {} ;; Transient
                    ::mnemonics {}}) ;; Saved
-

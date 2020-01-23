@@ -57,12 +57,11 @@
 
 (defn modal-selector
   [picker-idx subel-cursor]
-  (let [data (map (fn [word] {:key word :label word})
-                  (::db/word-choices @subel-cursor))
-        init-value (::db/chosen-word @subel-cursor)
-        val (rg/cursor subel-cursor [::db/chosen-word])]
-    (fn [picker-idx subel-cursor]
-      (print init-value)
+  (fn [picker-idx subel-cursor]
+    (let [data (map (fn [word] {:key word :label word})
+                    (::db/word-choices @subel-cursor))
+          init-value (::db/chosen-word @subel-cursor)
+          val (rg/cursor subel-cursor [::db/chosen-word])]
       [:> ModalSelector
        {:selected-key init-value
         :data data
@@ -98,7 +97,7 @@
            {:on-press
             #(.openURL rn/Linking (search-url (::db/chosen-word @el-cursor)))}
            [:> rn/Text " 🔎"]]]
-         [modal-selector idx (rg/cursor elements [idx])]]))
+         [modal-selector idx el-cursor]]))
     @elements)))
 
 (defn text-input
@@ -140,17 +139,44 @@
     :on-press on-clear}])
 
 (defn mnemonic-form
-  [mnemonic {:keys [on-save on-delete on-reset]}]
-  (let [mnemonic-edition (rg/atom mnemonic)
+  [mnemonic all-possible-mnemonic {:keys [on-save on-delete on-reset]}]
+  (let [all-elements-idx (rg/atom 0)
+        mnemonic-edition (rg/atom @mnemonic)
         name (rg/cursor mnemonic-edition [::db/name])
         story (rg/cursor mnemonic-edition [::db/story])]
-    (fn [mnemonic {:keys [on-save on-delete]}]
+    (fn [mnemonic all-possible-mnemonic {:keys [on-save on-delete]}]
       [:> rn/View
+       (if all-possible-mnemonic
+         [:> View
+          [:> Text
+           "Click the arrows to try splitting the number into different combinations of words."]
+          [:> rn/Button
+           {:title "<-"
+            :disabled (= @all-elements-idx 0)
+            :on-press (fn []
+                        (swap! all-elements-idx dec)
+                        (swap! mnemonic-edition
+                               #(assoc % ::db/elements
+                                       (get-in all-possible-mnemonic
+                                               [::db/all-possible-elements @all-elements-idx])))
+                        (rf/dispatch [:switch-elements @all-elements-idx]))}]
+          [:> rn/Button
+           {:title "->"
+            :disabled (= (+ 1 @all-elements-idx)
+                         (count (::db/all-possible-elements all-possible-mnemonic)))
+            :on-press (fn []
+                        (swap! all-elements-idx inc)
+                        (swap! mnemonic-edition
+                               #(assoc % ::db/elements
+                                       (get-in all-possible-mnemonic
+                                               [::db/all-possible-elements @all-elements-idx])))
+                        (rf/dispatch [:switch-elements @all-elements-idx]))}]])
        [:> rn/View
-        [:> rn/Text "Number: " (::db/number @mnemonic-edition)]]
+        [:> rn/Text "Number: " (::db/number @mnemonic)]]
        [:> rn/View
         [:> rn/Text "Words: "]
-        [native-pickers (rg/cursor mnemonic-edition [::db/elements])]]
+        [native-pickers
+         (rg/cursor mnemonic-edition [::db/elements])]]
        [:> rn/View
         [:> rn/Text "Name:"]
         [:> rn/TextInput
@@ -161,6 +187,7 @@
           :placeholder-text-color "grey"
           :on-change-text (fn [text]
                             (reset! name text)
+                            (print @mnemonic-edition)
                             (rg/flush))}]]
        [:> rn/View
         [:> Text "Story:"]
@@ -184,8 +211,8 @@
           :color "red"
           :on-press (fn []
                       (if on-delete
-                        (on-delete mnemonic)
-                        (on-reset mnemonic)))}]
+                        (on-delete @mnemonic)
+                        (on-reset)))}]
         [:> rn/Button
          {:title "Save"
           :disabled (or

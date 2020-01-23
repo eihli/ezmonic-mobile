@@ -90,7 +90,9 @@
    (let [db (:db cofx)]
      {:db (assoc db :calculating-mnemonic? true)
       :dispatch-later [{:ms 20
-                        :dispatch ^:flush-dom [:calculate-mnemonic number-to-mnemorize]}]})))
+                        :dispatch ^:flush-dom [:calculate-mnemonic number-to-mnemorize]}
+                       {:ms 20
+                        :dispatch ^:flush-dom [:calculate-all-mnemonics number-to-mnemorize]}]})))
 
 (reg-event-fx
  :calculate-mnemonic
@@ -127,15 +129,17 @@
             ::db/number number-to-memorize
             ::db/story ""
             ::db/all-possible-elements
-            (let [all-mnemonic-options util/e-all-mnemonic-options]
+            (let [all-mnemonic-options
+                  (sort-by count (util/e-all-mnemonic-options number-to-memorize))]
               (vec (map
                     (fn [mnemonic-options]
-                      (map
-                       (fn [mnemonic-subphrase]
-                         {::db/number (first mnemonic-subphrase)
-                          ::db/word-choices (second mnemonic-subphrase)
-                          ::db/chosen-word (first (second mnemonic-subphrase))})
-                       mnemonic-options))
+                      (vec
+                       (map
+                        (fn [mnemonic-subphrase]
+                          {::db/number (first mnemonic-subphrase)
+                           ::db/word-choices (second mnemonic-subphrase)
+                           ::db/chosen-word (first (second mnemonic-subphrase))})
+                        mnemonic-options)))
                     all-mnemonic-options)))})
           (assoc :calculating-mnemonic? false))})))
 
@@ -232,3 +236,13 @@
                    (:users)
                    (assoc "Eric" {:phone-number number}))]
      {:db (assoc db :users users)})))
+
+(reg-event-fx
+ :switch-elements
+ (fn [{:keys [db]} [_ idx]]
+   (let [new-elements (get-in db [::db/all-possible-mnemonic
+                                  ::db/all-possible-elements
+                                  idx])]
+     {:db (assoc-in db [::db/mnemonic
+                        ::db/elements]
+                    new-elements)})))

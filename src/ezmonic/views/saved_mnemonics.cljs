@@ -55,10 +55,11 @@
 (defn edit-mnemonic
   []
   (let [number @(rf/subscribe [:screen-params])
-        mnemonic @(rf/subscribe [:saved-mnemonic number])]
+        mnemonic (rg/atom @(rf/subscribe [:saved-mnemonic number]))]
     [shared/safe-scroll-wrapper
      [shared/mnemonic-form
       mnemonic
+      nil
       {:on-save (fn [mnemonic]
                   (rf/dispatch [:navigate [:saved-home]]))
        :on-delete (fn [mnemonic]

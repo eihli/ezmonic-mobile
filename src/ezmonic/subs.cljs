@@ -57,3 +57,8 @@
  (fn [db [_ number]]
    (get (::db/mnemonics db) number)))
 
+(reg-sub
+ :all-possible-mnemonic
+ (fn [db _]
+   (::db/all-possible-mnemonic db)))
+
