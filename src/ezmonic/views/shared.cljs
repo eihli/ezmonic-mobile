@@ -250,6 +250,7 @@
           :on-press on-reset}]
         [:> rn/Button
          {:title "Save"
+          :disabled (empty? @name)
           :on-press (fn []
                       (if on-save
                         (on-save @mnemonic-edition))
