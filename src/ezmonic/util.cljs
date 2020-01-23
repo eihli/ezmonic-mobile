@@ -18,19 +18,32 @@
   [length]
   (selections [0 1] length))
 
-(defn zeros [coll] (filter #(= % 0) coll))
-(defn ones [coll] (filter #(= % 1) coll))
+(defn singles [coll] (filter #(= (count %) 1) coll))
+(defn single? [coll])
+
+(defn num-to-min
+  [num]
+  (cond
+    (<= num 6) 3
+    (<= num 8) 2
+    (<= num 10) 1
+    :else 0))
 
 (defn filter-to-threshold
-  [coll min-filter percentage]
-  (filter
-   #(or (< (/ (count (zeros %)) (count %))
-           percentage)
-        (<= (count %) min-filter))
-   coll))
+  ;; If there's more than 8 digits, filter out singles.
+  ;; Also filter out phrases that have more than half
+  ;; their words as singles.
+  [ezminations min]
+  (filter (fn [ezmination]
+            (<= (count
+                 (filter (fn [combo]
+                           (= 1 (count combo)))
+                         ezmination))
+                min))
+          ezminations))
 
 (defn joiner
-  ;; This is the hack to get around not doing dynamic programming.
+  ;; This is the hack to avoid doing dynamic programming.
   ;; "12345"
   ;; [0 0 0 1]
   ;; [1, 2, 3, 45]
@@ -54,10 +67,7 @@
       joiner
       [[(first digits)]]
       (map vector (rest digits) connection)))
-   (filter-to-threshold
-    (connections (dec (count digits)))
-    3
-    0.5)))
+   (connections (dec (count digits)))))
 
 (defn -terminals [combo-el]
   (get-in number-to-word-tree (conj combo-el :terminals)))
@@ -76,7 +86,7 @@
   ;; [[nil] [[45...][67...]]] means there are no [[4..][567]] phrases
   [number]
   (let [digits (map int number)
-        combos (ezminations digits)
+        combos (filter-to-threshold (ezminations digits) (num-to-min (count digits)))
         phrases (map combo-to-phrase combos)]
     phrases))
 

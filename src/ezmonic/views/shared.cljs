@@ -150,7 +150,8 @@
                                      ::db/number number
                                      ::db/elements elements}))
         name (rg/cursor mnemonic-edition [::db/name])
-        story (rg/cursor mnemonic-edition [::db/story])]
+        story (rg/cursor mnemonic-edition [::db/story])
+        max-possible (dec (count (::db/all-possible-elements @all-possible-mnemonic)))]
     (fn [all-possible-mnemonic {:keys [on-save on-delete]}]
       [:> rn/View
        [:> View
@@ -165,7 +166,31 @@
                    :flex-basis 0}
            :disabled (= @all-elements-idx 0)
            :on-press (fn []
-                       (swap! all-elements-idx dec)
+                       (swap! all-elements-idx #(max 0 (dec %)))
+                       (swap! mnemonic-edition
+                              #(assoc % ::db/elements
+                                      (get-in @all-possible-mnemonic
+                                              [::db/all-possible-elements @all-elements-idx])))
+                       (rf/dispatch [:switch-elements @all-elements-idx]))}]
+         [:> rn/Button
+          {:title "<<- 10"
+           :style {:flex-grow 1
+                   :flex-basis 0}
+           :disabled (= @all-elements-idx 0)
+           :on-press (fn []
+                       (swap! all-elements-idx #(max 0 (- % 10)))
+                       (swap! mnemonic-edition
+                              #(assoc % ::db/elements
+                                      (get-in @all-possible-mnemonic
+                                              [::db/all-possible-elements @all-elements-idx])))
+                       (rf/dispatch [:switch-elements @all-elements-idx]))}]
+         [:> rn/Button
+          {:title "10 ->>"
+           :style {:flex-grow 1
+                   :flex-basis 0}
+           :disabled (= @all-elements-idx max-possible)
+           :on-press (fn []
+                       (swap! all-elements-idx #(min max-possible (+ % 10)))
                        (swap! mnemonic-edition
                               #(assoc % ::db/elements
                                       (get-in @all-possible-mnemonic
@@ -178,7 +203,7 @@
            :disabled (= (+ 1 @all-elements-idx)
                         (count (::db/all-possible-elements @all-possible-mnemonic)))
            :on-press (fn []
-                       (swap! all-elements-idx inc)
+                       (swap! all-elements-idx #(min max-possible (inc %)))
                        (swap! mnemonic-edition
                               #(assoc % ::db/elements
                                       (get-in @all-possible-mnemonic
