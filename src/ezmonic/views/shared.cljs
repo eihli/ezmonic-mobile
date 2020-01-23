@@ -184,6 +184,8 @@
                                       (get-in @all-possible-mnemonic
                                               [::db/all-possible-elements @all-elements-idx])))
                        (rf/dispatch [:switch-elements @all-elements-idx]))}]
+         [:> rn/View
+          [:> rn/Text "Option: " (inc @all-elements-idx) " of " (inc max-possible)]]
          [:> rn/Button
           {:title "10 ->>"
            :style {:flex-grow 1
