@@ -1,6 +1,7 @@
 (ns ezmonic.views.shared
   (:require [ezmonic.style :as style]
             [ezmonic.db :as db]
+            [ezmonic.util :as util]
             [reagent.core :as rg]
             [re-frame.core :as rf]
             [clojure.string :as string]
@@ -151,7 +152,10 @@
                                      ::db/elements elements}))
         name (rg/cursor mnemonic-edition [::db/name])
         story (rg/cursor mnemonic-edition [::db/story])
-        max-possible (dec (count (::db/all-possible-elements @all-possible-mnemonic)))]
+        num-options (count (::db/all-possible-elements @all-possible-mnemonic))
+        max-possible (if (= util/flavor "free")
+                       (min 4 num-options)
+                       num-options)]
     (fn [all-possible-mnemonic {:keys [on-save on-delete]}]
       [:> rn/View
        [:> View
@@ -185,7 +189,7 @@
                                               [::db/all-possible-elements @all-elements-idx])))
                        (rf/dispatch [:switch-elements @all-elements-idx]))}]
          [:> rn/View
-          [:> rn/Text "Option: " (inc @all-elements-idx) " of " (inc max-possible)]]
+          [:> rn/Text "Option: " (inc @all-elements-idx) " of " num-options]]
          [:> rn/Button
           {:title "10 ->>"
            :style {:flex-grow 1
@@ -202,15 +206,18 @@
           {:title "->"
            :style {:flex-grow 1
                    :flex-basis 0}
-           :disabled (= (+ 1 @all-elements-idx)
-                        (count (::db/all-possible-elements @all-possible-mnemonic)))
+           :disabled (= @all-elements-idx max-possible)
            :on-press (fn []
                        (swap! all-elements-idx #(min max-possible (inc %)))
                        (swap! mnemonic-edition
                               #(assoc % ::db/elements
                                       (get-in @all-possible-mnemonic
                                               [::db/all-possible-elements @all-elements-idx])))
-                       (rf/dispatch [:switch-elements @all-elements-idx]))}]]]
+                       (rf/dispatch [:switch-elements @all-elements-idx]))}]]
+        (if (and (= util/flavor "free")
+                 (= @all-elements-idx max-possible))
+          [:> Text {:style {:color "red"}}
+           "Please buy the paid version of Ezmonic to unlock all mnemonic options."])]
        [:> rn/View
         [:> rn/Text "Number: " (::db/number @mnemonic-edition)]]
        [:> rn/View

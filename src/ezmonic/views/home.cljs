@@ -38,7 +38,6 @@
   [{:keys [on-submit number]}]
   (fn [{:keys [on-submit number]}]
     [:> rn/View
-     [:> rn/Text util/flavor]
      [:> rn/View
       {:style {:display "flex"
                :flexDirection "row"}}
