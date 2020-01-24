@@ -5,6 +5,6 @@
   (atom
    {:env :release
     :flavor :pro
-    :max-saved js/Infinity
+    :max-saved-mnemonics js/Infinity
     :max-phrase-options js/Infinity
     :max-length-mnemonic js/Infinity}))
