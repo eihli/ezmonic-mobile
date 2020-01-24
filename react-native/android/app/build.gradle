@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 
@@ -133,6 +134,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 4
         versionName "0.2.2"
+        resValue "string", "build_config_package", "com.ezmonic"
     }
     splits {
         abi {
@@ -162,10 +164,12 @@ android {
             dimension = 'version'
             applicationId = 'com.ezmonic'
             applicationIdSuffix = 'pro'
+            resValue "string", "app_name", "Ezmonic"
         }
         free {
             dimension = 'version'
             applicationId = 'com.ezmonic'
+            resValue "string", "app_name", "Ezmonic Free"            
         }
     }
     buildTypes {

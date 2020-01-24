@@ -5,7 +5,11 @@
             [ezmonic.data]
             [cognitect.transit :as transit]
             [ezmonic.e-data :as data]
-            [ezmonic.number-to-word-tree :as mnemonic-data]))
+            [ezmonic.number-to-word-tree :as mnemonic-data]
+            ["react-native-config" :default rnc]))
+
+(def build-config (js->clj rnc :keywordize-keys true))
+(def flavor (:FLAVOR build-config))
 
 (defn get-number-to-word-tree []
   (let [reader (transit/reader :json)

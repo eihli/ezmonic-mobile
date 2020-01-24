@@ -6,6 +6,7 @@
              :refer [div center-quote]
              :as shared]
             [ezmonic.db :as db]
+            [ezmonic.util :as util]
             [clojure.string :as s]
             [reagent.core :as r]
             ["react-navigation-stack" :as react-navigation-stack]))
@@ -37,6 +38,7 @@
   [{:keys [on-submit number]}]
   (fn [{:keys [on-submit number]}]
     [:> rn/View
+     [:> rn/Text util/flavor]
      [:> rn/View
       {:style {:display "flex"
                :flexDirection "row"}}
