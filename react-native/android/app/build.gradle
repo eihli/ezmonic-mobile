@@ -156,6 +156,18 @@ android {
             storePassword 'q09d6h3k19k'
         }
     }
+    flavorDimensions 'version'
+    productFlavors {
+        pro {
+            dimension = 'version'
+            applicationId = 'com.ezmonic'
+            applicationIdSuffix = 'pro'
+        }
+        free {
+            dimension = 'version'
+            applicationId = 'com.ezmonic'
+        }
+    }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
