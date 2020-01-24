@@ -4,7 +4,6 @@
             [clojure.string :as string]
             [ezmonic.data]
             [cognitect.transit :as transit]
-            [ezmonic.e-data :as data]
             [ezmonic.config :as config]
             [ezmonic.number-to-word-tree :as mnemonic-data]))
 

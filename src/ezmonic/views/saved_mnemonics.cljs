@@ -43,7 +43,6 @@
         :title "Edit"} ]]]))
 
 (defn max-saved-notification [num-saved]
-  (print num-saved)
   (if (>= num-saved (util/max-saved-mnemonics))
     [:> rn/View
      [:> rn/Text {:style {:color "red"}}
