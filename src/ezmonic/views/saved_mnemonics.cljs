@@ -15,7 +15,8 @@
             [re-frame.core :as rf]
             [reagent.core :as rg]
             [clojure.string :as string]
-            [ezmonic.navigation :as navigation])
+            [ezmonic.navigation :as navigation]
+            [ezmonic.util :as util])
   (:require-macros [ezmonic.util :refer [defnav]]))
 
 (defn saved-mnemonic [number mnemonic]
@@ -41,11 +42,19 @@
         #(rf/dispatch [:navigate [:saved-edit number]])
         :title "Edit"} ]]]))
 
+(defn max-saved-notification [num-saved]
+  (print num-saved)
+  (if (>= num-saved (util/max-saved-mnemonics))
+    [:> rn/View
+     [:> rn/Text {:style {:color "red"}}
+      "You've reached the maximum number of saved mnemonics for the free version of the app. To save unlimited mnemonics, please purchase the paid version of Ezmonic from the app store."]]))
+
 (defn saved-mnemonics
   []
   (let [mnemonics (rf/subscribe [:saved-mnemonics])]
     (fn []
       [shared/safe-scroll-wrapper
+       [max-saved-notification (count @mnemonics)]
        (for [[number mnemonic] @mnemonics]
          ^{:key number}
          [:> View

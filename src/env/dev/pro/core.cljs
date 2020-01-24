@@ -3,9 +3,10 @@
             ezmonic.config))
 
 (def config
-  {:env :dev
-   :flavor :pro})
+  {:env :dev})
 
 (defn init []
-  (reset! ezmonic.config/config config)
+  (swap!
+   ezmonic.config/config
+   #(merge % config))
   (ezmonic.core/init))

@@ -5,9 +5,13 @@
             [ezmonic.data]
             [cognitect.transit :as transit]
             [ezmonic.e-data :as data]
+            [ezmonic.config :as config]
             [ezmonic.number-to-word-tree :as mnemonic-data]))
 
-(def flavor :free)
+(defn pro-version? [] (= :pro (:flavor @config/config)))
+(defn free-version? [] (not (pro-version?)))
+(defn max-phrase-options [] (:max-phrase-options @config/config))
+(defn max-saved-mnemonics [] (:max-saved-mnemonics @config/config))
 
 (defn get-number-to-word-tree []
   (let [reader (transit/reader :json)

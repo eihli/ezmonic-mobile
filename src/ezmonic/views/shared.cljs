@@ -139,6 +139,13 @@
     :color "red"
     :on-press on-clear}])
 
+(defn max-saved-mnemonics []
+  (let [num-saved (count @(rf/subscribe [:saved-mnemonics]))]
+    (if (>= num-saved (util/max-saved-mnemonics))
+      [:> View
+       [:> Text {:style {:color "red"}}
+        "You've reached the maximum number of saved mnemonics. Please purchase the paid version of Ezmonic from the app store to save an unlimited number of mnemonics."]])))
+
 (defn new-mnemonic-form
   [all-possible-mnemonic {:keys [on-save on-delete on-reset]}]
   (let [all-elements-idx (rg/atom 0)
@@ -153,9 +160,7 @@
         name (rg/cursor mnemonic-edition [::db/name])
         story (rg/cursor mnemonic-edition [::db/story])
         num-options (count (::db/all-possible-elements @all-possible-mnemonic))
-        max-possible (if (= util/flavor :free)
-                       (min 4 num-options)
-                       num-options)]
+        max-possible (dec (min (util/max-phrase-options) num-options))]
     (fn [all-possible-mnemonic {:keys [on-save on-delete]}]
       [:> rn/View
        [:> View
@@ -214,8 +219,9 @@
                                       (get-in @all-possible-mnemonic
                                               [::db/all-possible-elements @all-elements-idx])))
                        (rf/dispatch [:switch-elements @all-elements-idx]))}]]
-        (if (and (= util/flavor :free)
-                 (= @all-elements-idx max-possible))
+        (if (and (util/free-version?)
+                 (and (= @all-elements-idx max-possible)
+                      (not (= @all-elements-idx (dec num-options)))))
           [:> Text {:style {:color "red"}}
            "Please buy the paid version of Ezmonic to unlock all mnemonic options."])]
        [:> rn/View
@@ -234,7 +240,6 @@
           :placeholder-text-color "grey"
           :on-change-text (fn [text]
                             (reset! name text)
-                            (print @mnemonic-edition)
                             (rg/flush))}]]
        [:> rn/View
         [:> Text "Story:"]
@@ -257,13 +262,22 @@
          {:title "Reset"
           :color "red"
           :on-press on-reset}]
-        [:> rn/Button
-         {:title "Save"
-          :disabled (empty? @name)
-          :on-press (fn []
-                      (if on-save
-                        (on-save @mnemonic-edition))
-                      (rf/dispatch [:save-mnemonic @mnemonic-edition]))}]]])))
+        [:> rn/View
+         (if (and (not (empty? @name))
+                  (>= (count @(rf/subscribe [:saved-mnemonics]))
+                      (util/max-saved-mnemonics)))
+           {:style {:border-width 1
+                    :border-color "red"}})
+         [:> rn/Button
+          {:title "Save"
+           :disabled (or (empty? @name)
+                         (>= (count @(rf/subscribe [:saved-mnemonics]))
+                             (util/max-saved-mnemonics)))
+           :on-press (fn []
+                       (if on-save
+                         (on-save @mnemonic-edition))
+                       (rf/dispatch [:save-mnemonic @mnemonic-edition]))}]]]
+       [max-saved-mnemonics]])))
 
 (defn mnemonic-form
   [mnemonic all-possible-mnemonic {:keys [on-save on-delete on-reset]}]
@@ -321,7 +335,6 @@
           :placeholder-text-color "grey"
           :on-change-text (fn [text]
                             (reset! name text)
-                            (print @mnemonic-edition)
                             (rg/flush))}]]
        [:> rn/View
         [:> Text "Story:"]
