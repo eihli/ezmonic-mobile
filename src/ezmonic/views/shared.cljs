@@ -153,7 +153,7 @@
         name (rg/cursor mnemonic-edition [::db/name])
         story (rg/cursor mnemonic-edition [::db/story])
         num-options (count (::db/all-possible-elements @all-possible-mnemonic))
-        max-possible (if (= util/flavor "free")
+        max-possible (if (= util/flavor :free)
                        (min 4 num-options)
                        num-options)]
     (fn [all-possible-mnemonic {:keys [on-save on-delete]}]
@@ -214,7 +214,7 @@
                                       (get-in @all-possible-mnemonic
                                               [::db/all-possible-elements @all-elements-idx])))
                        (rf/dispatch [:switch-elements @all-elements-idx]))}]]
-        (if (and (= util/flavor "free")
+        (if (and (= util/flavor :free)
                  (= @all-elements-idx max-possible))
           [:> Text {:style {:color "red"}}
            "Please buy the paid version of Ezmonic to unlock all mnemonic options."])]
