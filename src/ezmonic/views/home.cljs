@@ -103,7 +103,7 @@
           [help/quickref]]]))))
 
 (defn home-navigation-options [props]
-  (clj->js {:title "ezmonic"
+  (clj->js {:title "Ezmonic"
             :headerStyle style/header}))
 
 (def Home

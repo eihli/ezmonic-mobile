@@ -30,7 +30,7 @@
 (def numbers (vec (map str (range 10))))
 (def descriptions
   ["Ace or Zoo"
-   "Tea, Doe, or "
+   "Tea, Doe, or Thaw"
    "Nay or Knee"
    "Mow or Aim"
    "Row or Ear"
@@ -115,7 +115,7 @@
   
   (fn [{:keys [navigation]} props]
     (clj->js
-     {:title "help"
+     {:title "Help"
       :headerStyle style/header})))
 
 (def help-stack
