@@ -2,7 +2,6 @@
   (:require [clojure.math.combinatorics :refer [selections]]
             [clojure.set]
             [clojure.string :as string]
-            [ezmonic.data]
             [cognitect.transit :as transit]
             [ezmonic.config :as config]
             [ezmonic.number-to-word-tree :as mnemonic-data]))
