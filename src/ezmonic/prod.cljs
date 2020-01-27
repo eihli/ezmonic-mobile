@@ -12,12 +12,8 @@
 
 (defn start []
   (rn/AppRegistry.registerComponent
-   (if (= :free (:flavor @config/config))
-     "Ezmonic Free"
-     "Ezmonic")
+   "Ezmonic"
    (fn [] (r/reactify-component views/app-container))))
 
 (defn ^:export init []
   (start))
-
-
