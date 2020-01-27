@@ -364,7 +364,7 @@
          {:title "Save"
           :disabled (or
                      (empty? (string/trim @name))
-                     (= mnemonic @mnemonic-edition))
+                     (= @mnemonic @mnemonic-edition))
           :on-press (fn []
                       (if on-save
                         (on-save @mnemonic-edition))
