@@ -1,5 +1,6 @@
 (ns ezmonic.prod
   (:require [reagent.core :as r]
+            [ezmonic.config :as config]
             [re-frame.core :as rf]
             ["react-native" :as rn]
             [ezmonic.views.core :as views]
@@ -11,7 +12,9 @@
 
 (defn start []
   (rn/AppRegistry.registerComponent
-   "Ezmonic Free"
+   (if (= :free (:flavor @config/config))
+     "Ezmonic Free"
+     "Ezmonic")
    (fn [] (r/reactify-component views/app-container))))
 
 (defn ^:export init []

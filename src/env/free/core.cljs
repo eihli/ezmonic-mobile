@@ -1,5 +1,5 @@
 (ns env.free.core
-  (:require ezmonic.core
+  (:require ezmonic.prod
             ezmonic.config))
 
 (def config
@@ -11,4 +11,4 @@
   (swap!
    ezmonic.config/config
    #(merge % config))
-  (ezmonic.core/init))
+  (ezmonic.prod/init))

@@ -3,6 +3,7 @@
             [re-frame.core :as rf]
             ["react-native" :as rn]
             [ezmonic.views.core :as views]
+            [ezmonic.config :as config]
             [ezmonic.subs]
             [shadow.cljs.devtools.client.react-native :as shadow-rn]
             [ezmonic.events]))
@@ -44,8 +45,11 @@
                       :component-will-unmount
                       (fn []
                         (.removeEventListener rn/AppState "change" on-app-state-change))})]
-        
-        (rn/AppRegistry.registerComponent "Ezmonic Free" (fn [] wrapper))
+
+        (rn/AppRegistry.registerComponent (if (= (:free (:flavor @config/config)))
+                                            "Ezmonic Free"
+                                            "Ezmonic")
+                                          (fn [] wrapper))
         (fn [comp]
           (reset! component-ref comp)
           ;; For some reason, views that were far removed from the navigators

@@ -1,5 +1,5 @@
 (ns env.pro.core
-  (:require ezmonic.core
+  (:require ezmonic.prod
             ezmonic.config))
 
 (def config {}) ; default is pro/release
@@ -8,4 +8,4 @@
   (swap!
    ezmonic.config/config
    #(merge % config))
-  (ezmonic.core/init))
+  (ezmonic.prod/init))
