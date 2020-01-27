@@ -5,6 +5,7 @@
             [ezmonic.views.shared
              :refer [div center-quote]
              :as shared]
+            [ezmonic.views.help :as help]
             [ezmonic.db :as db]
             [ezmonic.util :as util]
             [clojure.string :as s]
@@ -37,7 +38,7 @@
 (defn number-input
   [{:keys [on-submit number]}]
   (fn [{:keys [on-submit number]}]
-    [:> rn/View
+    [:> rn/View {:style {:margin-bottom 5}}
      [:> rn/View
       {:style {:display "flex"
                :flexDirection "row"}}
@@ -74,6 +75,9 @@
       (let [all-possible-mnemonic (r/atom @(rf/subscribe [:all-possible-mnemonic]))]
         [:> rn/SafeAreaView {}
          [:> rn/ScrollView {:style {:margin 10}}
+          [div "Generate a phrase to help you remember a number."]
+          [div "Use the table below to convert the phrase to your number."]
+          [div "Visit the \"Help\" tab at the bottom for help getting started."]
           [number-input
            {:number number
             :on-submit (fn [val]
@@ -94,7 +98,9 @@
             @calculating-mnemonic?
             [:> rn/View
              [:> rn/Text
-              "Calculating mnemonic for " @submitted-val ". Please wait..."]])]]))))
+              "Calculating mnemonic for " @submitted-val ". Please wait..."]])
+          [:> rn/Text {:style style/heading} "Quickref"]
+          [help/quickref]]]))))
 
 (defn home-navigation-options [props]
   (clj->js {:title "ezmonic"

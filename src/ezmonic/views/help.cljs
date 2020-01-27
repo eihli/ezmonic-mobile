@@ -17,7 +17,7 @@
 
 (def consonants
   ["S, Z, soft C"
-   "T, D"
+   "T, D, TH"
    "N"
    "M"
    "R"
@@ -30,7 +30,7 @@
 (def numbers (vec (map str (range 10))))
 (def descriptions
   ["Ace or Zoo"
-   "Tea or Doe"
+   "Tea, Doe, or "
    "Nay or Knee"
    "Mow or Aim"
    "Row or Ear"
@@ -53,16 +53,19 @@
    [:> Text {:style {:flex-grow 1
                      :flex-basis 0}} description]])
 
+(defn quickref []
+  [:> View
+   (for [[number consonant description bg-color]
+         (map vector numbers consonants descriptions (cycle ["#D3D3D3" "white"]))]
+     ^{:key number} [row number consonant description bg-color])])
+
 (defnav help
   []
   [shared/safe-scroll-wrapper
    [:> View
     [:> Text {:style style/heading} "Quickref"]
     [:> Text "The following table is a quick overview for how to convert consonant sounds to numbers."]
-    [:> View
-     (for [[number consonant description bg-color]
-           (map vector numbers consonants descriptions (cycle ["#D3D3D3" "white"]))]
-       ^{:key number} [row number consonant description bg-color])]
+    [quickref]
     [:> Text {:style style/heading} "How to use this app"]
     [div "Humans are really bad at remembering numbers."]
     [div "But we are really good at stories."]
@@ -90,10 +93,26 @@
     [div "All together now:"]
     [center-quote "METEOR (314) TULIP (159)"]
     [center-quote "ANGEL (265) EMAIL (35)"]
-    [:> Text {:style style/heading} "Next steps"]
-    [div "At first, you'll probably find yourself often referring to the table. But you'll have the sound/number translations down in no time and soon you'll be making mnemonics without even taking out your phone and opening the app!"]]]
-  
 
+    [:> Text {:style style/heading} "How to memorize the table"]
+
+
+    [div "Just like you can use a mnemonic trick to remember numbers, you can also use a mnemonic trick to remember the table itself!"]
+    [div "Here's how I remember the sound -> number conversion."]
+    [div "\"1\" translates to the \"T\" sound because \"1\" kind of looks like a \"T\"."]
+    [div "\"2\" translates to \"N\" because the lowercase \"n\" has two downward strokes."]
+    [div "\"3\" is \"M\" because the lowercase \"m\" has three downward strokes."]
+    [div "\"4\" is \"R\" because the word \"Four\" ends in \"r\". "]
+    [div "\"5\" is \"L\" because when you hold out your left hand with all 5 fingers extended, your forefinger and thumb make an \"L\" shape."]
+    [div "\"6\" is \"J\" or \"soft g\" because it kind of looks like a mirrored \"J\" or an upside-down and mirrored \"g\"."]
+    [div "\"7\" is \"K\" because it kind of looks like a mirrored \"K\" with the vertical line removed."]
+    [div "\"8\" is \"F\" because the cursive lower-case \"f\" kind of looks like an \"8\"."]
+    [div "And \"9\" is \"P\" because it looks like a mirrored \"9\"."]
+    [div "I know some of those mnemonic's may seem a bit contrived. But ignore that. Sometimes the more contrived something is, the easier it is to remember!"]
+    [:> Text {:style style/heading} "Next steps"]
+    [div "At first, you'll probably find yourself often referring to the table. But you'll have the sound/number translations down in no time and soon you'll be making mnemonics without even taking out your phone and opening the app!"]
+    [div "Now go out there and start memorizing stuff. No need to ever again dig through your wallet for your credit card! Impress people by remember their phone number without typing it into your phone! The potential is limitless! (Ok, quite limited... it's just numbers... But it's amazing!"]]]
+  
   (fn [{:keys [navigation]} props]
     (clj->js
      {:title "help"

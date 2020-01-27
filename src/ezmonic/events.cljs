@@ -4,7 +4,6 @@
                           after
                           ->interceptor
                           reg-event-fx
-                          debug
                           reg-cofx
                           reg-fx
                           inject-cofx]]
@@ -84,8 +83,7 @@
 
 (reg-event-fx
  :mnemonic-submitted-for-calculation
- [debug
-  validate-spec]
+ [validate-spec]
  (fn [cofx [_ number-to-mnemorize]]
    (let [db (:db cofx)]
      {:db (assoc db :calculating-mnemonic? true)
@@ -94,8 +92,7 @@
 
 (reg-event-fx
  :calculate-mnemonic
- [debug
-  validate-spec]
+ [validate-spec]
  (fn [cofx [_ number-to-memorize]]
    (let [db (:db cofx)]
      {:db
@@ -115,8 +112,7 @@
 
 (reg-event-fx
  :calculate-all-mnemonics
- [debug
-  validate-spec]
+ [validate-spec]
  (fn [cofx [_ number-to-memorize]]
    (let [db (:db cofx)]
      {:db
