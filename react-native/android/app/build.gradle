@@ -131,8 +131,8 @@ android {
         applicationId "com.ezmonic"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4
-        versionName "0.2.2"
+        versionCode 5
+        versionName "0.3.0"
         resValue "string", "build_config_package", "com.ezmonic"
     }
     splits {
@@ -161,13 +161,11 @@ android {
     productFlavors {
         pro {
             dimension = 'version'
-            applicationId = 'com.ezmonic'
             applicationIdSuffix = 'pro'
             resValue "string", "app_name", "Ezmonic"
         }
         free {
             dimension = 'version'
-            applicationId = 'com.ezmonic'
             resValue "string", "app_name", "Ezmonic Free"            
         }
     }
