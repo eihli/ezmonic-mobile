@@ -56,8 +56,7 @@
    (->
     AsyncStorage
     (.getItem key)
-    (.then #(rf/dispatch [on-success key % %2]))
-    (.catch #(print "Error " % %2)))))  ;; Better handling
+    (.then #(rf/dispatch [on-success key % %2])))))  ;; Better handling
 
 ;; -- Handlers --------------------------------------------------------------
 (reg-event-db
@@ -190,9 +189,7 @@
  :persist-mnemonics
  (fn [mnemonics]
    (-> AsyncStorage
-       (.setItem "saved-mnemonics" (pr-str mnemonics))
-       (.then #(print "Success " mnemonics))
-       (.catch #(print "Error saving: " % %2)))))
+       (.setItem "saved-mnemonics" (pr-str mnemonics)))))
 
 (reg-event-fx
  :save-mnemonic
