@@ -10,7 +10,6 @@
 		00E356F31AD99517003FC87E /* EzmonicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* EzmonicTests.m */; };
 		09EC60754FCE00679A1827C2 /* libPods-Ezmonic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D853594BB14774814364AD /* libPods-Ezmonic.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* AppIcon.appiconset */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1CA577D223D226D300B99AA5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA577D123D226D300B99AA5 /* Images.xcassets */; };
@@ -21,7 +20,8 @@
 		1CF1CB9723DF7ABA004ED51B /* libPods-Ezmonic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D853594BB14774814364AD /* libPods-Ezmonic.a */; };
 		1CF1CB9923DF7ABA004ED51B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA577D123D226D300B99AA5 /* Images.xcassets */; };
 		1CF1CB9A23DF7ABA004ED51B /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* AppIcon.appiconset */; };
-		1CF1CB9B23DF7ABA004ED51B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
+		1CF1CBA323DF8BD0004ED51B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CF1CBA223DF8BD0004ED51B /* Launch Screen.storyboard */; };
+		1CF1CBA523DF8C64004ED51B /* Launch Screen Free.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CF1CBA423DF8C64004ED51B /* Launch Screen Free.storyboard */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* AppIcon.appiconset */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -58,13 +58,14 @@
 		13B07F961A680F5B00A75B9A /* Ezmonic Free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ezmonic Free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Ezmonic/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Ezmonic/AppDelegate.m; sourceTree = "<group>"; };
-		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppIcon.appiconset; path = Ezmonic/Images.xcassets/AppIcon.appiconset; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Ezmonic/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Ezmonic/main.m; sourceTree = "<group>"; };
 		1CA577D123D226D300B99AA5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Ezmonic Free/Images.xcassets"; sourceTree = "<group>"; };
 		1CF1CBA023DF7ABA004ED51B /* Ezmonic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ezmonic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF1CBA123DF7ABB004ED51B /* Ezmonic Free copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Ezmonic Free copy-Info.plist"; path = "/Users/eihli/code/ezmonic-mobile/react-native/ios/Ezmonic Free copy-Info.plist"; sourceTree = "<absolute>"; };
+		1CF1CBA223DF8BD0004ED51B /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		1CF1CBA423DF8C64004ED51B /* Launch Screen Free.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen Free.storyboard"; sourceTree = "<group>"; };
 		2237BD96CD6605867C344A4D /* libPods-Ezmonic-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ezmonic-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E47B1E0B4A5D006451C7 /* Ezmonic Free-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ezmonic Free-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Ezmonic Free-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ezmonic Free-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,8 +151,9 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* AppIcon.appiconset */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				1CF1CBA223DF8BD0004ED51B /* Launch Screen.storyboard */,
+				1CF1CBA423DF8C64004ED51B /* Launch Screen Free.storyboard */,
 			);
 			name = Ezmonic;
 			sourceTree = "<group>";
@@ -392,8 +394,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CA577D223D226D300B99AA5 /* Images.xcassets in Resources */,
+				1CF1CBA523DF8C64004ED51B /* Launch Screen Free.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* AppIcon.appiconset in Resources */,
-				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,7 +405,7 @@
 			files = (
 				1CF1CB9923DF7ABA004ED51B /* Images.xcassets in Resources */,
 				1CF1CB9A23DF7ABA004ED51B /* AppIcon.appiconset in Resources */,
-				1CF1CB9B23DF7ABA004ED51B /* LaunchScreen.xib in Resources */,
+				1CF1CBA323DF8BD0004ED51B /* Launch Screen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,18 +696,6 @@
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				13B07FB21A68108700A75B9A /* Base */,
-			);
-			name = LaunchScreen.xib;
-			path = Ezmonic;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
