@@ -8,15 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* EzmonicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* EzmonicTests.m */; };
-		051F1689575AE8B1D83979A8 /* libPods-Ezmonic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D853594BB14774814364AD /* libPods-Ezmonic.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* AppIcon.appiconset */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1C4ABFAB23DFE558009B714A /* libPods-Ezmonic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D853594BB14774814364AD /* libPods-Ezmonic.a */; };
 		1C4ABFB023DFE5D2009B714A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		1C4ABFB123DFE5D2009B714A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1C4ABFB323DFE5D2009B714A /* libPods-Ezmonic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D853594BB14774814364AD /* libPods-Ezmonic.a */; };
-		1C4ABFB423DFE5D2009B714A /* libPods-Ezmonic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D853594BB14774814364AD /* libPods-Ezmonic.a */; };
 		1C4ABFB623DFE5D2009B714A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA577D123D226D300B99AA5 /* Images.xcassets */; };
 		1C4ABFB723DFE5D2009B714A /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* AppIcon.appiconset */; };
 		1C4ABFC023E0D0DC009B714A /* Launch Screen Free.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CF1CBA423DF8C64004ED51B /* Launch Screen Free.storyboard */; };
@@ -25,7 +21,6 @@
 		1CF1CB7D23D77235004ED51B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA577D123D226D300B99AA5 /* Images.xcassets */; };
 		1CF1CB9423DF7ABA004ED51B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		1CF1CB9523DF7ABA004ED51B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1CF1CB9723DF7ABA004ED51B /* libPods-Ezmonic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D853594BB14774814364AD /* libPods-Ezmonic.a */; };
 		1CF1CB9923DF7ABA004ED51B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA577D123D226D300B99AA5 /* Images.xcassets */; };
 		1CF1CB9A23DF7ABA004ED51B /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* AppIcon.appiconset */; };
 		1CF1CBA323DF8BD0004ED51B /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CF1CBA223DF8BD0004ED51B /* Launch Screen.storyboard */; };
@@ -37,6 +32,8 @@
 		3B5DC843641D98E85ED484CA /* libPods-Ezmonic-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2237BD96CD6605867C344A4D /* libPods-Ezmonic-tvOSTests.a */; };
 		3FD5F6A4D097C7012BA59749 /* libPods-Ezmonic-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1031A7F2E780EE221B4F54 /* libPods-Ezmonic-tvOS.a */; };
 		4DA43A90D782CB2720CEB0F6 /* libPods-EzmonicTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ACCF8E1DA2B2C4CEE71ACD9 /* libPods-EzmonicTests.a */; };
+		95C2D7C7C310E92F7DDD9569 /* libPods-Ezmonic Abstract-Ezmonic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CADFC2E355E634ED76090FD /* libPods-Ezmonic Abstract-Ezmonic.a */; };
+		AEF6F40061E23AE52C1593F9 /* libPods-Ezmonic Abstract-Ezmonic Free.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9784873CCB29034C138B1BFE /* libPods-Ezmonic Abstract-Ezmonic Free.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +66,7 @@
 		13B07FB51A68108700A75B9A /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppIcon.appiconset; path = Ezmonic/Images.xcassets/AppIcon.appiconset; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Ezmonic/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Ezmonic/main.m; sourceTree = "<group>"; };
+		14FD3FE6C8E1A60C41A8E854 /* Pods-Ezmonic Abstract-Ezmonic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ezmonic Abstract-Ezmonic.debug.xcconfig"; path = "Target Support Files/Pods-Ezmonic Abstract-Ezmonic/Pods-Ezmonic Abstract-Ezmonic.debug.xcconfig"; sourceTree = "<group>"; };
 		1C4ABFBE23DFE5D2009B714A /* Ezmonic Free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ezmonic Free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C4ABFBF23DFE5D3009B714A /* Ezmonic copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Ezmonic copy2-Info.plist"; path = "/Users/eihli/code/ezmonic-mobile/react-native/ios/Ezmonic copy2-Info.plist"; sourceTree = "<absolute>"; };
 		1CA577D123D226D300B99AA5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Ezmonic Free/Images.xcassets"; sourceTree = "<group>"; };
@@ -80,13 +78,17 @@
 		25AE744A9854E5D55D76CA64 /* Pods-Ezmonic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ezmonic.release.xcconfig"; path = "Target Support Files/Pods-Ezmonic/Pods-Ezmonic.release.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Ezmonic-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ezmonic-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Ezmonic-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Ezmonic-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B1163A30E14BA9E868A61FB /* Pods-Ezmonic Abstract-Ezmonic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ezmonic Abstract-Ezmonic.release.xcconfig"; path = "Target Support Files/Pods-Ezmonic Abstract-Ezmonic/Pods-Ezmonic Abstract-Ezmonic.release.xcconfig"; sourceTree = "<group>"; };
+		3D0C25CB294D1495DD13873B /* Pods-Ezmonic Abstract-Ezmonic Free.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ezmonic Abstract-Ezmonic Free.debug.xcconfig"; path = "Target Support Files/Pods-Ezmonic Abstract-Ezmonic Free/Pods-Ezmonic Abstract-Ezmonic Free.debug.xcconfig"; sourceTree = "<group>"; };
+		4CADFC2E355E634ED76090FD /* libPods-Ezmonic Abstract-Ezmonic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ezmonic Abstract-Ezmonic.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EAD029C2D833BC192D1667E /* Pods-Ezmonic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ezmonic.debug.xcconfig"; path = "Target Support Files/Pods-Ezmonic/Pods-Ezmonic.debug.xcconfig"; sourceTree = "<group>"; };
 		5A971AEEBEA2E2B3EC722591 /* Pods-EzmonicTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EzmonicTests.debug.xcconfig"; path = "Target Support Files/Pods-EzmonicTests/Pods-EzmonicTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9784873CCB29034C138B1BFE /* libPods-Ezmonic Abstract-Ezmonic Free.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ezmonic Abstract-Ezmonic Free.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		983F081006D795DA091DAAAA /* Pods-EzmonicTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EzmonicTests.release.xcconfig"; path = "Target Support Files/Pods-EzmonicTests/Pods-EzmonicTests.release.xcconfig"; sourceTree = "<group>"; };
 		AE1031A7F2E780EE221B4F54 /* libPods-Ezmonic-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ezmonic-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B848B7857A1712D96A0C35AD /* Pods-Ezmonic-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ezmonic-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Ezmonic-tvOSTests/Pods-Ezmonic-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BAB4BAA08FC2C13F58C8DA72 /* Pods-Ezmonic-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ezmonic-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Ezmonic-tvOSTests/Pods-Ezmonic-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		C1D853594BB14774814364AD /* libPods-Ezmonic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Ezmonic.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CBF96A0999AC38C027699F23 /* Pods-Ezmonic Abstract-Ezmonic Free.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ezmonic Abstract-Ezmonic Free.release.xcconfig"; path = "Target Support Files/Pods-Ezmonic Abstract-Ezmonic Free/Pods-Ezmonic Abstract-Ezmonic Free.release.xcconfig"; sourceTree = "<group>"; };
 		CCF3EF2E9E14E8295DBC83C8 /* Pods-Ezmonic-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ezmonic-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Ezmonic-tvOS/Pods-Ezmonic-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -105,7 +107,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C4ABFAB23DFE558009B714A /* libPods-Ezmonic.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,8 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C4ABFB323DFE5D2009B714A /* libPods-Ezmonic.a in Frameworks */,
-				1C4ABFB423DFE5D2009B714A /* libPods-Ezmonic.a in Frameworks */,
+				AEF6F40061E23AE52C1593F9 /* libPods-Ezmonic Abstract-Ezmonic Free.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,8 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CF1CB9723DF7ABA004ED51B /* libPods-Ezmonic.a in Frameworks */,
-				051F1689575AE8B1D83979A8 /* libPods-Ezmonic.a in Frameworks */,
+				95C2D7C7C310E92F7DDD9569 /* libPods-Ezmonic Abstract-Ezmonic.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,10 +182,11 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				C1D853594BB14774814364AD /* libPods-Ezmonic.a */,
 				AE1031A7F2E780EE221B4F54 /* libPods-Ezmonic-tvOS.a */,
 				2237BD96CD6605867C344A4D /* libPods-Ezmonic-tvOSTests.a */,
 				0ACCF8E1DA2B2C4CEE71ACD9 /* libPods-EzmonicTests.a */,
+				4CADFC2E355E634ED76090FD /* libPods-Ezmonic Abstract-Ezmonic.a */,
+				9784873CCB29034C138B1BFE /* libPods-Ezmonic Abstract-Ezmonic Free.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -240,6 +240,10 @@
 				983F081006D795DA091DAAAA /* Pods-EzmonicTests.release.xcconfig */,
 				4EAD029C2D833BC192D1667E /* Pods-Ezmonic.debug.xcconfig */,
 				25AE744A9854E5D55D76CA64 /* Pods-Ezmonic.release.xcconfig */,
+				14FD3FE6C8E1A60C41A8E854 /* Pods-Ezmonic Abstract-Ezmonic.debug.xcconfig */,
+				3B1163A30E14BA9E868A61FB /* Pods-Ezmonic Abstract-Ezmonic.release.xcconfig */,
+				3D0C25CB294D1495DD13873B /* Pods-Ezmonic Abstract-Ezmonic Free.debug.xcconfig */,
+				CBF96A0999AC38C027699F23 /* Pods-Ezmonic Abstract-Ezmonic Free.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -514,7 +518,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Ezmonic-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Ezmonic Abstract-Ezmonic Free-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -560,7 +564,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Ezmonic/Pods-Ezmonic-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Ezmonic Abstract-Ezmonic Free/Pods-Ezmonic Abstract-Ezmonic Free-resources.sh",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -569,7 +573,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Ezmonic/Pods-Ezmonic-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Ezmonic Abstract-Ezmonic Free/Pods-Ezmonic Abstract-Ezmonic Free-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		1CF1CB9123DF7ABA004ED51B /* [CP] Check Pods Manifest.lock */ = {
@@ -587,7 +591,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Ezmonic-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Ezmonic Abstract-Ezmonic-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -751,7 +755,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Ezmonic/Pods-Ezmonic-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Ezmonic Abstract-Ezmonic/Pods-Ezmonic Abstract-Ezmonic-resources.sh",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -760,7 +764,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Ezmonic/Pods-Ezmonic-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Ezmonic Abstract-Ezmonic/Pods-Ezmonic Abstract-Ezmonic-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -940,7 +944,7 @@
 		};
 		1C4ABFBC23DFE5D2009B714A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4EAD029C2D833BC192D1667E /* Pods-Ezmonic.debug.xcconfig */;
+			baseConfigurationReference = 3D0C25CB294D1495DD13873B /* Pods-Ezmonic Abstract-Ezmonic Free.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Ezmonic Free";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -966,7 +970,7 @@
 		};
 		1C4ABFBD23DFE5D2009B714A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 25AE744A9854E5D55D76CA64 /* Pods-Ezmonic.release.xcconfig */;
+			baseConfigurationReference = CBF96A0999AC38C027699F23 /* Pods-Ezmonic Abstract-Ezmonic Free.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "Ezmonic Free";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -991,7 +995,7 @@
 		};
 		1CF1CB9E23DF7ABA004ED51B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4EAD029C2D833BC192D1667E /* Pods-Ezmonic.debug.xcconfig */;
+			baseConfigurationReference = 14FD3FE6C8E1A60C41A8E854 /* Pods-Ezmonic Abstract-Ezmonic.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Ezmonic;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -1017,7 +1021,7 @@
 		};
 		1CF1CB9F23DF7ABA004ED51B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 25AE744A9854E5D55D76CA64 /* Pods-Ezmonic.release.xcconfig */;
+			baseConfigurationReference = 3B1163A30E14BA9E868A61FB /* Pods-Ezmonic Abstract-Ezmonic.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = Ezmonic;
 				CODE_SIGN_IDENTITY = "Apple Development";

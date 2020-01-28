@@ -34,19 +34,13 @@ abstract_target 'Ezmonic Abstract' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+
+  target 'Ezmonic'
+  target 'Ezmonic Free'
   target 'EzmonicTests' do
     inherit! :search_paths
     # Pods for testing
   end
-  
-  target 'Ezmonic' do
-    pod 'Ezmonic Abstract'
-  end
-  
-  target 'Ezmonic Free' do
-    pod 'Ezmonic Abstract'
-  end
-
   use_native_modules!
 end
 
