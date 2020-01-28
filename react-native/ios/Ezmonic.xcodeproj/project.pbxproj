@@ -13,6 +13,8 @@
 		1C4ABFB623DFE5D2009B714A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA577D123D226D300B99AA5 /* Images.xcassets */; };
 		1C4ABFB723DFE5D2009B714A /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* AppIcon.appiconset */; };
 		1C4ABFC023E0D0DC009B714A /* Launch Screen Free.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CF1CBA423DF8C64004ED51B /* Launch Screen Free.storyboard */; };
+		1C64336E23E100EE004E2BE3 /* Launch Screen Free.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CF1CBA423DF8C64004ED51B /* Launch Screen Free.storyboard */; };
+		1C64336F23E100F0004E2BE3 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CF1CBA223DF8BD0004ED51B /* Launch Screen.storyboard */; };
 		1CF1CB7C23D7722E004ED51B /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* AppIcon.appiconset */; };
 		1CF1CB7D23D77235004ED51B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA577D123D226D300B99AA5 /* Images.xcassets */; };
 		1CF1CB9423DF7ABA004ED51B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -401,6 +403,7 @@
 			files = (
 				1C4ABFB623DFE5D2009B714A /* Images.xcassets in Resources */,
 				1C4ABFC023E0D0DC009B714A /* Launch Screen Free.storyboard in Resources */,
+				1C64336F23E100F0004E2BE3 /* Launch Screen.storyboard in Resources */,
 				1C4ABFB723DFE5D2009B714A /* AppIcon.appiconset in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,6 +413,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CF1CB9923DF7ABA004ED51B /* Images.xcassets in Resources */,
+				1C64336E23E100EE004E2BE3 /* Launch Screen Free.storyboard in Resources */,
 				1CF1CB9A23DF7ABA004ED51B /* AppIcon.appiconset in Resources */,
 				1CF1CBA323DF8BD0004ED51B /* Launch Screen.storyboard in Resources */,
 			);
