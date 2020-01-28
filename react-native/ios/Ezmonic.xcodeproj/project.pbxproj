@@ -12,6 +12,14 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* AppIcon.appiconset */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1C4ABFAB23DFE558009B714A /* libPods-Ezmonic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D853594BB14774814364AD /* libPods-Ezmonic.a */; };
+		1C4ABFB023DFE5D2009B714A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		1C4ABFB123DFE5D2009B714A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1C4ABFB323DFE5D2009B714A /* libPods-Ezmonic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D853594BB14774814364AD /* libPods-Ezmonic.a */; };
+		1C4ABFB423DFE5D2009B714A /* libPods-Ezmonic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D853594BB14774814364AD /* libPods-Ezmonic.a */; };
+		1C4ABFB623DFE5D2009B714A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA577D123D226D300B99AA5 /* Images.xcassets */; };
+		1C4ABFB723DFE5D2009B714A /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* AppIcon.appiconset */; };
+		1C4ABFC023E0D0DC009B714A /* Launch Screen Free.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1CF1CBA423DF8C64004ED51B /* Launch Screen Free.storyboard */; };
 		1CA577D223D226D300B99AA5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA577D123D226D300B99AA5 /* Images.xcassets */; };
 		1CF1CB7C23D7722E004ED51B /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* AppIcon.appiconset */; };
 		1CF1CB7D23D77235004ED51B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA577D123D226D300B99AA5 /* Images.xcassets */; };
@@ -61,6 +69,8 @@
 		13B07FB51A68108700A75B9A /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppIcon.appiconset; path = Ezmonic/Images.xcassets/AppIcon.appiconset; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Ezmonic/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Ezmonic/main.m; sourceTree = "<group>"; };
+		1C4ABFBE23DFE5D2009B714A /* Ezmonic Free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ezmonic Free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C4ABFBF23DFE5D3009B714A /* Ezmonic copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Ezmonic copy2-Info.plist"; path = "/Users/eihli/code/ezmonic-mobile/react-native/ios/Ezmonic copy2-Info.plist"; sourceTree = "<absolute>"; };
 		1CA577D123D226D300B99AA5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Ezmonic Free/Images.xcassets"; sourceTree = "<group>"; };
 		1CF1CBA023DF7ABA004ED51B /* Ezmonic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ezmonic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF1CBA123DF7ABB004ED51B /* Ezmonic copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ezmonic copy-Info.plist"; sourceTree = "<group>"; };
@@ -95,6 +105,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C4ABFAB23DFE558009B714A /* libPods-Ezmonic.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1C4ABFB223DFE5D2009B714A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C4ABFB323DFE5D2009B714A /* libPods-Ezmonic.a in Frameworks */,
+				1C4ABFB423DFE5D2009B714A /* libPods-Ezmonic.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +209,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				8720BDDF39301689A0C92709 /* Pods */,
 				1CF1CBA123DF7ABB004ED51B /* Ezmonic copy-Info.plist */,
+				1C4ABFBF23DFE5D3009B714A /* Ezmonic copy2-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -203,6 +224,7 @@
 				2D02E47B1E0B4A5D006451C7 /* Ezmonic-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* Ezmonic-tvOSTests.xctest */,
 				1CF1CBA023DF7ABA004ED51B /* Ezmonic.app */,
+				1C4ABFBE23DFE5D2009B714A /* Ezmonic Free.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -244,9 +266,9 @@
 			productReference = 00E356EE1AD99517003FC87E /* EzmonicTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* Ezmonic Free */ = {
+		13B07F861A680F5B00A75B9A /* Ezmonic Free back */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Ezmonic Free" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Ezmonic Free back" */;
 			buildPhases = (
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
@@ -258,9 +280,30 @@
 			);
 			dependencies = (
 			);
-			name = "Ezmonic Free";
+			name = "Ezmonic Free back";
 			productName = Ezmonic;
 			productReference = 13B07F961A680F5B00A75B9A /* Ezmonic.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1C4ABFAC23DFE5D2009B714A /* Ezmonic Free */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1C4ABFBB23DFE5D2009B714A /* Build configuration list for PBXNativeTarget "Ezmonic Free" */;
+			buildPhases = (
+				1C4ABFAD23DFE5D2009B714A /* [CP] Check Pods Manifest.lock */,
+				1C4ABFAE23DFE5D2009B714A /* Start Packager */,
+				1C4ABFAF23DFE5D2009B714A /* Sources */,
+				1C4ABFB223DFE5D2009B714A /* Frameworks */,
+				1C4ABFB523DFE5D2009B714A /* Resources */,
+				1C4ABFB923DFE5D2009B714A /* Bundle React Native code and images */,
+				1C4ABFBA23DFE5D2009B714A /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Ezmonic Free";
+			productName = Ezmonic;
+			productReference = 1C4ABFBE23DFE5D2009B714A /* Ezmonic Free.app */;
 			productType = "com.apple.product-type.application";
 		};
 		1CF1CB9023DF7ABA004ED51B /* Ezmonic */ = {
@@ -342,6 +385,10 @@
 						DevelopmentTeam = NN5GN3NQ54;
 						ProvisioningStyle = Automatic;
 					};
+					1C4ABFAC23DFE5D2009B714A = {
+						DevelopmentTeam = NN5GN3NQ54;
+						ProvisioningStyle = Automatic;
+					};
 					1CF1CB9023DF7ABA004ED51B = {
 						DevelopmentTeam = NN5GN3NQ54;
 						ProvisioningStyle = Automatic;
@@ -370,7 +417,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Ezmonic Free */,
+				13B07F861A680F5B00A75B9A /* Ezmonic Free back */,
+				1C4ABFAC23DFE5D2009B714A /* Ezmonic Free */,
 				1CF1CB9023DF7ABA004ED51B /* Ezmonic */,
 				00E356ED1AD99517003FC87E /* EzmonicTests */,
 				2D02E47A1E0B4A5D006451C7 /* Ezmonic-tvOS */,
@@ -396,6 +444,16 @@
 				1CA577D223D226D300B99AA5 /* Images.xcassets in Resources */,
 				1CF1CBA523DF8C64004ED51B /* Launch Screen Free.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* AppIcon.appiconset in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1C4ABFB523DFE5D2009B714A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C4ABFB623DFE5D2009B714A /* Images.xcassets in Resources */,
+				1C4ABFC023E0D0DC009B714A /* Launch Screen Free.storyboard in Resources */,
+				1C4ABFB723DFE5D2009B714A /* AppIcon.appiconset in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +498,79 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		1C4ABFAD23DFE5D2009B714A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Ezmonic-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1C4ABFAE23DFE5D2009B714A /* Start Packager */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Start Packager";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		1C4ABFB923DFE5D2009B714A /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		1C4ABFBA23DFE5D2009B714A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Ezmonic/Pods-Ezmonic-resources.sh",
+				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Ezmonic/Pods-Ezmonic-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		1CF1CB9123DF7ABA004ED51B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -652,6 +783,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		1C4ABFAF23DFE5D2009B714A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C4ABFB023DFE5D2009B714A /* AppDelegate.m in Sources */,
+				1C4ABFB123DFE5D2009B714A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1CF1CB9323DF7ABA004ED51B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -683,7 +823,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* Ezmonic Free */;
+			target = 13B07F861A680F5B00A75B9A /* Ezmonic Free back */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
@@ -798,6 +938,57 @@
 			};
 			name = Release;
 		};
+		1C4ABFBC23DFE5D2009B714A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4EAD029C2D833BC192D1667E /* Pods-Ezmonic.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Ezmonic Free";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = NN5GN3NQ54;
+				INFOPLIST_FILE = "Ezmonic copy2-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.3.1;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Ezmonic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		1C4ABFBD23DFE5D2009B714A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 25AE744A9854E5D55D76CA64 /* Pods-Ezmonic.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Ezmonic Free";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = NN5GN3NQ54;
+				INFOPLIST_FILE = "Ezmonic copy2-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.3.1;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Ezmonic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
 		1CF1CB9E23DF7ABA004ED51B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4EAD029C2D833BC192D1667E /* Pods-Ezmonic.debug.xcconfig */;
@@ -805,12 +996,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = Ezmonic;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = NN5GN3NQ54;
 				INFOPLIST_FILE = "Ezmonic copy-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 0.3.0;
+				MARKETING_VERSION = 0.3.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -831,11 +1022,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = Ezmonic;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = NN5GN3NQ54;
 				INFOPLIST_FILE = "Ezmonic copy-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 0.3.0;
+				MARKETING_VERSION = 0.3.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1072,11 +1263,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Ezmonic Free" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Ezmonic Free back" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1C4ABFBB23DFE5D2009B714A /* Build configuration list for PBXNativeTarget "Ezmonic Free" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1C4ABFBC23DFE5D2009B714A /* Debug */,
+				1C4ABFBD23DFE5D2009B714A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

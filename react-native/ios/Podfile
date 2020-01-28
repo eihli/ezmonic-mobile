@@ -1,7 +1,7 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 project 'Ezmonic.xcodeproj'
-target 'Ezmonic' do
+abstract_target 'Ezmonic Abstract' do
   # Pods for Ezmonic
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
@@ -37,6 +37,14 @@ target 'Ezmonic' do
   target 'EzmonicTests' do
     inherit! :search_paths
     # Pods for testing
+  end
+  
+  target 'Ezmonic' do
+    pod 'Ezmonic Abstract'
+  end
+  
+  target 'Ezmonic Free' do
+    pod 'Ezmonic Abstract'
   end
 
   use_native_modules!
