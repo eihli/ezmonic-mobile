@@ -44,7 +44,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UILaunchStoryboardName</key>
-	<string>Launch Screen</string>
+	<string>Launch Screen Free</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Launch Screen</string>
 	<key>UIRequiredDeviceCapabilities</key>
