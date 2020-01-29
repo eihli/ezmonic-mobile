@@ -56,7 +56,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Ezmonic/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Ezmonic/main.m; sourceTree = "<group>"; };
 		14FD3FE6C8E1A60C41A8E854 /* Pods-Ezmonic Abstract-Ezmonic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ezmonic Abstract-Ezmonic.debug.xcconfig"; path = "Target Support Files/Pods-Ezmonic Abstract-Ezmonic/Pods-Ezmonic Abstract-Ezmonic.debug.xcconfig"; sourceTree = "<group>"; };
-		1C4ABFBE23DFE5D2009B714A /* Ezmonic Free.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ezmonic Free.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C4ABFBE23DFE5D2009B714A /* Ezmonic Lite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ezmonic Lite.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C4ABFBF23DFE5D3009B714A /* Ezmonic copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Ezmonic copy2-Info.plist"; sourceTree = "<group>"; };
 		1CA577D123D226D300B99AA5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "Ezmonic Free/Images.xcassets"; sourceTree = "<group>"; };
 		1CF1CBA023DF7ABA004ED51B /* Ezmonic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ezmonic.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,7 +205,7 @@
 				2D02E47B1E0B4A5D006451C7 /* Ezmonic-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* Ezmonic-tvOSTests.xctest */,
 				1CF1CBA023DF7ABA004ED51B /* Ezmonic.app */,
-				1C4ABFBE23DFE5D2009B714A /* Ezmonic Free.app */,
+				1C4ABFBE23DFE5D2009B714A /* Ezmonic Lite.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -268,7 +268,7 @@
 			);
 			name = "Ezmonic Free";
 			productName = Ezmonic;
-			productReference = 1C4ABFBE23DFE5D2009B714A /* Ezmonic Free.app */;
+			productReference = 1C4ABFBE23DFE5D2009B714A /* Ezmonic Lite.app */;
 			productType = "com.apple.product-type.application";
 		};
 		1CF1CB9023DF7ABA004ED51B /* Ezmonic */ = {
@@ -813,7 +813,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Ezmonic-Free";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Ezmonic Lite";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -838,7 +838,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.Ezmonic-Free";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Ezmonic Lite";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";

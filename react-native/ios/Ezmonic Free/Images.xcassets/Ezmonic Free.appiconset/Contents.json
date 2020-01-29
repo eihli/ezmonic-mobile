@@ -3,109 +3,109 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "ezmonic-free-40x40.png",
+      "filename" : "ezmonic-lite-40x40.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "ezmonic-free-60x60.png",
+      "filename" : "ezmonic-lite-60x60.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "ezmonic-free-58x58.png",
+      "filename" : "ezmonic-lite-58x58.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "ezmonic-free-87x87.png",
+      "filename" : "ezmonic-lite-87x87.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "ezmonic-free-80x80.png",
+      "filename" : "ezmonic-lite-80x80.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "ezmonic-free-120x120.png",
+      "filename" : "ezmonic-lite-120x120.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "ezmonic-free-120x120-1.png",
+      "filename" : "ezmonic-lite-120x120-1.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "ezmonic-free-180x180.png",
+      "filename" : "ezmonic-lite-180x180.png",
       "scale" : "3x"
     },
     {
       "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "ezmonic-free-20x20.png",
+      "filename" : "ezmonic-lite-20x20.png",
       "scale" : "1x"
     },
     {
       "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "ezmonic-free-40x40-1.png",
+      "filename" : "ezmonic-lite-40x40-1.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "ezmonic-free-29x29.png",
+      "filename" : "ezmonic-lite-29x29.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "ezmonic-free-58x58-1.png",
+      "filename" : "ezmonic-lite-58x58-1.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "ezmonic-free-40x40-2.png",
+      "filename" : "ezmonic-lite-40x40-2.png",
       "scale" : "1x"
     },
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "ezmonic-free-80x80-1.png",
+      "filename" : "ezmonic-lite-80x80-1.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "ezmonic-free-76x76.png",
+      "filename" : "ezmonic-lite-76x76.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "ezmonic-free-152x152.png",
+      "filename" : "ezmonic-lite-152x152.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "ezmonic-free-167x167.png",
+      "filename" : "ezmonic-lite-167x167.png",
       "scale" : "2x"
     },
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "ezmonic-free-1024x1024.png",
+      "filename" : "ezmonic-lite-1024x1024.png",
       "scale" : "1x"
     }
   ],
