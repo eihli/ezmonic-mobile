@@ -11,7 +11,37 @@
 (defn max-phrase-options [] (:max-phrase-options @config/config))
 (defn max-saved-mnemonics [] (:max-saved-mnemonics @config/config))
 
-(defn get-number-to-word-tree []
+(defn get-number-to-word-tree
+  "Data structure looks like this:
+  {0 {0 {0 {:terminals [\"ASSESSES\"]}
+         1 {:terminals [\"ASSIST\" \"ASSESSED\"]
+            1 {:terminals [\"ASSISTED\"]}
+            ,,,}
+         ,,,}
+      ,,,}
+   1 {0 {:terminals [\"TASE\"]
+         0 {,,,}
+         ,,,}
+       ,,,}
+   ,,,}
+
+  In hindsight, this was not the best structure to meet the needs
+  of the algorithm.
+
+  The original idea was... find the longest number you can
+  find words for, i.e. traverse the tree as far as you can
+  go, then work your way back making smaller words at each
+  step. Or, given 001, show me a list of all the longer words
+  that could be made from that prefix.
+
+  It's kind of silly though for what this app needs. You could just have a flat
+  hash-map and things would be a lot simpler.
+
+  {\"000\" [\"ASSESSES\"]
+   \"001\" [\"ASSIST\" \"ASSESSED\"]
+   \"0011\" [\"ASSISTED\"]}
+  "
+  []
   (let [reader (transit/reader :json)
         data mnemonic-data/number-to-word-tree]
     (transit/read reader data))) 
@@ -19,6 +49,8 @@
 (defonce number-to-word-tree (get-number-to-word-tree))
 
 (defn connections
+  "I think there's a built-in Clojure function that gives us
+  what we are trying to do with this. See `partitions`."
   [length]
   (selections [0 1] length))
 
@@ -26,6 +58,10 @@
 (defn single? [coll])
 
 (defn num-to-min
+  "TODO: I think this might be a performance bug. The idea (I think)
+  is to ignore 1-digit words for numbers that are over a certain
+  number of digits. See how this interacts with ezminations and
+  filter-to-threshold."
   [num]
   (cond
     (<= num 6) 3
@@ -47,7 +83,8 @@
           ezminations))
 
 (defn joiner
-  ;; This is the hack to avoid doing dynamic programming.
+  ;; There are much better ways to do this. I think the builtin `partitions`
+  ;; would be the same.
   ;; "12345"
   ;; [0 0 0 1]
   ;; [1, 2, 3, 45]
@@ -64,6 +101,10 @@
     (conj acc [digit])))
 
 (defn ezminations
+  "An `ezmination` is like a combination, but one that makes
+  up a mnemonic. It's the selection of: [AFLAME VOICEMAIL] i.e.
+  the grouping of 8538035 into the pairs of numbers [853 8035]
+  to form the mnemonic `aflame voicemail`."
   [digits]
   (map
    (fn [connection]

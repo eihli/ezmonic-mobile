@@ -7,6 +7,8 @@
 Build server will be listening at localhost:9630.
 Nrepl server will be listening at localhost:3333.
 
+The server receives communication from the watcher and compiles the Clojurescript into Javascript, output to `react-native/app`, which is then bundled and supplied to an emulator over websockets by Metro.
+
 ** Shadow target watcher
 
 `shadow-cljs watch [:app|:free|:pro|:dev-free|:dev-pro]`
@@ -16,64 +18,21 @@ Differences between each include:
 - Load devtools
 - Config vars for feature availability checks
 - Initialization function
- 
+
+Watches files for changes and automatically re-compiles the Javascript.
+
 ** react-native metro bundler
+
+`npx react-native start`
+
+Starts the server that communicates with connected device[s?]. I think it looks for `index.js` in the directory from which it's run. In our case, we have an `index.js` that simply imports from `app/index.js` which is where Shadow-cljs is outputting our compiled ClojureScript.
 
 ** Delivery to Android emulator
 
-Must use modified version of CLI that gives ability to pass a "flavor" flag.
+`npx react-native run-android --flavor [pro|free] --variant [debug|release]`
+
+Must use modified version of CLI that gives ability to pass a "flavor" flag. Or,
+run the gradle commands manually. See
+`@react-native-community/cli-platform-android`.
 
 Android builds have a concept of "flavor" that I'm taking advantage of to have free/pro versions. The React CLI doesn't (didn't?) have a way to pass those in. So look to https://github.com/eihli/cli for the fork.
-
-
-** How to set up the app?
-
-*** CLI
-
-- `shadow-cljs server`
-- `shadow-cljs watch :app`
-- `npx react-native start`
-- `npx react-native run-android --flavor [pro/free]`
-- Connect to repl <SPC m C>
-
-*** The default way
-
-In the top level of the repo run
-
-: npm install
-
-to install shadow.cljs and its dependencies.
-
-Then to install the dependencies of the mobile app
-
-
-: cd react-native && npm install
-
-For Emacs:
-
-: M-x cider-jack-in-cljs
-
-and when prompted for the REPL type, enter *shadow* and when prompted
-for the app type enter *:app*.
-
-Any other editor:
-
-: shadow-cljs watch app
-
-** Start Metro
-
-Then to load the app and start Metro (it'll start it in a separate tab
-of your terminal):
-
-
-: react-native run-android
-
-(Note: you'll need to start Android emulator first.)
-
-or
-
-: react-native run-ios
-
-** Production build
-
-: shadow-cljs release app
