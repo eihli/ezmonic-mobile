@@ -3,6 +3,7 @@
   "version": "0.2.2",
   "private": true,
   "devDependencies": {
+    "react-native-cli": "^2.0.1",
     "shadow-cljs": "^2.8.74"
   },
   "dependencies": {

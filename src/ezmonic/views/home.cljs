@@ -1,5 +1,6 @@
 (ns ezmonic.views.home
   (:require ["react-native" :as rn]
+            ["@react-native-community/picker" :refer [Picker]]
             [re-frame.core :as rf]
             [ezmonic.style :as style]
             [ezmonic.views.shared
@@ -12,7 +13,7 @@
             [reagent.core :as r]
             ["react-navigation-stack" :as react-navigation-stack]))
 
-(def PickerItem (.. rn -Picker -Item))
+(def PickerItem (.. Picker -Item))
 
 (defn picker
   [picker-idx mnemonic-subelement]

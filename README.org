@@ -1,14 +1,18 @@
 * ezmonic-mobile
 
+Must use modified version of CLI that gives ability to pass a "flavor" flag.
+
+Android builds have a concept of "flavor" that I'm taking advantage of to have free/pro versions. The React CLI doesn't (didn't?) have a way to pass those in. So look to https://github.com/eihli/cli for the fork.
+
 ** How to set up the app?
 
-*** The E Way
+*** CLI
 
 - `shadow-cljs server`
 - `shadow-cljs watch :app`
 - `npx react-native start`
-- `npx react-native run-android`
-- Connect to socket repl
+- `npx react-native run-android --flavor [pro/free]`
+- Connect to repl <SPC m C>
 
 *** The default way
 
