@@ -84,7 +84,7 @@
 
 (defn joiner
   ;; There are much better ways to do this. I think the builtin `partitions`
-  ;; would be the same.
+  ;; would be equivalent but better.
   ;; "12345"
   ;; [0 0 0 1]
   ;; [1, 2, 3, 45]
@@ -136,6 +136,7 @@
     phrases))
 
 (defn shortest
+  "Return thing with lowest `count`. Same as `min-by`, but with a +2 obfuscation bonus."
   [coll]
   (reduce
    #(if (< (count %1) (count %2))
@@ -263,8 +264,8 @@
 
 
 (defn normalize-consonants
-  [consonants]
   "Converts a sequence of consonants to a sequence of numbers."
+  [consonants]
   (map consonant-number-map consonants))
 
 
