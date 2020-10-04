@@ -36,3 +36,20 @@ run the gradle commands manually. See
 `@react-native-community/cli-platform-android`.
 
 Android builds have a concept of "flavor" that I'm taking advantage of to have free/pro versions. The React CLI doesn't (didn't?) have a way to pass those in. So look to https://github.com/eihli/cli for the fork.
+
+https://github.com/eihli/cli/commit/4b0504d2b614695b258e540021e5898121072f37
+
+*** Custom ReactNative CLI
+
+To modify/install
+
+- Clone from eihli/cli
+- `yarn`
+- `yarn watch`
+- `yarn link-packages` in /cli
+- `yarn link @react-native-community/cli-platform-android` in /ezmonic-mobile/react-native
+
+When done hacking/editing:
+
+- `yarn unlink @react-native-community/cli-platform-android`
+- `yarn install --force @react-native-community/cli-platform-android`
